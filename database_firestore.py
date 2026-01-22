@@ -115,6 +115,7 @@ def get_all_news():
     if not db: return []
     
     try:
+        print("Firestore: Fetching all news (limit 100)...")
         # Order by published_at DESC
         docs = db.collection('news').order_by('published_at', direction=firestore.Query.DESCENDING).limit(100).stream()
         
@@ -122,6 +123,11 @@ def get_all_news():
         for doc in docs:
             news_data = doc.to_dict()
             news_list.append(news_data)
+            
+        print(f"Firestore: Fetched {len(news_list)} items.")
+        if len(news_list) > 0:
+            print(f"Firestore: First item date: {news_list[0].get('published_at')}")
+            
         return news_list
     except Exception as e:
         print(f"Error fetching news from Firestore: {e}")

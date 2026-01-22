@@ -98,6 +98,8 @@ def get_recent_news():
     else:
         news_list = all_news
     
+    print(f"RB: Total items from DB: {len(news_list)}")
+    
     # Filter for recent news (last 7 days)
     today = datetime.now()
     limit_date = today - timedelta(days=7)
@@ -107,7 +109,23 @@ def get_recent_news():
         try:
             pub_date_str = item['published_at']
             # Parse date to compare
-            pub_date = datetime.strptime(pub_date_str, '%Y-%m-%d')
+            try:
+                # Try YYYY-MM-DD
+                pub_date = datetime.strptime(pub_date_str, '%Y-%m-%d')
+            except ValueError:
+                try:
+                    # Try ISO format (YYYY-MM-DDTHH:MM:SS...)
+                    # Handle timezone if present, or just ignore it for comparison
+                    if 'T' in pub_date_str:
+                        pub_date = datetime.fromisoformat(pub_date_str)
+                        # Make naive for comparison if needed, or ensure limit_date is aware
+                        if pub_date.tzinfo is not None:
+                            pub_date = pub_date.replace(tzinfo=None)
+                    else:
+                        continue
+                except ValueError:
+                     # print(f"Date parse error for {pub_date_str}")
+                     continue
             
             if pub_date >= limit_date:
                 recent_news.append(item)
