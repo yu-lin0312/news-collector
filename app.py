@@ -187,22 +187,22 @@ with st.popover("📅 每日新聞", help="點擊管理簡報"):
                     result = subprocess.run([sys.executable, "crawler.py"], capture_output=True, text=True, encoding='utf-8')
 
                 
-                if result.returncode != 0:
-                    logs.append(f"ERROR: Crawler failed with code {result.returncode}")
-                    logs.append("Aborting sequence.")
-                    update_terminal(logs, show_cursor=False)
-                    
-                    error_msg = result.stderr if result.stderr else result.stdout
-                    st.error(f"爬蟲錯誤: {error_msg}")
-                    st.stop()
+                    if result.returncode != 0:
+                        logs.append(f"ERROR: Crawler failed with code {result.returncode}")
+                        logs.append("Aborting sequence.")
+                        update_terminal(logs, show_cursor=False)
+                        
+                        error_msg = result.stderr if result.stderr else result.stdout
+                        st.error(f"爬蟲錯誤: {error_msg}")
+                        st.stop()
+                    else:
+                        logs.append("Crawler finished successfully. [OK]")
+                        logs.append(f"Data ingestion complete.")
+                        update_terminal(logs)
                 else:
-                    logs.append("Crawler finished successfully. [OK]")
-                    logs.append(f"Data ingestion complete.")
+                    logs.append("Database check: Found existing records.")
+                    logs.append("Skipping crawler sequence. [SKIP]")
                     update_terminal(logs)
-            else:
-                logs.append("Database check: Found existing records.")
-                logs.append("Skipping crawler sequence. [SKIP]")
-                update_terminal(logs)
                 
             # Step 2: Analyze & Generate
             logs.append("Initializing AI Core (Deep Analyzer)...")
