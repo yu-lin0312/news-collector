@@ -10,6 +10,17 @@ import random
 from playwright.sync_api import sync_playwright
 import urllib3
 from dotenv import load_dotenv
+try:
+    from zoneinfo import ZoneInfo
+except ImportError:
+    from backports.zoneinfo import ZoneInfo
+
+# Timezone helper
+TAIPEI_TZ = ZoneInfo("Asia/Taipei")
+
+def get_taiwan_now():
+    """Get current time in Taiwan timezone."""
+    return datetime.now(TAIPEI_TZ)
 
 load_dotenv()
 
@@ -426,9 +437,9 @@ def select_top_stories_with_ai(candidates):
 
 def generate_deep_top10(target_date=None):
     if target_date is None:
-        target_date = datetime.now()
+        target_date = get_taiwan_now()
     elif isinstance(target_date, str):
-        target_date = datetime.strptime(target_date, '%Y-%m-%d')
+        target_date = datetime.strptime(target_date, '%Y-%m-%d').replace(tzinfo=TAIPEI_TZ)
 
     print(f"Starting Deep Analysis for {target_date.strftime('%Y-%m-%d')}...")
     
