@@ -215,20 +215,39 @@ with st.popover("📅 每日新聞", help="點擊管理簡報"):
             update_terminal(logs)
             
             import deep_analyzer
+            import rule_based_top10
             import importlib
+            importlib.reload(rule_based_top10)
             importlib.reload(deep_analyzer)
             
             logs.append("AI Agent: Analyzing content relevance...")
             update_terminal(logs)
             
-            result = deep_analyzer.generate_deep_top10()
+            # Capture stdout/stderr from deep_analyzer to show in UI
+            import io
+            import contextlib
+            
+            output_capture = io.StringIO()
+            result = None
+            
+            try:
+                with contextlib.redirect_stdout(output_capture), contextlib.redirect_stderr(output_capture):
+                    result = deep_analyzer.generate_deep_top10()
+            except Exception as e:
+                output_capture.write(f"\nEXCEPTION in deep_analyzer: {e}")
+            
+            # Process captured logs
+            captured_logs = output_capture.getvalue().split('\n')
+            for line in captured_logs:
+                if line.strip():
+                    logs.append(f"DA: {line}")
+            
+            update_terminal(logs)
             
             if not result or not result.get('top10'):
                 logs.append("CRITICAL: Generation produced 0 items.")
-                logs.append("Please check Cloud Logs for details.")
                 update_terminal(logs, show_cursor=False)
-                st.error("⚠️ 生成結果為空！可能是爬蟲或 AI 分析失敗。請查看 Streamlit Cloud 的 Manage app -> Logs 以獲取詳細錯誤資訊。")
-                # Add a button to retry or force crawl next time could be useful, but for now just stop.
+                st.error("⚠️ 生成結果為空！上方終端機已顯示詳細日誌 (DA: 開頭)。請檢查是否有 'Found 0 candidates' 或其他錯誤訊息。")
                 st.stop()
             
             logs.append(f"Success: Generated {len(result['top10'])} items.")
