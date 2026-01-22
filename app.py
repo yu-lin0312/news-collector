@@ -41,6 +41,12 @@ sources_config = load_sources_config()
 categories = list(set(s.get('category', '其他') for s in sources_config))
 categories.sort()
 
+# Check for Firestore errors
+if hasattr(database, 'FIRESTORE_IMPORT_ERROR') and database.FIRESTORE_IMPORT_ERROR:
+    st.warning(f"⚠️ Firestore 連線失敗，已切換至本地模式 (SQLite)。錯誤訊息: {database.FIRESTORE_IMPORT_ERROR}")
+    st.info("請檢查 Secrets 設定中的 FIREBASE_CREDENTIALS 是否正確。")
+
+
 # ========== HEADER ==========
 # st.title("📡 AI News Radar")
 

@@ -6,13 +6,19 @@ from datetime import datetime
 # Check environment variable to decide which DB to use
 # Default to SQLite if not set
 USE_FIRESTORE = os.environ.get('USE_FIRESTORE', 'False').lower() == 'true'
+FIRESTORE_IMPORT_ERROR = None
 
 if USE_FIRESTORE:
     try:
         import database_firestore as backend
         print("Using Firestore database")
-    except ImportError:
-        print("Error importing database_firestore, falling back to SQLite")
+    except ImportError as e:
+        print(f"Error importing database_firestore, falling back to SQLite: {e}")
+        FIRESTORE_IMPORT_ERROR = str(e)
+        USE_FIRESTORE = False
+    except Exception as e:
+        print(f"Unexpected error importing database_firestore: {e}")
+        FIRESTORE_IMPORT_ERROR = str(e)
         USE_FIRESTORE = False
 
 if not USE_FIRESTORE:
@@ -73,6 +79,10 @@ if not USE_FIRESTORE:
         conn.close()
 
     def url_exists(url):
+        # Ensure DB exists
+        if not os.path.exists(DB_NAME):
+            init_db()
+            
         conn = get_connection()
         c = conn.cursor()
         c.execute('SELECT 1 FROM news WHERE url = ?', (url,))
@@ -81,6 +91,10 @@ if not USE_FIRESTORE:
         return exists
 
     def add_news(title, url, source, category, published_at, summary, image_url, ai_rundown=None, ai_details=None, ai_impact=None, discussion_url=None):
+        # Ensure DB exists
+        if not os.path.exists(DB_NAME):
+            init_db()
+            
         conn = get_connection()
         c = conn.cursor()
         try:
@@ -96,6 +110,10 @@ if not USE_FIRESTORE:
             conn.close()
 
     def cleanup_old_news(days=30):
+        # Ensure DB exists
+        if not os.path.exists(DB_NAME):
+            init_db()
+            
         conn = get_connection()
         c = conn.cursor()
         try:
@@ -127,12 +145,23 @@ if not USE_FIRESTORE:
 
     def get_today_news_count():
         """Count news items published today"""
+        # Ensure DB exists
+        if not os.path.exists(DB_NAME):
+            init_db()
+            
         conn = get_connection()
         c = conn.cursor()
         today_str = datetime.now().strftime('%Y-%m-%d')
         # Check for both full datetime and date string
-        c.execute("SELECT COUNT(*) FROM news WHERE published_at LIKE ? OR published_at = ?", (f"{today_str}%", today_str))
-        count = c.fetchone()[0]
+        try:
+            c.execute("SELECT COUNT(*) FROM news WHERE published_at LIKE ? OR published_at = ?", (f"{today_str}%", today_str))
+            count = c.fetchone()[0]
+        except sqlite3.OperationalError:
+            # Table might not exist even if file exists (rare but possible if init failed)
+            init_db()
+            c.execute("SELECT COUNT(*) FROM news WHERE published_at LIKE ? OR published_at = ?", (f"{today_str}%", today_str))
+            count = c.fetchone()[0]
+            
         conn.close()
         return count
 
