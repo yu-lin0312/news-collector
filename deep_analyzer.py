@@ -80,11 +80,28 @@ class PlaywrightManager:
             cls._instance._context = None
         return cls._instance
     
+    def _check_playwright_install(self):
+        """Ensure Playwright browsers are installed."""
+        import subprocess
+        import sys
+        try:
+            # Check if we can launch a browser (cheap check)
+            # Just run install command, it returns quickly if already installed
+            print("Checking Playwright browsers in Deep Analyzer...")
+            subprocess.run([sys.executable, "-m", "playwright", "install", "chromium"], check=True)
+            print("Playwright browsers checked.")
+        except Exception as e:
+            print(f"Warning: Failed to install Playwright browsers: {e}")
+
     def _ensure_browser(self):
         """Lazily initialize shared Playwright browser and context."""
         if self._browser is None:
+            self._check_playwright_install()
             self._playwright = sync_playwright().start()
-            self._browser = self._playwright.chromium.launch(headless=True)
+            self._browser = self._playwright.chromium.launch(
+                headless=True,
+                args=["--disable-blink-features=AutomationControlled", "--no-sandbox"]
+            )
             self._context = self._browser.new_context(
                 user_agent=HEADERS['User-Agent'],
                 ignore_https_errors=True
@@ -658,8 +675,24 @@ def generate_deep_top10(target_date=None):
         
     filename = f"top10_{target_date.strftime('%Y-%m-%d')}.json"
     
-    # SAFETY CHECK: Don't overwrite existing good file with empty data
+    # SAFETY CHECK: Don't overwrite existing good data with empty data
+    # Check BOTH local file AND Firestore
     if not final_top10:
+        date_str = target_date.strftime('%Y-%m-%d')
+        
+        # Check Firestore first (for cloud deployments)
+        try:
+            existing_briefing = database.get_briefing(date_str)
+            if existing_briefing and existing_briefing.get('top10') and len(existing_briefing['top10']) > 0:
+                print(f"⚠️ WARNING: Generated list is empty, but Firestore already has {len(existing_briefing['top10'])} items for {date_str}.")
+                print("⚠️ Aborting save to prevent overwriting valid briefing.")
+                # Cleanup Playwright before returning
+                cleanup_playwright()
+                return existing_briefing
+        except Exception as e:
+            print(f"Error checking Firestore: {e}")
+        
+        # Also check local file (for local development)
         if os.path.exists(filename):
             try:
                 with open(filename, 'r', encoding='utf-8') as f:
@@ -667,6 +700,8 @@ def generate_deep_top10(target_date=None):
                 if existing_data.get('top10') and len(existing_data['top10']) > 0:
                     print(f"⚠️ WARNING: Generated list is empty, but {filename} already has data.")
                     print("⚠️ Aborting save to prevent overwriting valid briefing.")
+                    # Cleanup Playwright before returning
+                    cleanup_playwright()
                     return existing_data
             except Exception as e:
                 print(f"Error checking existing file: {e}")
