@@ -10,6 +10,13 @@ import re
 from playwright.sync_api import sync_playwright
 import sys
 import io
+try:
+    from zoneinfo import ZoneInfo
+except ImportError:
+    from backports.zoneinfo import ZoneInfo
+
+# Timezone helper
+TAIPEI_TZ = ZoneInfo("Asia/Taipei")
 
 # Force UTF-8 encoding for stdout/stderr on Windows to prevent UnicodeEncodeError
 if sys.platform.startswith('win'):
@@ -133,8 +140,8 @@ class NewsCrawler:
 
     # --- Date Normalization Helpers ---
     def _today(self):
-        """Return today's date as YYYY-MM-DD."""
-        return datetime.now().strftime('%Y-%m-%d')
+        """Return today's date as YYYY-MM-DD in Taipei Time."""
+        return datetime.now(TAIPEI_TZ).strftime('%Y-%m-%d')
 
     def _try_regex_extraction(self, date_str):
         """Try to extract date using regex patterns."""
@@ -178,7 +185,7 @@ class NewsCrawler:
         # Handle "December 16" (assume current year)
         try:
             dt = datetime.strptime(date_str, '%B %d')
-            return dt.replace(year=datetime.now().year).strftime('%Y-%m-%d')
+            return dt.replace(year=datetime.now(TAIPEI_TZ).year).strftime('%Y-%m-%d')
         except ValueError:
             pass
         
@@ -195,13 +202,13 @@ class NewsCrawler:
                 if 'hour' in unit or 'min' in unit:
                     return self._today()
                 elif 'day' in unit:
-                    return (datetime.now() - timedelta(days=num)).strftime('%Y-%m-%d')
+                    return (datetime.now(TAIPEI_TZ) - timedelta(days=num)).strftime('%Y-%m-%d')
             
             if '小時前' in date_str or '分鐘前' in date_str:
                 return self._today()
             if '天前' in date_str:
                 num = int(date_str.replace('天前', '').strip())
-                return (datetime.now() - timedelta(days=num)).strftime('%Y-%m-%d')
+                return (datetime.now(TAIPEI_TZ) - timedelta(days=num)).strftime('%Y-%m-%d')
         except Exception:
             pass
         return None
@@ -429,7 +436,9 @@ class NewsCrawler:
                             'title': title,
                             'url': link,
                             'summary': summary,
-                            'published_at': datetime.now().isoformat()
+                            'url': link,
+                            'summary': summary,
+                            'published_at': datetime.now(TAIPEI_TZ).isoformat()
                         })
                         print(f"Parsed item: {title}")
                 except Exception as e:

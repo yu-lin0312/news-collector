@@ -221,8 +221,17 @@ with st.popover("📅 每日新聞", help="點擊管理簡報"):
             logs.append("AI Agent: Analyzing content relevance...")
             update_terminal(logs)
             
-            deep_analyzer.generate_deep_top10()
+            result = deep_analyzer.generate_deep_top10()
             
+            if not result or not result.get('top10'):
+                logs.append("CRITICAL: Generation produced 0 items.")
+                logs.append("Please check Cloud Logs for details.")
+                update_terminal(logs, show_cursor=False)
+                st.error("⚠️ 生成結果為空！可能是爬蟲或 AI 分析失敗。請查看 Streamlit Cloud 的 Manage app -> Logs 以獲取詳細錯誤資訊。")
+                # Add a button to retry or force crawl next time could be useful, but for now just stop.
+                st.stop()
+            
+            logs.append(f"Success: Generated {len(result['top10'])} items.")
             logs.append("Generating briefing artifacts...")
             update_terminal(logs)
             
