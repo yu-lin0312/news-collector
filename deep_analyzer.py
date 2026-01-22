@@ -136,6 +136,9 @@ def get_playwright_manager():
         _playwright_manager = PlaywrightManager()
     return _playwright_manager
 
+def cleanup_playwright():
+    """Cleanup global Playwright resources."""
+    global _playwright_manager
     if _playwright_manager:
         _playwright_manager.close()
         _playwright_manager = None
@@ -665,22 +668,15 @@ def generate_deep_top10(target_date=None):
         # Fetch Content
         content, status, fetched_image = fetch_article_content(item['url'], item['source'], item.get('discussion_url'))
         
-        # Backfill image if missing
-        if not item.get('image_url') and fetched_image:
-            print(f"  -> Found missing image: {fetched_image[:50]}...")
-            item['image_url'] = fetched_image
-            # Update DB with new image
-            conn = None
-            try:
-                conn = database.get_connection()
-                c = conn.cursor()
-                c.execute("UPDATE news SET image_url = ? WHERE url = ?", (fetched_image, item['url']))
-                conn.commit()
-            except Exception as e:
-                print(f"  -> Failed to update image in DB: {e}")
-            finally:
-                if conn:
-                    conn.close()
+        # Backfill image if missing (DISABLED for speed)
+        # if not item.get('image_url') and fetched_image:
+        #     print(f"  -> Found missing image: {fetched_image[:50]}...")
+        #     item['image_url'] = fetched_image
+        #     # Update DB with new image
+        #     try:
+        #         database.update_news_image(item['url'], fetched_image)
+        #     except Exception as e:
+        #         print(f"  -> Failed to update image in DB: {e}")
         
         if not content:
             print(f"  -> Fetch failed: {status}")
