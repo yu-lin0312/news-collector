@@ -150,85 +150,84 @@ with st.popover("📅 每日新聞", help="點擊管理簡報"):
             term_container.markdown(html, unsafe_allow_html=True)
             time.sleep(0.3)
         
-            try:
-                logs = []
-                logs.append("Initializing system...")
-                update_terminal(logs)
-                time.sleep(0.5)
+        try:
+            logs = []
+            logs.append("Initializing system...")
+            update_terminal(logs)
+            time.sleep(0.5)
+            
+            logs.append("Authenticating user... [OK]")
+            update_terminal(logs)
+            
+            # Step 1: Crawl (Always force crawl when manually triggered)
+            if True: # Always run crawl sequence when button is clicked
+                logs.append("Checking environment variables...")
                 
-                logs.append("Authenticating user... [OK]")
-                update_terminal(logs)
-                
-                # Step 1: Crawl (Always force crawl when manually triggered)
-                if True: # Always run crawl sequence when button is clicked
-                    logs.append("Checking environment variables...")
-                    
-                    # DEBUG: Check what secrets are actually loaded
-                    if "GOOGLE_API_KEY" in st.secrets:
-                        logs.append("DEBUG: GOOGLE_API_KEY found in st.secrets")
-                    else:
-                        logs.append("DEBUG: GOOGLE_API_KEY NOT found in st.secrets")
-                        
-                    api_key = os.environ.get("GOOGLE_API_KEY")
-                    if api_key:
-                        logs.append(f"API Key found in env: {api_key[:5]}... (masked)")
-                    else:
-                        logs.append("WARNING: GOOGLE_API_KEY not found in env!")
-                    update_terminal(logs)
-                    
-                    logs.append("Starting crawler subsystem...")
-                    update_terminal(logs)
-                    
-                    logs.append("Targeting global AI news sources...")
-                    update_terminal(logs)
-                    
-                    import subprocess
-                    import sys
-                    result = subprocess.run([sys.executable, "crawler.py"], capture_output=True, text=True, encoding='utf-8')
-
-                
-                    if result.returncode != 0:
-                        logs.append(f"ERROR: Crawler failed with code {result.returncode}")
-                        logs.append("Aborting sequence.")
-                        update_terminal(logs, show_cursor=False)
-                        
-                        error_msg = result.stderr if result.stderr else result.stdout
-                        st.error(f"爬蟲錯誤: {error_msg}")
-                        st.stop()
-                    else:
-                        logs.append("Crawler finished successfully. [OK]")
-                        logs.append(f"Data ingestion complete.")
-                        update_terminal(logs)
+                # DEBUG: Check what secrets are actually loaded
+                if "GOOGLE_API_KEY" in st.secrets:
+                    logs.append("DEBUG: GOOGLE_API_KEY found in st.secrets")
                 else:
-                    logs.append("Database check: Found existing records.")
-                    logs.append("Skipping crawler sequence. [SKIP]")
+                    logs.append("DEBUG: GOOGLE_API_KEY NOT found in st.secrets")
+                    
+                api_key = os.environ.get("GOOGLE_API_KEY")
+                if api_key:
+                    logs.append(f"API Key found in env: {api_key[:5]}... (masked)")
+                else:
+                    logs.append("WARNING: GOOGLE_API_KEY not found in env!")
+                update_terminal(logs)
+                
+                logs.append("Starting crawler subsystem...")
+                update_terminal(logs)
+                
+                logs.append("Targeting global AI news sources...")
+                update_terminal(logs)
+                
+                import subprocess
+                import sys
+                result = subprocess.run([sys.executable, "crawler.py"], capture_output=True, text=True, encoding='utf-8')
+                
+                if result.returncode != 0:
+                    logs.append(f"ERROR: Crawler failed with code {result.returncode}")
+                    logs.append("Aborting sequence.")
+                    update_terminal(logs, show_cursor=False)
+                    
+                    error_msg = result.stderr if result.stderr else result.stdout
+                    st.error(f"爬蟲錯誤: {error_msg}")
+                    st.stop()
+                else:
+                    logs.append("Crawler finished successfully. [OK]")
+                    logs.append(f"Data ingestion complete.")
                     update_terminal(logs)
-                
-                # Step 2: Analyze & Generate
-                logs.append("Initializing AI Core (Deep Analyzer)...")
+            else:
+                logs.append("Database check: Found existing records.")
+                logs.append("Skipping crawler sequence. [SKIP]")
                 update_terminal(logs)
-                
-                import deep_analyzer
-                import importlib
-                importlib.reload(deep_analyzer)
-                
-                logs.append("AI Agent: Analyzing content relevance...")
-                update_terminal(logs)
-                
-                deep_analyzer.generate_deep_top10()
-                
-                logs.append("Generating briefing artifacts...")
-                update_terminal(logs)
-                
-                logs.append("Sequence complete. System ready.")
-                update_terminal(logs, show_cursor=False)
-                
-                time.sleep(1)
-                st.rerun()
-            except Exception as e:
-                logs.append(f"CRITICAL ERROR: {str(e)}")
-                update_terminal(logs, show_cursor=False)
-                st.error(f"發生錯誤: {e}")
+            
+            # Step 2: Analyze & Generate
+            logs.append("Initializing AI Core (Deep Analyzer)...")
+            update_terminal(logs)
+            
+            import deep_analyzer
+            import importlib
+            importlib.reload(deep_analyzer)
+            
+            logs.append("AI Agent: Analyzing content relevance...")
+            update_terminal(logs)
+            
+            deep_analyzer.generate_deep_top10()
+            
+            logs.append("Generating briefing artifacts...")
+            update_terminal(logs)
+            
+            logs.append("Sequence complete. System ready.")
+            update_terminal(logs, show_cursor=False)
+            
+            time.sleep(1)
+            st.rerun()
+        except Exception as e:
+            logs.append(f"CRITICAL ERROR: {str(e)}")
+            update_terminal(logs, show_cursor=False)
+            st.error(f"發生錯誤: {e}")
 
 if not briefing_dates:
     st.info("尚無每日簡報資料。請先點擊上方「📅 每日新聞」按鈕，再點擊「🚀 開始生成」來產生第一期簡報。")
