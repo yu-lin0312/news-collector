@@ -176,6 +176,22 @@ if not USE_FIRESTORE:
                 return None
         return None
 
+    def list_briefings():
+        import glob
+        # Find all available briefing files
+        files = glob.glob("top10_*.json")
+        # Extract dates: top10_2026-01-22.json -> 2026-01-22
+        dates = []
+        for f in files:
+            if 'cache' in f: continue
+            try:
+                date_str = f.replace('top10_', '').replace('.json', '')
+                dates.append(date_str)
+            except:
+                continue
+        dates.sort(reverse=True)
+        return dates
+
 else:
     # Proxy calls to the firestore backend
     def init_db():
