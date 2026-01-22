@@ -136,12 +136,50 @@ def get_playwright_manager():
         _playwright_manager = PlaywrightManager()
     return _playwright_manager
 
-def cleanup_playwright():
-    """Cleanup global Playwright resources."""
-    global _playwright_manager
     if _playwright_manager:
         _playwright_manager.close()
         _playwright_manager = None
+
+def resolve_original_source(item):
+    """
+    If source is an aggregator, try to resolve the real source from URL.
+    """
+    aggregator_names = ['TLDR Tech AI', 'HackingAI', 'Google News (AI)', 'Google News']
+    
+    # Check if it's an aggregator
+    is_aggregator = False
+    for agg in aggregator_names:
+        if agg.lower() in item['source'].lower():
+            is_aggregator = True
+            break
+            
+    if is_aggregator:
+        try:
+            from urllib.parse import urlparse
+            domain = urlparse(item['url']).netloc
+            # Remove www.
+            if domain.startswith('www.'):
+                domain = domain[4:]
+            
+            # Extract main name
+            parts = domain.split('.')
+            if len(parts) >= 2:
+                name = parts[0]
+                # Special cases
+                if 'github' in name: return 'GitHub'
+                if 'arxiv' in name: return 'Arxiv'
+                if 'youtube' in name: return 'YouTube'
+                if 'bloomberg' in name: return 'Bloomberg'
+                if 'techcrunch' in name: return 'TechCrunch'
+                if 'wsj' in name: return 'WSJ'
+                if 'nytimes' in name: return 'NYTimes'
+                if 'reuters' in name: return 'Reuters'
+                
+                # Default: Capitalize first letter
+                return name.title()
+        except:
+            pass
+    return item['source']
 
 
 def fetch_article_content(url, source, discussion_url=None):
@@ -505,6 +543,9 @@ def generate_deep_top10(target_date=None):
 
     sources_config = rule_based_top10.load_sources_config()
     for item in candidates:
+        # Resolve original source for aggregators (TLDR, HackingAI, etc.)
+        item['source'] = resolve_original_source(item)
+        
         item['score'] = rule_based_top10.calculate_score(item)
         item['top10_category'] = rule_based_top10.categorize_news(item, sources_config)
         
@@ -522,6 +563,8 @@ def generate_deep_top10(target_date=None):
         
     diversity_pool = []
     seen_urls = set()
+    source_counts = {} # Track items per source for capping
+    MAX_PER_SOURCE = 3
     
     # 1. Guaranteed Entry: Top 3 from each category
     for cat, items in category_buckets.items():
@@ -529,15 +572,32 @@ def generate_deep_top10(target_date=None):
         top_picks = items[:3]
         for item in top_picks:
             if item['url'] not in seen_urls:
+                # Check source cap
+                source = item.get('source', 'Unknown')
+                if source_counts.get(source, 0) >= MAX_PER_SOURCE:
+                    continue
+                    
                 diversity_pool.append(item)
                 seen_urls.add(item['url'])
+                source_counts[source] = source_counts.get(source, 0) + 1
     
     # --- SPECIAL ENFORCEMENT ---
     # 1. Ensure at least 5 HackingAI items (via discussion_url)
+    # HackingAI is special, we might want to allow more from it if it's the aggregator itself,
+    # but since we resolved sources, these might now be 'GitHub', 'Arxiv', etc.
+    # So we filter by discussion_url presence which indicates HackingAI origin.
     hacking_ai_items = [item for item in candidates if item.get('discussion_url') and item['url'] not in seen_urls]
     for item in hacking_ai_items[:5]:
+        # Check source cap (even for HackingAI derived items, we want diversity)
+        # But maybe relax it slightly or treat them as distinct? 
+        # Let's enforce cap to ensure we don't get 5 Arxiv papers if HackingAI posted 5 Arxiv papers.
+        source = item.get('source', 'Unknown')
+        if source_counts.get(source, 0) >= MAX_PER_SOURCE:
+            continue
+            
         diversity_pool.append(item)
         seen_urls.add(item['url'])
+        source_counts[source] = source_counts.get(source, 0) + 1
         
     # 2. Fill the rest up to 50, but CAP Google News
     remaining_slots = 50 - len(diversity_pool)
@@ -547,16 +607,22 @@ def generate_deep_top10(target_date=None):
     if remaining_slots > 0:
         for item in candidates: # candidates is already sorted by score
             if item['url'] not in seen_urls:
-                # Check Google News Cap
+                # Check Google News Cap (Legacy logic, but source_counts handles it generally now)
                 is_google_news = 'news.google.com' in item['url']
                 
                 if is_google_news:
                     if google_news_count >= MAX_GOOGLE_NEWS:
                         continue
                     google_news_count += 1
+                
+                # General Source Cap
+                source = item.get('source', 'Unknown')
+                if source_counts.get(source, 0) >= MAX_PER_SOURCE:
+                    continue
                     
                 diversity_pool.append(item)
                 seen_urls.add(item['url'])
+                source_counts[source] = source_counts.get(source, 0) + 1
                 if len(diversity_pool) >= 50:
                     break
                     
@@ -565,8 +631,16 @@ def generate_deep_top10(target_date=None):
         for item in candidates:
             if len(diversity_pool) >= 50: break
             if item['url'] in seen_urls: continue
+            
+            # Still enforce cap in fallback? Maybe relax if desperate.
+            # Let's enforce strict diversity.
+            source = item.get('source', 'Unknown')
+            if source_counts.get(source, 0) >= MAX_PER_SOURCE:
+                continue
+                
             diversity_pool.append(item)
             seen_urls.add(item['url'])
+            source_counts[source] = source_counts.get(source, 0) + 1
 
     candidates = diversity_pool
     # Re-sort pool by score for AI
