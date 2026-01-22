@@ -9,6 +9,37 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+# Inject Streamlit secrets into environment variables for subprocesses
+def load_secrets_to_env():
+    """
+    Load secrets from streamlit.secrets into os.environ so that subprocesses
+    (like crawler.py and deep_analyzer.py) can access them.
+    """
+    # 1. GOOGLE_API_KEY
+    if "GOOGLE_API_KEY" in st.secrets:
+        os.environ["GOOGLE_API_KEY"] = st.secrets["GOOGLE_API_KEY"]
+        # print("Loaded GOOGLE_API_KEY from secrets") # Debug only
+
+    # 2. FIREBASE_CREDENTIALS
+    # Streamlit secrets might parse the JSON string into a dict automatically if it's in [general] or root
+    # or it might be a string if defined as FIREBASE_CREDENTIALS = "..."
+    if "FIREBASE_CREDENTIALS" in st.secrets:
+        creds = st.secrets["FIREBASE_CREDENTIALS"]
+        if isinstance(creds, dict):
+            # If it's already a dict, dump it back to a JSON string for the env var
+            os.environ["FIREBASE_CREDENTIALS"] = json.dumps(dict(creds))
+        else:
+            # If it's a string, just set it
+            os.environ["FIREBASE_CREDENTIALS"] = str(creds)
+        # print("Loaded FIREBASE_CREDENTIALS from secrets") # Debug only
+
+    # 3. USE_FIRESTORE
+    if "USE_FIRESTORE" in st.secrets:
+        os.environ["USE_FIRESTORE"] = st.secrets["USE_FIRESTORE"]
+
+load_secrets_to_env()
+
+
 # Page config
 st.set_page_config(
     page_title="AI News Radar",
