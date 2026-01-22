@@ -268,16 +268,31 @@ if not briefing_dates:
     st.info("尚無每日簡報資料。請先點擊上方「📅 每日新聞」按鈕，再點擊「🚀 開始生成」來產生第一期簡報。")
 else:
     
-    # Load the latest briefing file by default
-    latest_date = briefing_dates[0]
-    try:
-        data = database.get_briefing(latest_date)
-        if not data:
-            st.error(f"Error loading briefing for {latest_date}")
-            st.stop()
+    # Iterate through dates to find the first valid briefing
+    found_valid_briefing = False
+    file_date = None
+    top10_list = []
+    
+    for date_str in briefing_dates:
+        try:
+            data = database.get_briefing(date_str)
+            if data and data.get('top10'):
+                top10_list = [item for item in data.get('top10', []) if item is not None]
+                if top10_list: # Ensure list is not empty
+                    file_date = date_str
+                    found_valid_briefing = True
+                    break
+        except Exception as e:
+            print(f"Error checking briefing for {date_str}: {e}")
+            continue
             
-        top10_list = [item for item in data.get('top10', []) if item is not None]
-        file_date = latest_date
+    if not found_valid_briefing:
+        st.info("尚無可用的每日簡報資料。請先點擊上方「📅 每日新聞」按鈕，再點擊「🚀 開始生成」來產生第一期簡報。")
+    else:
+        # Check if the displayed news is from today
+        today_str = datetime.now().strftime('%Y-%m-%d')
+        if file_date != today_str:
+            st.warning(f"⚠️ 尚未生成今日 ({today_str}) 的新聞，目前顯示 {file_date} 的內容。")
         
         # Display Date Header
         st.markdown(f"### {file_date} 重點新聞")
@@ -312,8 +327,7 @@ else:
         
         st.markdown("".join(html_cards), unsafe_allow_html=True)
             
-    except Exception as e:
-        st.error(f"Error loading briefing file: {e}")
+
 
 
 # ========== NEWS FEED SECTION ==========

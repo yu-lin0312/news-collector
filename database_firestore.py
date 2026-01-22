@@ -228,6 +228,29 @@ def get_briefing(date_str):
         print(f"Error retrieving briefing from Firestore: {e}")
         return None
 
+def update_news_image(url, image_url):
+    """Updates the image_url for a news item."""
+    db = get_db()
+    if not db: return False
+    
+    try:
+        # Find document by URL
+        docs = db.collection('news').where('url', '==', url).limit(1).stream()
+        
+        doc_ref = None
+        for doc in docs:
+            doc_ref = doc.reference
+            break
+            
+        if doc_ref:
+            doc_ref.update({'image_url': image_url})
+            # print(f"Updated image for {url}")
+            return True
+        return False
+    except Exception as e:
+        print(f"Error updating news image in Firestore: {e}")
+        return False
+
 def list_briefings():
     """Lists all available briefing dates (document IDs)."""
     db = get_db()

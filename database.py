@@ -176,8 +176,22 @@ if not USE_FIRESTORE:
             ''', (rundown, details, impact, url))
             conn.commit()
             return True
+        finally:
+            conn.close()
+
+    def update_news_image(url, image_url):
+        # Ensure DB exists
+        if not os.path.exists(DB_NAME):
+            init_db()
+            
+        conn = get_connection()
+        c = conn.cursor()
+        try:
+            c.execute("UPDATE news SET image_url = ? WHERE url = ?", (image_url, url))
+            conn.commit()
+            return True
         except Exception as e:
-            print(f"Error updating AI analysis: {e}")
+            print(f"Error updating news image: {e}")
             return False
         finally:
             conn.close()
@@ -243,6 +257,9 @@ else:
         
     def update_ai_analysis(url, rundown, details, impact):
         return backend.update_ai_analysis(url, rundown, details, impact)
+
+    def update_news_image(url, image_url):
+        return backend.update_news_image(url, image_url)
         
     def save_briefing(date_str, data_dict):
         return backend.save_briefing(date_str, data_dict)
