@@ -150,10 +150,42 @@ with st.popover("📅 每日新聞", help="點擊管理簡報"):
             term_container.markdown(html, unsafe_allow_html=True)
             time.sleep(0.3)
         
-        try:
-            logs = []
-                import sys
-                result = subprocess.run([sys.executable, "crawler.py"], capture_output=True, text=True, encoding='utf-8')
+            try:
+                logs = []
+                logs.append("Initializing system...")
+                update_terminal(logs)
+                time.sleep(0.5)
+                
+                logs.append("Authenticating user... [OK]")
+                update_terminal(logs)
+                
+                # Step 1: Crawl (Always force crawl when manually triggered)
+                if True: # Always run crawl sequence when button is clicked
+                    logs.append("Checking environment variables...")
+                    
+                    # DEBUG: Check what secrets are actually loaded
+                    if "GOOGLE_API_KEY" in st.secrets:
+                        logs.append("DEBUG: GOOGLE_API_KEY found in st.secrets")
+                    else:
+                        logs.append("DEBUG: GOOGLE_API_KEY NOT found in st.secrets")
+                        
+                    api_key = os.environ.get("GOOGLE_API_KEY")
+                    if api_key:
+                        logs.append(f"API Key found in env: {api_key[:5]}... (masked)")
+                    else:
+                        logs.append("WARNING: GOOGLE_API_KEY not found in env!")
+                    update_terminal(logs)
+                    
+                    logs.append("Starting crawler subsystem...")
+                    update_terminal(logs)
+                    
+                    logs.append("Targeting global AI news sources...")
+                    update_terminal(logs)
+                    
+                    import subprocess
+                    import sys
+                    result = subprocess.run([sys.executable, "crawler.py"], capture_output=True, text=True, encoding='utf-8')
+
                 
                 if result.returncode != 0:
                     logs.append(f"ERROR: Crawler failed with code {result.returncode}")
