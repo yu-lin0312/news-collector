@@ -170,9 +170,9 @@ with st.popover("📅 每日新聞", help="點擊管理簡報"):
                 logs.append("Checking environment variables...")
                 
                 # DEBUG: Check what secrets are actually loaded
-                    has_key = "GOOGLE_API_KEY" in st.secrets or ("general" in st.secrets and "GOOGLE_API_KEY" in st.secrets["general"])
-                    if has_key:
-                        logs.append("DEBUG: GOOGLE_API_KEY found in st.secrets")
+                has_key = "GOOGLE_API_KEY" in st.secrets or ("general" in st.secrets and "GOOGLE_API_KEY" in st.secrets["general"])
+                if has_key:
+                    logs.append("DEBUG: GOOGLE_API_KEY found in st.secrets")
                 else:
                     logs.append("DEBUG: GOOGLE_API_KEY NOT found in st.secrets")
                     
