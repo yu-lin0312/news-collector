@@ -14,28 +14,34 @@ def load_secrets_to_env():
     """
     Load secrets from streamlit.secrets into os.environ so that subprocesses
     (like crawler.py and deep_analyzer.py) can access them.
+    
+    Secrets can be at root level or under [general] section.
     """
+    # Helper to get secret from root or general section
+    def get_secret(key):
+        if key in st.secrets:
+            return st.secrets[key]
+        elif "general" in st.secrets and key in st.secrets["general"]:
+            return st.secrets["general"][key]
+        return None
+    
     # 1. GOOGLE_API_KEY
-    if "GOOGLE_API_KEY" in st.secrets:
-        os.environ["GOOGLE_API_KEY"] = st.secrets["GOOGLE_API_KEY"]
-        # print("Loaded GOOGLE_API_KEY from secrets") # Debug only
+    api_key = get_secret("GOOGLE_API_KEY")
+    if api_key:
+        os.environ["GOOGLE_API_KEY"] = api_key
 
     # 2. FIREBASE_CREDENTIALS
-    # Streamlit secrets might parse the JSON string into a dict automatically if it's in [general] or root
-    # or it might be a string if defined as FIREBASE_CREDENTIALS = "..."
-    if "FIREBASE_CREDENTIALS" in st.secrets:
-        creds = st.secrets["FIREBASE_CREDENTIALS"]
+    creds = get_secret("FIREBASE_CREDENTIALS")
+    if creds:
         if isinstance(creds, dict):
-            # If it's already a dict, dump it back to a JSON string for the env var
             os.environ["FIREBASE_CREDENTIALS"] = json.dumps(dict(creds))
         else:
-            # If it's a string, just set it
             os.environ["FIREBASE_CREDENTIALS"] = str(creds)
-        # print("Loaded FIREBASE_CREDENTIALS from secrets") # Debug only
 
     # 3. USE_FIRESTORE
-    if "USE_FIRESTORE" in st.secrets:
-        os.environ["USE_FIRESTORE"] = st.secrets["USE_FIRESTORE"]
+    use_firestore = get_secret("USE_FIRESTORE")
+    if use_firestore:
+        os.environ["USE_FIRESTORE"] = use_firestore
 
 load_secrets_to_env()
 
@@ -164,8 +170,9 @@ with st.popover("📅 每日新聞", help="點擊管理簡報"):
                 logs.append("Checking environment variables...")
                 
                 # DEBUG: Check what secrets are actually loaded
-                if "GOOGLE_API_KEY" in st.secrets:
-                    logs.append("DEBUG: GOOGLE_API_KEY found in st.secrets")
+                    has_key = "GOOGLE_API_KEY" in st.secrets or ("general" in st.secrets and "GOOGLE_API_KEY" in st.secrets["general"])
+                    if has_key:
+                        logs.append("DEBUG: GOOGLE_API_KEY found in st.secrets")
                 else:
                     logs.append("DEBUG: GOOGLE_API_KEY NOT found in st.secrets")
                     
