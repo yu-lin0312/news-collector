@@ -204,28 +204,27 @@ with st.popover("📅 每日新聞", help="點擊管理簡報"):
                     logs.append("Skipping crawler sequence. [SKIP]")
                     update_terminal(logs)
                 
-            # Step 2: Analyze & Generate
-            logs.append("Initializing AI Core (Deep Analyzer)...")
-            update_terminal(logs)
-            
-            import deep_analyzer
-            import importlib
-            importlib.reload(deep_analyzer)
-            
-            logs.append("AI Agent: Analyzing content relevance...")
-            update_terminal(logs)
-            
-            deep_analyzer.generate_deep_top10()
-            
-            logs.append("Generating briefing artifacts...")
-            update_terminal(logs)
-            
-            logs.append("Sequence complete. System ready.")
-            update_terminal(logs, show_cursor=False)
-            
-            time.sleep(1)
-            st.rerun()
+                # Step 2: Analyze & Generate
+                logs.append("Initializing AI Core (Deep Analyzer)...")
+                update_terminal(logs)
                 
+                import deep_analyzer
+                import importlib
+                importlib.reload(deep_analyzer)
+                
+                logs.append("AI Agent: Analyzing content relevance...")
+                update_terminal(logs)
+                
+                deep_analyzer.generate_deep_top10()
+                
+                logs.append("Generating briefing artifacts...")
+                update_terminal(logs)
+                
+                logs.append("Sequence complete. System ready.")
+                update_terminal(logs, show_cursor=False)
+                
+                time.sleep(1)
+                st.rerun()
         except Exception as e:
             logs.append(f"CRITICAL ERROR: {str(e)}")
             update_terminal(logs, show_cursor=False)
