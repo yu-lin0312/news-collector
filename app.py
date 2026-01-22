@@ -56,9 +56,6 @@ briefing_dates = database.list_briefings()
 # # Exclude cache files
 # briefing_files = [f for f in briefing_files if 'cache' not in f]
 
-if not briefing_dates:
-    st.info("尚無每日簡報資料。請先點擊「更新新聞」來產生第一期簡報。")
-else:
     # Check if today's briefing exists
     today_str = datetime.now().strftime('%Y-%m-%d')
     today_file = f"top10_{today_str}.json"
@@ -188,6 +185,10 @@ else:
                 logs.append(f"CRITICAL ERROR: {str(e)}")
                 update_terminal(logs, show_cursor=False)
                 st.error(f"發生錯誤: {e}")
+    
+    if not briefing_dates:
+        st.info("尚無每日簡報資料。請先點擊上方「📅 每日新聞」按鈕，再點擊「🚀 開始生成」來產生第一期簡報。")
+    else:
     
     # Load the latest briefing file by default
     latest_date = briefing_dates[0]
