@@ -478,7 +478,19 @@ def generate_deep_top10(target_date=None):
     candidates = []
     for item in all_news:
         try:
-            pub_date = datetime.strptime(item['published_at'], '%Y-%m-%d')
+            pub_date_str = item['published_at']
+            try:
+                # Try YYYY-MM-DD
+                pub_date = datetime.strptime(pub_date_str, '%Y-%m-%d')
+            except ValueError:
+                # Try ISO format
+                if 'T' in pub_date_str:
+                    pub_date = datetime.fromisoformat(pub_date_str)
+                    if pub_date.tzinfo is not None:
+                        pub_date = pub_date.replace(tzinfo=None)
+                else:
+                    continue
+            
             # print(f"DEBUG: Checking {item['published_at']} vs {limit_date} - {target_date_naive}")
             if limit_date <= pub_date <= target_date_naive:
                 candidates.append(item)
