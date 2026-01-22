@@ -1,0 +1,2297 @@
+<!DOCTYPE html><html lang="en"><head>
+
+  <!-- Google tag (gtag.js) -->
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-91QZ8WWZHP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-91QZ8WWZHP');
+  </script>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>HackingAI.app</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&amp;display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/static/css/hai.css">
+
+</head>
+
+<body>
+
+  <!-- 
+  <div style="color:red">
+    DEBUG search_value = "Search"
+  </div>
+
+  <div style="background:red;color:white;padding:10px;">
+    TEMPLATE = main.html
+    search_value = "Search"
+  </div> -->
+
+  <h1 class="site-title">
+    hacking <span>artificial intelligence</span>
+  </h1>
+  <p class="site-subtitle">
+    A live index of AI conversations, links, and media across Reddit
+  </p>
+
+  <!-- 
+  <div class="fixed-top ms-2" style="background:#1c1c1c;">
+    <a href="https://hackingai.app" class="navbar-brand" id="logo;"><img src="/static/laptop.svg" alt="logo"></a>
+  </div> -->
+
+  <div class="signal-bar mb-3"></div>
+
+  <nav class="sticky-top mt-2 site-nav">
+    <div class="container-fluid">
+
+      <!-- row 1: buttons -->
+      <div class="d-flex gap-2 mb-2">
+        <a class="btn btn-outline-light btn-sm" href="/">Show All</a>
+        <a class="btn btn-outline-light btn-sm" href="/random">Random</a>
+      </div>
+
+      <!-- row 2: search + meta -->
+      <div class="search-stack">
+        <form method="get" action="/search" class="search-form mb-3">
+          <input name="q" value="Search" placeholder="Search" onfocus="this.value='';" style="max-width:200px;">
+          <button class="btn btn-primary">Search</button>
+        </form>
+
+        <div class="search-meta small">
+          Posts: 1,049,495 •
+          Contact:
+          <a href="mailto:info@precptress.ai" class="text-decoration-none contact-email">
+            info@precptress.ai
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </nav>
+
+  <!-- <div class="hero-divider"></div> -->
+
+  <!-- ================= LAYOUT ================= -->
+  <div class="container-fluid mt-3">
+    <div class="row">
+
+      <!-- ===== SIDEBAR ===== -->
+      <aside class="col-12 col-md-3 col-lg-2 sidebar mt-2">
+        
+        <div class="sidebar-item" style="--sb-color:var(--artificial);">
+          <div class="sidebar-color" style="background:var(--artificial);"></div>
+          <!-- <div>
+            <a class="sidebar-link" href="/subreddit/artificial">artificial</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/artificial/new">▶ TO SUBREDDIT</a>
+          </div> -->
+          <div>
+            <a class="sidebar-link" href="/subreddit/artificial">artificial</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/artificial/new">▶ TO SUBREDDIT</a>
+          </div>
+        </div>
+        
+        <div class="sidebar-item" style="--sb-color:var(--Artificialinteligence);">
+          <div class="sidebar-color" style="background:var(--Artificialinteligence);"></div>
+          <!-- <div>
+            <a class="sidebar-link" href="/subreddit/Artificialinteligence">Artificialinteligence</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/Artificialinteligence/new">▶ TO SUBREDDIT</a>
+          </div> -->
+          <div>
+            <a class="sidebar-link" href="/subreddit/Artificialinteligence">Artificialinteligence</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/Artificialinteligence/new">▶ TO SUBREDDIT</a>
+          </div>
+        </div>
+        
+        <div class="sidebar-item" style="--sb-color:var(--ChatGPT);">
+          <div class="sidebar-color" style="background:var(--ChatGPT);"></div>
+          <!-- <div>
+            <a class="sidebar-link" href="/subreddit/ChatGPT">ChatGPT</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/ChatGPT/new">▶ TO SUBREDDIT</a>
+          </div> -->
+          <div>
+            <a class="sidebar-link" href="/subreddit/ChatGPT">ChatGPT</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/ChatGPT/new">▶ TO SUBREDDIT</a>
+          </div>
+        </div>
+        
+        <div class="sidebar-item" style="--sb-color:var(--computervision);">
+          <div class="sidebar-color" style="background:var(--computervision);"></div>
+          <!-- <div>
+            <a class="sidebar-link" href="/subreddit/computervision">computervision</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/computervision/new">▶ TO SUBREDDIT</a>
+          </div> -->
+          <div>
+            <a class="sidebar-link" href="/subreddit/computervision">computervision</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/computervision/new">▶ TO SUBREDDIT</a>
+          </div>
+        </div>
+        
+        <div class="sidebar-item" style="--sb-color:var(--dalle2);">
+          <div class="sidebar-color" style="background:var(--dalle2);"></div>
+          <!-- <div>
+            <a class="sidebar-link" href="/subreddit/dalle2">dalle2</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/dalle2/new">▶ TO SUBREDDIT</a>
+          </div> -->
+          <div>
+            <a class="sidebar-link" href="/subreddit/dalle2">dalle2</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/dalle2/new">▶ TO SUBREDDIT</a>
+          </div>
+        </div>
+        
+        <div class="sidebar-item" style="--sb-color:var(--dataisbeautiful);">
+          <div class="sidebar-color" style="background:var(--dataisbeautiful);"></div>
+          <!-- <div>
+            <a class="sidebar-link" href="/subreddit/dataisbeautiful">dataisbeautiful</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/dataisbeautiful/new">▶ TO SUBREDDIT</a>
+          </div> -->
+          <div>
+            <a class="sidebar-link" href="/subreddit/dataisbeautiful">dataisbeautiful</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/dataisbeautiful/new">▶ TO SUBREDDIT</a>
+          </div>
+        </div>
+        
+        <div class="sidebar-item" style="--sb-color:var(--datascience);">
+          <div class="sidebar-color" style="background:var(--datascience);"></div>
+          <!-- <div>
+            <a class="sidebar-link" href="/subreddit/datascience">datascience</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/datascience/new">▶ TO SUBREDDIT</a>
+          </div> -->
+          <div>
+            <a class="sidebar-link" href="/subreddit/datascience">datascience</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/datascience/new">▶ TO SUBREDDIT</a>
+          </div>
+        </div>
+        
+        <div class="sidebar-item" style="--sb-color:var(--datasets);">
+          <div class="sidebar-color" style="background:var(--datasets);"></div>
+          <!-- <div>
+            <a class="sidebar-link" href="/subreddit/datasets">datasets</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/datasets/new">▶ TO SUBREDDIT</a>
+          </div> -->
+          <div>
+            <a class="sidebar-link" href="/subreddit/datasets">datasets</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/datasets/new">▶ TO SUBREDDIT</a>
+          </div>
+        </div>
+        
+        <div class="sidebar-item" style="--sb-color:var(--DataVizRequests);">
+          <div class="sidebar-color" style="background:var(--DataVizRequests);"></div>
+          <!-- <div>
+            <a class="sidebar-link" href="/subreddit/DataVizRequests">DataVizRequests</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/DataVizRequests/new">▶ TO SUBREDDIT</a>
+          </div> -->
+          <div>
+            <a class="sidebar-link" href="/subreddit/DataVizRequests">DataVizRequests</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/DataVizRequests/new">▶ TO SUBREDDIT</a>
+          </div>
+        </div>
+        
+        <div class="sidebar-item" style="--sb-color:var(--deepdream);">
+          <div class="sidebar-color" style="background:var(--deepdream);"></div>
+          <!-- <div>
+            <a class="sidebar-link" href="/subreddit/deepdream">deepdream</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/deepdream/new">▶ TO SUBREDDIT</a>
+          </div> -->
+          <div>
+            <a class="sidebar-link" href="/subreddit/deepdream">deepdream</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/deepdream/new">▶ TO SUBREDDIT</a>
+          </div>
+        </div>
+        
+        <div class="sidebar-item" style="--sb-color:var(--Futurology);">
+          <div class="sidebar-color" style="background:var(--Futurology);"></div>
+          <!-- <div>
+            <a class="sidebar-link" href="/subreddit/Futurology">Futurology</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/Futurology/new">▶ TO SUBREDDIT</a>
+          </div> -->
+          <div>
+            <a class="sidebar-link" href="/subreddit/Futurology">Futurology</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/Futurology/new">▶ TO SUBREDDIT</a>
+          </div>
+        </div>
+        
+        <div class="sidebar-item" style="--sb-color:var(--GameAI);">
+          <div class="sidebar-color" style="background:var(--GameAI);"></div>
+          <!-- <div>
+            <a class="sidebar-link" href="/subreddit/GameAI">GameAI</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/GameAI/new">▶ TO SUBREDDIT</a>
+          </div> -->
+          <div>
+            <a class="sidebar-link" href="/subreddit/GameAI">GameAI</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/GameAI/new">▶ TO SUBREDDIT</a>
+          </div>
+        </div>
+        
+        <div class="sidebar-item" style="--sb-color:var(--HealthAI);">
+          <div class="sidebar-color" style="background:var(--HealthAI);"></div>
+          <!-- <div>
+            <a class="sidebar-link" href="/subreddit/HealthAI">HealthAI</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/HealthAI/new">▶ TO SUBREDDIT</a>
+          </div> -->
+          <div>
+            <a class="sidebar-link" href="/subreddit/HealthAI">HealthAI</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/HealthAI/new">▶ TO SUBREDDIT</a>
+          </div>
+        </div>
+        
+        <div class="sidebar-item" style="--sb-color:var(--LanguageTechnology);">
+          <div class="sidebar-color" style="background:var(--LanguageTechnology);"></div>
+          <!-- <div>
+            <a class="sidebar-link" href="/subreddit/LanguageTechnology">LanguageTechnology</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/LanguageTechnology/new">▶ TO SUBREDDIT</a>
+          </div> -->
+          <div>
+            <a class="sidebar-link" href="/subreddit/LanguageTechnology">LanguageTechnology</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/LanguageTechnology/new">▶ TO SUBREDDIT</a>
+          </div>
+        </div>
+        
+        <div class="sidebar-item" style="--sb-color:var(--learnmachinelearning);">
+          <div class="sidebar-color" style="background:var(--learnmachinelearning);"></div>
+          <!-- <div>
+            <a class="sidebar-link" href="/subreddit/learnmachinelearning">learnmachinelearning</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/learnmachinelearning/new">▶ TO SUBREDDIT</a>
+          </div> -->
+          <div>
+            <a class="sidebar-link" href="/subreddit/learnmachinelearning">learnmachinelearning</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/learnmachinelearning/new">▶ TO SUBREDDIT</a>
+          </div>
+        </div>
+        
+        <div class="sidebar-item" style="--sb-color:var(--Mathematics);">
+          <div class="sidebar-color" style="background:var(--Mathematics);"></div>
+          <!-- <div>
+            <a class="sidebar-link" href="/subreddit/Mathematics">Mathematics</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/Mathematics/new">▶ TO SUBREDDIT</a>
+          </div> -->
+          <div>
+            <a class="sidebar-link" href="/subreddit/Mathematics">Mathematics</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/Mathematics/new">▶ TO SUBREDDIT</a>
+          </div>
+        </div>
+        
+        <div class="sidebar-item" style="--sb-color:var(--MLQuestions);">
+          <div class="sidebar-color" style="background:var(--MLQuestions);"></div>
+          <!-- <div>
+            <a class="sidebar-link" href="/subreddit/MLQuestions">MLQuestions</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/MLQuestions/new">▶ TO SUBREDDIT</a>
+          </div> -->
+          <div>
+            <a class="sidebar-link" href="/subreddit/MLQuestions">MLQuestions</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/MLQuestions/new">▶ TO SUBREDDIT</a>
+          </div>
+        </div>
+        
+        <div class="sidebar-item" style="--sb-color:var(--midjourney);">
+          <div class="sidebar-color" style="background:var(--midjourney);"></div>
+          <!-- <div>
+            <a class="sidebar-link" href="/subreddit/midjourney">midjourney</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/midjourney/new">▶ TO SUBREDDIT</a>
+          </div> -->
+          <div>
+            <a class="sidebar-link" href="/subreddit/midjourney">midjourney</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/midjourney/new">▶ TO SUBREDDIT</a>
+          </div>
+        </div>
+        
+        <div class="sidebar-item" style="--sb-color:var(--neuralnetworks);">
+          <div class="sidebar-color" style="background:var(--neuralnetworks);"></div>
+          <!-- <div>
+            <a class="sidebar-link" href="/subreddit/neuralnetworks">neuralnetworks</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/neuralnetworks/new">▶ TO SUBREDDIT</a>
+          </div> -->
+          <div>
+            <a class="sidebar-link" href="/subreddit/neuralnetworks">neuralnetworks</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/neuralnetworks/new">▶ TO SUBREDDIT</a>
+          </div>
+        </div>
+        
+        <div class="sidebar-item" style="--sb-color:var(--OpenAI);">
+          <div class="sidebar-color" style="background:var(--OpenAI);"></div>
+          <!-- <div>
+            <a class="sidebar-link" href="/subreddit/OpenAI">OpenAI</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/OpenAI/new">▶ TO SUBREDDIT</a>
+          </div> -->
+          <div>
+            <a class="sidebar-link" href="/subreddit/OpenAI">OpenAI</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/OpenAI/new">▶ TO SUBREDDIT</a>
+          </div>
+        </div>
+        
+        <div class="sidebar-item" style="--sb-color:var(--robotics);">
+          <div class="sidebar-color" style="background:var(--robotics);"></div>
+          <!-- <div>
+            <a class="sidebar-link" href="/subreddit/robotics">robotics</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/robotics/new">▶ TO SUBREDDIT</a>
+          </div> -->
+          <div>
+            <a class="sidebar-link" href="/subreddit/robotics">robotics</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/robotics/new">▶ TO SUBREDDIT</a>
+          </div>
+        </div>
+        
+        <div class="sidebar-item" style="--sb-color:var(--singularity);">
+          <div class="sidebar-color" style="background:var(--singularity);"></div>
+          <!-- <div>
+            <a class="sidebar-link" href="/subreddit/singularity">singularity</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/singularity/new">▶ TO SUBREDDIT</a>
+          </div> -->
+          <div>
+            <a class="sidebar-link" href="/subreddit/singularity">singularity</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/singularity/new">▶ TO SUBREDDIT</a>
+          </div>
+        </div>
+        
+        <div class="sidebar-item" style="--sb-color:var(--statistics);">
+          <div class="sidebar-color" style="background:var(--statistics);"></div>
+          <!-- <div>
+            <a class="sidebar-link" href="/subreddit/statistics">statistics</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/statistics/new">▶ TO SUBREDDIT</a>
+          </div> -->
+          <div>
+            <a class="sidebar-link" href="/subreddit/statistics">statistics</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/statistics/new">▶ TO SUBREDDIT</a>
+          </div>
+        </div>
+        
+        <div class="sidebar-item" style="--sb-color:var(--Technology);">
+          <div class="sidebar-color" style="background:var(--Technology);"></div>
+          <!-- <div>
+            <a class="sidebar-link" href="/subreddit/Technology">Technology</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/Technology/new">▶ TO SUBREDDIT</a>
+          </div> -->
+          <div>
+            <a class="sidebar-link" href="/subreddit/Technology">Technology</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/Technology/new">▶ TO SUBREDDIT</a>
+          </div>
+        </div>
+        
+        <div class="sidebar-item" style="--sb-color:var(--visualization);">
+          <div class="sidebar-color" style="background:var(--visualization);"></div>
+          <!-- <div>
+            <a class="sidebar-link" href="/subreddit/visualization">visualization</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/visualization/new">▶ TO SUBREDDIT</a>
+          </div> -->
+          <div>
+            <a class="sidebar-link" href="/subreddit/visualization">visualization</a><br>
+            <a class="tiny-link" href="https://www.reddit.com/r/visualization/new">▶ TO SUBREDDIT</a>
+          </div>
+        </div>
+        
+      </aside>
+
+      <!-- ===== CONTENT ===== -->
+      <main class="col-12 col-md-9 col-lg-10 mt-2">
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--robotics);">
+            1. robotics
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/robotics/comments/1qjj2em/will_there_be_a_need_for_those_with_a_cs/">
+            Will there be a need for those with a CS background in robotics companies in the future?
+          </a>
+
+          <div class="meta">
+            2026-01-21 22:07:41 EST ·
+            <a class="source-link" href="https://www.reddit.com/r/robotics/comments/1qjj2em/will_there_be_a_need_for_those_with_a_cs/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/r/robotics/comments/1qjj2em/will_there_be_a_need_for_those_with_a_cs/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--ChatGPT);">
+            2. ChatGPT
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/ChatGPT/comments/1qjiwd4/what_have_i_created/">
+            What have I created?
+          </a>
+
+          <div class="meta">
+            2026-01-21 22:00:13 EST ·
+            <a class="source-link" href="https://i.redd.it/xxj75fpbgteg1.jpeg" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://i.redd.it/xxj75fpbgteg1.jpeg&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--StableDiffusion);">
+            3. StableDiffusion
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/StableDiffusion/comments/1qjiw8s/ostris_aitoolkit_lora_training_confusion/">
+            ostris AI-toolkit Lora training confusion
+          </a>
+
+          <div class="meta">
+            2026-01-21 22:00:03 EST ·
+            <a class="source-link" href="https://www.reddit.com/r/StableDiffusion/comments/1qjiw8s/ostris_aitoolkit_lora_training_confusion/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/r/StableDiffusion/comments/1qjiw8s/ostris_aitoolkit_lora_training_confusion/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--ChatGPT);">
+            4. ChatGPT
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/ChatGPT/comments/1qjiv93/generate_an_image_of_what_you_think_i_do_for_work/">
+            Generate an image of what you think I do for work
+          </a>
+
+          <div class="meta">
+            2026-01-21 21:58:54 EST ·
+            <a class="source-link" href="https://i.redd.it/ztiu5e93gteg1.jpeg" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://i.redd.it/ztiu5e93gteg1.jpeg&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--robotics);">
+            5. robotics
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/robotics/comments/1qjiv48/followup_survey_what_would_you_pay_for_a_home/">
+            Follow-up Survey: What Would You Pay for a Home Robotic Arm? (Based on our previous fun discussion!)
+          </a>
+
+          <div class="meta">
+            2026-01-21 21:58:43 EST ·
+            <a class="source-link" href="https://www.reddit.com/r/robotics/comments/1qiuxi9/help_with_a_survey_if_you_had_a_smart_robotic_arm/?share_id=S9S3HfuF6MFxtWU7cmBpK&amp;utm_content=1&amp;utm_medium=ios_app&amp;utm_name=ioscss&amp;utm_source=share&amp;utm_term=1" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/r/robotics/comments/1qiuxi9/help_with_a_survey_if_you_had_a_smart_robotic_arm/?share_id=S9S3HfuF6MFxtWU7cmBpK&amp;utm_content=1&amp;utm_medium=ios_app&amp;utm_name=ioscss&amp;utm_source=share&amp;utm_term=1&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--midjourney);">
+            6. midjourney
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/midjourney/comments/1qjiu9u/doesnt_surprise_me_at_all_way_too_predictable_ez/">
+            Doesn't surprise me at all, way too predictable. EZ GG
+          </a>
+
+          <div class="meta">
+            2026-01-21 21:57:39 EST ·
+            <a class="source-link" href="https://i.redd.it/h69mjiapfteg1.jpeg" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://i.redd.it/h69mjiapfteg1.jpeg&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--Artificialinteligence);">
+            7. Artificialinteligence
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/ArtificialInteligence/comments/1qjit55/ai_based_productivity_hack_you_have_adopted/">
+            (ai based) productivity hack you have adopted?
+          </a>
+
+          <div class="meta">
+            2026-01-21 21:56:15 EST ·
+            <a class="source-link" href="https://www.reddit.com/r/ArtificialInteligence/comments/1qjit55/ai_based_productivity_hack_you_have_adopted/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/r/ArtificialInteligence/comments/1qjit55/ai_based_productivity_hack_you_have_adopted/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--visualization);">
+            8. visualization
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/visualization/comments/1qjipcd/i_built_a_raw_webgl_liquid_glass_physics_engine/">
+            I built a raw WebGL "Liquid Glass" physics engine inside AI Studio (No Three.js) – Looking for feedback!
+          </a>
+
+          <div class="meta">
+            2026-01-21 21:51:31 EST ·
+            <a class="source-link" href="https://ai.studio/apps/drive/12xfgA4MUuE1kTW63GrrHNalBFoHf8a_p" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://ai.studio/apps/drive/12xfgA4MUuE1kTW63GrrHNalBFoHf8a_p&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--datasets);">
+            9. datasets
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/datasets/comments/1qjiok5/i_finetuned_llama_32_1b_brazilian_address_parser/">
+            I fine-tuned LLaMA 3.2 1B Brazilian Address Parser — looking for honest feedback
+          </a>
+
+          <div class="meta">
+            2026-01-21 21:50:32 EST ·
+            <a class="source-link" href="https://www.reddit.com/r/datasets/comments/1qjiok5/i_finetuned_llama_32_1b_brazilian_address_parser/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/r/datasets/comments/1qjiok5/i_finetuned_llama_32_1b_brazilian_address_parser/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--ChatGPT);">
+            10. ChatGPT
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/ChatGPT/comments/1qjinlg/asked_chat_to_depict_my_career_as_it_see_me_i/">
+            Asked Chat to depict my career as it see me. I work in end of life care for companion animals and I defend my business diligently.
+          </a>
+
+          <div class="meta">
+            2026-01-21 21:49:17 EST ·
+            <a class="source-link" href="https://i.redd.it/4efo1ijdeteg1.jpeg" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://i.redd.it/4efo1ijdeteg1.jpeg&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--Technology);">
+            11. Technology
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/technology/comments/1qjinee/eu_launches_gcve_to_track_vulnerabilities_without/">
+            EU Launches GCVE to Track Vulnerabilities Without Relying on US
+          </a>
+
+          <div class="meta">
+            2026-01-21 21:49:03 EST ·
+            <a class="source-link" href="https://gcve.eu/2026/01/07/gcve-db-announce/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://gcve.eu/2026/01/07/gcve-db-announce/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--statistics);">
+            12. statistics
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/statistics/comments/1qjin4l/conformal_prediction_with_precomputed_forecasts/">
+            Conformal Prediction With Precomputed Forecasts [Question]
+          </a>
+
+          <div class="meta">
+            2026-01-21 21:48:43 EST ·
+            <a class="source-link" href="https://www.reddit.com/r/statistics/comments/1qjin4l/conformal_prediction_with_precomputed_forecasts/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/r/statistics/comments/1qjin4l/conformal_prediction_with_precomputed_forecasts/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--ChatGPT);">
+            13. ChatGPT
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/ChatGPT/comments/1qjimuc/whats_up_with_the_200mo_plus_plan_couldnt_find/">
+            What's up with the $200/mo Plus plan??? Couldn't find anything about it on the plans page, but under plans on my login this showed up
+          </a>
+
+          <div class="meta">
+            2026-01-21 21:48:21 EST ·
+            <a class="source-link" href="https://i.redd.it/h3sb6zc7eteg1.jpeg" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://i.redd.it/h3sb6zc7eteg1.jpeg&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--dataisbeautiful);">
+            14. dataisbeautiful
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/dataisbeautiful/comments/1qjiht9/data_dumpor_dump_data_oc/">
+            Data Dump?...or Dump Data [OC]
+          </a>
+
+          <div class="meta">
+            2026-01-21 21:41:57 EST ·
+            <a class="source-link" href="https://i.redd.it/svq9uchycteg1.png" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://i.redd.it/svq9uchycteg1.png&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--Technology);">
+            15. Technology
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/technology/comments/1qjih92/ubisoft_ends_remote_work_and_requires_employees/">
+            Ubisoft ends remote work and requires employees to return to the office five days a week to "improve efficiency"
+          </a>
+
+          <div class="meta">
+            2026-01-21 21:41:15 EST ·
+            <a class="source-link" href="https://www.notebookcheck.net/Ubisoft-ends-remote-work-and-requires-employees-to-return-to-the-office-five-days-a-week-to-improve-efficiency.1209750.0.html" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.notebookcheck.net/Ubisoft-ends-remote-work-and-requires-employees-to-return-to-the-office-five-days-a-week-to-improve-efficiency.1209750.0.html&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--singularity);">
+            16. singularity
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/singularity/comments/1qjif3p/the_most_important_chart_in_ai/">
+            The most important chart in AI...
+          </a>
+
+          <div class="meta">
+            2026-01-21 21:38:36 EST ·
+            <a class="source-link" href="https://www.reddit.com/r/singularity/comments/1qjif3p/the_most_important_chart_in_ai/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/r/singularity/comments/1qjif3p/the_most_important_chart_in_ai/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--midjourney);">
+            17. midjourney
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/midjourney/comments/1qjie9v/guess_its_about_time_to_make_this_fun_again/">
+            Guess it's about time to make this fun again
+          </a>
+
+          <div class="meta">
+            2026-01-21 21:37:35 EST ·
+            <a class="source-link" href="https://i.redd.it/w1johigkbteg1.jpeg" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://i.redd.it/w1johigkbteg1.jpeg&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--Technology);">
+            18. Technology
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/technology/comments/1qjiao7/how_ai_destroys_institutions/">
+            How AI Destroys Institutions
+          </a>
+
+          <div class="meta">
+            2026-01-21 21:33:01 EST ·
+            <a class="source-link" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5870623" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5870623&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--computervision);">
+            19. computervision
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/computervision/comments/1qji79f/sam3_playground_vs_local_results/">
+            SAM3 Playground vs. Local Results
+          </a>
+
+          <div class="meta">
+            2026-01-21 21:29:00 EST ·
+            <a class="source-link" href="https://www.reddit.com/r/computervision/comments/1qji79f/sam3_playground_vs_local_results/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/r/computervision/comments/1qji79f/sam3_playground_vs_local_results/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--Technology);">
+            20. Technology
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/technology/comments/1qji6cy/job_applicants_sue_to_open_black_box_of_ai_hiring/">
+            Job Applicants Sue to Open ‘Black Box’ of A.I. Hiring Decisions
+          </a>
+
+          <div class="meta">
+            2026-01-21 21:27:51 EST ·
+            <a class="source-link" href="https://www.nytimes.com/2026/01/21/business/ai-hiring-tools-lawsuit-eightfold-fcra.html?unlocked_article_code=1.GFA.9XQK.n_nH_2Z3omQR" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.nytimes.com/2026/01/21/business/ai-hiring-tools-lawsuit-eightfold-fcra.html?unlocked_article_code=1.GFA.9XQK.n_nH_2Z3omQR&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--ChatGPT);">
+            21. ChatGPT
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/ChatGPT/comments/1qji4t7/thats_interesting/">
+            That's interesting...
+          </a>
+
+          <div class="meta">
+            2026-01-21 21:26:03 EST ·
+            <a class="source-link" href="https://i.redd.it/5b9swqa8ateg1.jpeg" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://i.redd.it/5b9swqa8ateg1.jpeg&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--StableDiffusion);">
+            22. StableDiffusion
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/StableDiffusion/comments/1qji49a/ltx2_lipsync_using_audioin_with_fix_for_frozen/">
+            LTX-2 Lipsync using Audio-in (with fix for frozen frames)
+          </a>
+
+          <div class="meta">
+            2026-01-21 21:25:23 EST ·
+            <a class="source-link" href="https://www.youtube.com/watch?v=HjXwE5xHsV8" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.youtube.com/watch?v=HjXwE5xHsV8&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--ChatGPT);">
+            23. ChatGPT
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/ChatGPT/comments/1qji44i/51_suddenly_chills_with_18/">
+            5.1 suddenly chills with 18+
+          </a>
+
+          <div class="meta">
+            2026-01-21 21:25:14 EST ·
+            <a class="source-link" href="https://www.reddit.com/r/ChatGPT/comments/1qji44i/51_suddenly_chills_with_18/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/r/ChatGPT/comments/1qji44i/51_suddenly_chills_with_18/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--deepdream);">
+            24. deepdream
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/deepdream/comments/1qji38z/future_ai_influencers_2/">
+            Future Ai Influencers #2
+          </a>
+
+          <div class="meta">
+            2026-01-21 21:24:10 EST ·
+            <a class="source-link" href="https://www.reddit.com/gallery/1qjh4tz" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/gallery/1qjh4tz&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--OpenAI);">
+            25. OpenAI
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/OpenAI/comments/1qji2ni/ask_chatgpt_what_it_thinks_you_look_like/">
+            Ask ChatGPT what it thinks you look like, including any pets you have!
+          </a>
+
+          <div class="meta">
+            2026-01-21 21:23:25 EST ·
+            <a class="source-link" href="https://i.redd.it/zbicn2er9teg1.jpeg" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://i.redd.it/zbicn2er9teg1.jpeg&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--OpenAI);">
+            26. OpenAI
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/OpenAI/comments/1qji1tk/found_a_resource_to_learn_prompt_injection/">
+            Found a resource to learn prompt injection
+          </a>
+
+          <div class="meta">
+            2026-01-21 21:22:22 EST ·
+            <a class="source-link" href="https://www.reddit.com/gallery/1qji1tk" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/gallery/1qji1tk&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--Technology);">
+            27. Technology
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/technology/comments/1qjhxpo/not_to_be_outdone_by_openai_apple_is_reportedly/">
+            Not to be outdone by OpenAI, Apple is reportedly developing an AI wearable | TechCrunch
+          </a>
+
+          <div class="meta">
+            2026-01-21 21:17:18 EST ·
+            <a class="source-link" href="https://techcrunch.com/2026/01/21/not-to-be-outdone-by-openai-apple-is-reportedly-developing-an-ai-wearable/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://techcrunch.com/2026/01/21/not-to-be-outdone-by-openai-apple-is-reportedly-developing-an-ai-wearable/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--StableDiffusion);">
+            28. StableDiffusion
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/StableDiffusion/comments/1qjhx2e/need_recommendations/">
+            Need Recommendations
+          </a>
+
+          <div class="meta">
+            2026-01-21 21:16:29 EST ·
+            <a class="source-link" href="https://www.reddit.com/r/StableDiffusion/comments/1qjhx2e/need_recommendations/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/r/StableDiffusion/comments/1qjhx2e/need_recommendations/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--StableDiffusion);">
+            29. StableDiffusion
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/StableDiffusion/comments/1qjhx11/i_love_the_zimage_turbo_generator_tool_because_it/">
+            I love the Z-Image Turbo Generator tool because it helps me create better style‑influencer images.
+          </a>
+
+          <div class="meta">
+            2026-01-21 21:16:27 EST ·
+            <a class="source-link" href="https://www.reddit.com/r/StableDiffusion/comments/1qjhx11/i_love_the_zimage_turbo_generator_tool_because_it/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/r/StableDiffusion/comments/1qjhx11/i_love_the_zimage_turbo_generator_tool_because_it/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--Technology);">
+            30. Technology
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/technology/comments/1qjhuvs/internet_voting_is_insecure_and_should_not_be/">
+            Internet voting is insecure and should not be used in public elections
+          </a>
+
+          <div class="meta">
+            2026-01-21 21:13:49 EST ·
+            <a class="source-link" href="https://blog.citp.princeton.edu/2026/01/16/internet-voting-is-insecure-and-should-not-be-used-in-public-elections/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://blog.citp.princeton.edu/2026/01/16/internet-voting-is-insecure-and-should-not-be-used-in-public-elections/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--StableDiffusion);">
+            31. StableDiffusion
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/StableDiffusion/comments/1qjhtz4/do_you_think_bfl_lobotomized_klein_anatomy/">
+            Do you think BFL lobotomized Klein anatomy understanding on purpose like stability did to SD3?
+          </a>
+
+          <div class="meta">
+            2026-01-21 21:12:44 EST ·
+            <a class="source-link" href="https://i.redd.it/hflx9gfm7teg1.png" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://i.redd.it/hflx9gfm7teg1.png&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--Technology);">
+            32. Technology
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/technology/comments/1qjhrrt/threads_rolls_out_ads_to_all_users_worldwide/">
+            Threads rolls out ads to all users worldwide | TechCrunch
+          </a>
+
+          <div class="meta">
+            2026-01-21 21:10:04 EST ·
+            <a class="source-link" href="https://techcrunch.com/2026/01/21/threads-rolls-out-ads-to-all-users-worldwide/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://techcrunch.com/2026/01/21/threads-rolls-out-ads-to-all-users-worldwide/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--Technology);">
+            33. Technology
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/technology/comments/1qjhopz/openais_internal_documents_predict_14_billion/">
+            OpenAI's internal documents predict $14 billion loss in 2026 according to report
+          </a>
+
+          <div class="meta">
+            2026-01-21 21:06:26 EST ·
+            <a class="source-link" href="https://www.pcgamer.com/software/ai/openais-internal-documents-predict-usd14-billion-loss-in-2026-according-to-report/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.pcgamer.com/software/ai/openais-internal-documents-predict-usd14-billion-loss-in-2026-according-to-report/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--learnmachinelearning);">
+            34. learnmachinelearning
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/learnmachinelearning/comments/1qjhocc/indigorl_pokemon_yellow_deep_reinforcement/">
+            indigoRL - Pokemon Yellow Deep Reinforcement Learning
+          </a>
+
+          <div class="meta">
+            2026-01-21 21:05:59 EST ·
+            <a class="source-link" href="https://i.redd.it/o5fx99lb6teg1.gif" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://i.redd.it/o5fx99lb6teg1.gif&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--midjourney);">
+            35. midjourney
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/midjourney/comments/1qjhm8y/most_used_generative_ai_tools/">
+            Most used generative AI tools?
+          </a>
+
+          <div class="meta">
+            2026-01-21 21:03:24 EST ·
+            <a class="source-link" href="https://www.reddit.com/r/midjourney/comments/1qjhm8y/most_used_generative_ai_tools/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/r/midjourney/comments/1qjhm8y/most_used_generative_ai_tools/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--Technology);">
+            36. Technology
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/technology/comments/1qjhktt/our_video_tests_prove_generative_ai_still_sucks/">
+            Our video tests prove generative AI still sucks at dancing. See for yourself— Dancers say their craft can’t be duplicated by AI. Our tests show they’re right — for now.
+          </a>
+
+          <div class="meta">
+            2026-01-21 21:01:37 EST ·
+            <a class="source-link" href="https://themarkup.org/artificial-intelligence/2026/01/21/our-video-tests-prove-generative-ai-still-sucks-at-dancing-see-for-yourself" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://themarkup.org/artificial-intelligence/2026/01/21/our-video-tests-prove-generative-ai-still-sucks-at-dancing-see-for-yourself&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--Technology);">
+            37. Technology
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/technology/comments/1qjhkhs/apple_to_revamp_siri_as_a_builtin_chatbot/">
+            Apple to revamp Siri as a built-in chatbot, Bloomberg News reports
+          </a>
+
+          <div class="meta">
+            2026-01-21 21:01:14 EST ·
+            <a class="source-link" href="https://www.reuters.com/business/apple-revamp-siri-built-in-chatbot-bloomberg-news-reports-2026-01-21/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reuters.com/business/apple-revamp-siri-built-in-chatbot-bloomberg-news-reports-2026-01-21/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--ChatGPT);">
+            38. ChatGPT
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/ChatGPT/comments/1qjhgye/absolutely_panicking_turnitin_ai_detection_20_but/">
+            Absolutely panicking. Turnitin AI detection &lt;20% but ZeroGPT 60%
+          </a>
+
+          <div class="meta">
+            2026-01-21 20:56:59 EST ·
+            <a class="source-link" href="https://www.reddit.com/r/ChatGPT/comments/1qjhgye/absolutely_panicking_turnitin_ai_detection_20_but/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/r/ChatGPT/comments/1qjhgye/absolutely_panicking_turnitin_ai_detection_20_but/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--ChatGPT);">
+            39. ChatGPT
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/ChatGPT/comments/1qjhgh5/why_is_chatgpt_so_bad_at_mcp/">
+            Why is ChatGPT SO bad at MCP?
+          </a>
+
+          <div class="meta">
+            2026-01-21 20:56:22 EST ·
+            <a class="source-link" href="https://www.reddit.com/r/ChatGPT/comments/1qjhgh5/why_is_chatgpt_so_bad_at_mcp/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/r/ChatGPT/comments/1qjhgh5/why_is_chatgpt_so_bad_at_mcp/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--OpenAI);">
+            40. OpenAI
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/OpenAI/comments/1qjhg9c/mcpnative_apps_feel_like_a_new_software_primitive/">
+            MCP-native apps feel like a new software primitive — curious how others see this evolving
+          </a>
+
+          <div class="meta">
+            2026-01-21 20:56:04 EST ·
+            <a class="source-link" href="https://www.reddit.com/r/OpenAI/comments/1qjhg9c/mcpnative_apps_feel_like_a_new_software_primitive/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/r/OpenAI/comments/1qjhg9c/mcpnative_apps_feel_like_a_new_software_primitive/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--datascience);">
+            41. datascience
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/datascience/comments/1qjhf6p/prod_grade_python_backend_patterns/">
+            Prod grade python backend patterns
+          </a>
+
+          <div class="meta">
+            2026-01-21 20:54:43 EST ·
+            <a class="source-link" href="https://www.reddit.com/r/datascience/comments/1qjhf6p/prod_grade_python_backend_patterns/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/r/datascience/comments/1qjhf6p/prod_grade_python_backend_patterns/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--StableDiffusion);">
+            42. StableDiffusion
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/StableDiffusion/comments/1qjhb8m/heartmula_configuration_for_macos/">
+            HeartMuLa Configuration for MacOS
+          </a>
+
+          <div class="meta">
+            2026-01-21 20:49:41 EST ·
+            <a class="source-link" href="https://www.reddit.com/r/StableDiffusion/comments/1qjhb8m/heartmula_configuration_for_macos/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/r/StableDiffusion/comments/1qjhb8m/heartmula_configuration_for_macos/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--ChatGPT);">
+            43. ChatGPT
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/ChatGPT/comments/1qjhak8/because_i_still_see_people_asking/">
+            Because I still see people asking
+          </a>
+
+          <div class="meta">
+            2026-01-21 20:48:49 EST ·
+            <a class="source-link" href="https://www.reddit.com/gallery/1qjhak8" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/gallery/1qjhak8&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--Technology);">
+            44. Technology
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/technology/comments/1qjh5o1/president_fcc_threatens_to_enforce_equaltime_rule/">
+            President FCC threatens to enforce equal-time rule on late-night talk shows | FCC disputes long-standing view that the shows are exempt from equal-time rule.
+          </a>
+
+          <div class="meta">
+            2026-01-21 20:42:43 EST ·
+            <a class="source-link" href="https://arstechnica.com/tech-policy/2026/01/trump-fcc-tries-to-get-more-republicans-on-late-night-and-daytime-talk-shows/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://arstechnica.com/tech-policy/2026/01/trump-fcc-tries-to-get-more-republicans-on-late-night-and-daytime-talk-shows/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--Artificialinteligence);">
+            45. Artificialinteligence
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/ArtificialInteligence/comments/1qjh5fj/cascadelattice_on_pypi/">
+            Cascade-lattice on Pypi
+          </a>
+
+          <div class="meta">
+            2026-01-21 20:42:27 EST ·
+            <a class="source-link" href="https://www.reddit.com/r/ArtificialInteligence/comments/1qjh5fj/cascadelattice_on_pypi/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/r/ArtificialInteligence/comments/1qjh5fj/cascadelattice_on_pypi/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--Technology);">
+            46. Technology
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/technology/comments/1qjh40p/rand_paul_only_wants_google_to_be_the_arbiter_of/">
+            Rand Paul Only Wants Google To Be The Arbiter Of Truth When The Videos Are About Him
+          </a>
+
+          <div class="meta">
+            2026-01-21 20:40:42 EST ·
+            <a class="source-link" href="https://www.techdirt.com/2026/01/21/rand-paul-only-wants-google-to-be-the-arbiter-of-truth-when-the-videos-are-about-him/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.techdirt.com/2026/01/21/rand-paul-only-wants-google-to-be-the-arbiter-of-truth-when-the-videos-are-about-him/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--ChatGPT);">
+            47. ChatGPT
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/ChatGPT/comments/1qjh33i/who_are_these_new_flamewalkers/">
+            Who are these new Flamewalkers?
+          </a>
+
+          <div class="meta">
+            2026-01-21 20:39:32 EST ·
+            <a class="source-link" href="https://www.reddit.com/r/ChatGPT/comments/1qjh33i/who_are_these_new_flamewalkers/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/r/ChatGPT/comments/1qjh33i/who_are_these_new_flamewalkers/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--StableDiffusion);">
+            48. StableDiffusion
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/StableDiffusion/comments/1qjgve4/some_time_ago_i_saw_a_post_where_someone_claimed/">
+            Some time ago I saw a post where someone claimed that training people's loras in QWEN Edit gave better results than QWEN Image. Is this true? Is it still true considering they released a new QWEN Image (2512) and a new QWEN Edit ?
+          </a>
+
+          <div class="meta">
+            2026-01-21 20:29:42 EST ·
+            <a class="source-link" href="https://www.reddit.com/r/StableDiffusion/comments/1qjgve4/some_time_ago_i_saw_a_post_where_someone_claimed/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/r/StableDiffusion/comments/1qjgve4/some_time_ago_i_saw_a_post_where_someone_claimed/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--StableDiffusion);">
+            49. StableDiffusion
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/StableDiffusion/comments/1qjguk4/i_know_weve_moved_on_to_ltx_now_but_has_anyone/">
+            I know we've moved on to LTX now, but has anyone had luck prompting a middle finger gesture in Wan?
+          </a>
+
+          <div class="meta">
+            2026-01-21 20:28:37 EST ·
+            <a class="source-link" href="https://www.reddit.com/r/StableDiffusion/comments/1qjguk4/i_know_weve_moved_on_to_ltx_now_but_has_anyone/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/r/StableDiffusion/comments/1qjguk4/i_know_weve_moved_on_to_ltx_now_but_has_anyone/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--ChatGPT);">
+            50. ChatGPT
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/ChatGPT/comments/1qjgsn4/voice_option_completely_disappeared/">
+            Voice Option Completely disappeared
+          </a>
+
+          <div class="meta">
+            2026-01-21 20:26:15 EST ·
+            <a class="source-link" href="https://www.reddit.com/r/ChatGPT/comments/1qjgsn4/voice_option_completely_disappeared/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/r/ChatGPT/comments/1qjgsn4/voice_option_completely_disappeared/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--learnmachinelearning);">
+            51. learnmachinelearning
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/learnmachinelearning/comments/1qjgqcw/building_an_ml_runtime_from_scratch_day_1/">
+            Building an ML runtime from scratch, Day 1 - visualizing tensors in memory
+          </a>
+
+          <div class="meta">
+            2026-01-21 20:23:35 EST ·
+            <a class="source-link" href="https://i.redd.it/u2bceocvyseg1.jpeg" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://i.redd.it/u2bceocvyseg1.jpeg&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--StableDiffusion);">
+            52. StableDiffusion
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/StableDiffusion/comments/1qjgo7l/flux_klein_variants/">
+            Flux klein variants
+          </a>
+
+          <div class="meta">
+            2026-01-21 20:20:58 EST ·
+            <a class="source-link" href="https://www.reddit.com/r/StableDiffusion/comments/1qjgo7l/flux_klein_variants/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/r/StableDiffusion/comments/1qjgo7l/flux_klein_variants/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--artificial);">
+            53. artificial
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/artificial/comments/1qjgmic/microsoft_launches_new_ai_model_for_realworld/">
+            Microsoft launches new AI model for real-world robotic learning
+          </a>
+
+          <div class="meta">
+            2026-01-21 20:19:00 EST ·
+            <a class="source-link" href="https://interestingengineering.com/ai-robotics/microsoft-rho-alpha-robotics-ai-model" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://interestingengineering.com/ai-robotics/microsoft-rho-alpha-robotics-ai-model&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--ChatGPT);">
+            54. ChatGPT
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/ChatGPT/comments/1qjgm2i/full_chat_continuity/">
+            Full chat continuity
+          </a>
+
+          <div class="meta">
+            2026-01-21 20:18:29 EST ·
+            <a class="source-link" href="https://www.reddit.com/r/ChatGPT/comments/1qjgm2i/full_chat_continuity/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/r/ChatGPT/comments/1qjgm2i/full_chat_continuity/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--Mathematics);">
+            55. Mathematics
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/mathematics/comments/1qjgkxc/integral_vs_antiderivative/">
+            integral vs antiderivative
+          </a>
+
+          <div class="meta">
+            2026-01-21 20:17:11 EST ·
+            <a class="source-link" href="https://www.reddit.com/r/mathematics/comments/1qjgkxc/integral_vs_antiderivative/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/r/mathematics/comments/1qjgkxc/integral_vs_antiderivative/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--ChatGPT);">
+            56. ChatGPT
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/ChatGPT/comments/1qjgc3z/i_want_to_use_chat_gpt_to_help_me_build_things_in/">
+            I want to use chat gpt to help me build things in my classroom.
+          </a>
+
+          <div class="meta">
+            2026-01-21 20:06:10 EST ·
+            <a class="source-link" href="https://www.reddit.com/r/ChatGPT/comments/1qjgc3z/i_want_to_use_chat_gpt_to_help_me_build_things_in/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/r/ChatGPT/comments/1qjgc3z/i_want_to_use_chat_gpt_to_help_me_build_things_in/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--OpenAI);">
+            57. OpenAI
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/OpenAI/comments/1qjgaje/silent_data_loss_incentivizes_harmful_user/">
+            Silent Data Loss Incentivizes Harmful User Behavior
+          </a>
+
+          <div class="meta">
+            2026-01-21 20:04:19 EST ·
+            <a class="source-link" href="https://www.reddit.com/r/OpenAI/comments/1qjgaje/silent_data_loss_incentivizes_harmful_user/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/r/OpenAI/comments/1qjgaje/silent_data_loss_incentivizes_harmful_user/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--singularity);">
+            58. singularity
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/singularity/comments/1qjg74y/perspective_the_singularity_is_not_a_rapture_it/">
+            [Perspective] The Singularity is not a Rapture. It is a Merge.
+          </a>
+
+          <div class="meta">
+            2026-01-21 20:00:24 EST ·
+            <a class="source-link" href="https://www.reddit.com/r/singularity/comments/1qjg74y/perspective_the_singularity_is_not_a_rapture_it/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/r/singularity/comments/1qjg74y/perspective_the_singularity_is_not_a_rapture_it/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--learnmachinelearning);">
+            59. learnmachinelearning
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/learnmachinelearning/comments/1qjg6zi/prompt_writing_training_feedback_request/">
+            Prompt Writing Training (Feedback request)
+          </a>
+
+          <div class="meta">
+            2026-01-21 20:00:13 EST ·
+            <a class="source-link" href="https://www.reddit.com/r/learnmachinelearning/comments/1qjg6zi/prompt_writing_training_feedback_request/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/r/learnmachinelearning/comments/1qjg6zi/prompt_writing_training_feedback_request/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--singularity);">
+            60. singularity
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/singularity/comments/1qjg6lg/majority_of_ceos_report_zero_payoff_from_ai/">
+            Majority of CEOs report zero payoff from AI splurge
+          </a>
+
+          <div class="meta">
+            2026-01-21 19:59:47 EST ·
+            <a class="source-link" href="https://www.theregister.com/2026/01/20/pwc_ai_ceo_survey/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.theregister.com/2026/01/20/pwc_ai_ceo_survey/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--Technology);">
+            61. Technology
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/technology/comments/1qjg3vv/microsoft_shares_workaround_for_outlook_freezes/">
+            Microsoft shares workaround for Outlook freezes after Windows update
+          </a>
+
+          <div class="meta">
+            2026-01-21 19:56:25 EST ·
+            <a class="source-link" href="https://www.bleepingcomputer.com/news/microsoft/microsoft-shares-workaround-for-outlook-freezes-after-windows-update/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.bleepingcomputer.com/news/microsoft/microsoft-shares-workaround-for-outlook-freezes-after-windows-update/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--ChatGPT);">
+            62. ChatGPT
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/ChatGPT/comments/1qjg3qd/connect_the_animal_names_with_their_picture/">
+            "Connect the animal names with their picture"
+          </a>
+
+          <div class="meta">
+            2026-01-21 19:56:14 EST ·
+            <a class="source-link" href="https://www.reddit.com/gallery/1qjg3qd" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/gallery/1qjg3qd&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--singularity);">
+            63. singularity
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/singularity/comments/1qjg04i/lonely_young_people_are_using_ai_chatbots_as/">
+            Lonely young people are using AI chatbots as friends now
+          </a>
+
+          <div class="meta">
+            2026-01-21 19:51:56 EST ·
+            <a class="source-link" href="https://youtu.be/zVMNP2_p5oM" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://youtu.be/zVMNP2_p5oM&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--ChatGPT);">
+            64. ChatGPT
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/ChatGPT/comments/1qjfyvh/heres_my_version_of_i_asked_chatgpt_to_draw_a/">
+            Here’s my version of I asked ChatGPT to draw a painting by the worst painter ever lived
+          </a>
+
+          <div class="meta">
+            2026-01-21 19:50:27 EST ·
+            <a class="source-link" href="https://i.redd.it/5jcwgz46tseg1.jpeg" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://i.redd.it/5jcwgz46tseg1.jpeg&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--StableDiffusion);">
+            65. StableDiffusion
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/StableDiffusion/comments/1qjfy4k/whats_the_deal_with_ai/">
+            What's the deal with AI
+          </a>
+
+          <div class="meta">
+            2026-01-21 19:49:33 EST ·
+            <a class="source-link" href="https://v.redd.it/nnuwdldcsseg1" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://v.redd.it/nnuwdldcsseg1&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--ChatGPT);">
+            66. ChatGPT
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/ChatGPT/comments/1qjfxfe/chatgpt_screwed_me_over_lol/">
+            ChatGPT Screwed Me Over (lol)
+          </a>
+
+          <div class="meta">
+            2026-01-21 19:48:44 EST ·
+            <a class="source-link" href="https://www.reddit.com/r/ChatGPT/comments/1qjfxfe/chatgpt_screwed_me_over_lol/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/r/ChatGPT/comments/1qjfxfe/chatgpt_screwed_me_over_lol/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--OpenAI);">
+            67. OpenAI
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/OpenAI/comments/1qjfrap/ai_will_help_humans_understand_consciousness_and/">
+            AI Will Help Humans Understand Consciousness — and Humans Will Struggle More Than AI With the Boundary
+          </a>
+
+          <div class="meta">
+            2026-01-21 19:41:19 EST ·
+            <a class="source-link" href="https://www.reddit.com/r/OpenAI/comments/1qjfrap/ai_will_help_humans_understand_consciousness_and/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/r/OpenAI/comments/1qjfrap/ai_will_help_humans_understand_consciousness_and/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--ChatGPT);">
+            68. ChatGPT
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/ChatGPT/comments/1qjfpmj/well_that_was_easy_to_avoid_the_age_thing/">
+            Well that was easy to avoid the age thing
+          </a>
+
+          <div class="meta">
+            2026-01-21 19:39:19 EST ·
+            <a class="source-link" href="https://www.reddit.com/gallery/1qjfpmj" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/gallery/1qjfpmj&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--OpenAI);">
+            69. OpenAI
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/OpenAI/comments/1qjfozy/ai_news_show_will_elon_kill_oai/">
+            AI News Show - Will Elon Kill OAI?
+          </a>
+
+          <div class="meta">
+            2026-01-21 19:38:30 EST ·
+            <a class="source-link" href="https://www.reddit.com/r/OpenAI/comments/1qjfozy/ai_news_show_will_elon_kill_oai/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/r/OpenAI/comments/1qjfozy/ai_news_show_will_elon_kill_oai/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--singularity);">
+            70. singularity
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/singularity/comments/1qjfo75/openais_altman_meets_mideast_investors_for_50/">
+            OpenAI’s Altman Meets Mideast Investors for $50 Billion Round
+          </a>
+
+          <div class="meta">
+            2026-01-21 19:37:31 EST ·
+            <a class="source-link" href="https://www.reddit.com/r/singularity/comments/1qjfo75/openais_altman_meets_mideast_investors_for_50/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/r/singularity/comments/1qjfo75/openais_altman_meets_mideast_investors_for_50/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--ChatGPT);">
+            71. ChatGPT
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/ChatGPT/comments/1qjflsu/dont_care_if_its_lying_or_not_no_way_im_right/">
+            Don't care if its lying or not, no way im right based on observation.
+          </a>
+
+          <div class="meta">
+            2026-01-21 19:34:40 EST ·
+            <a class="source-link" href="https://www.reddit.com/gallery/1qjflsu" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/gallery/1qjflsu&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--Artificialinteligence);">
+            72. Artificialinteligence
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/ArtificialInteligence/comments/1qjfljk/ai_in_real_work_isnt_just_chatting/">
+            AI in Real Work Isn’t Just Chatting
+          </a>
+
+          <div class="meta">
+            2026-01-21 19:34:20 EST ·
+            <a class="source-link" href="https://www.reddit.com/r/ArtificialInteligence/comments/1qjfljk/ai_in_real_work_isnt_just_chatting/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/r/ArtificialInteligence/comments/1qjfljk/ai_in_real_work_isnt_just_chatting/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--LanguageTechnology);">
+            73. LanguageTechnology
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/LanguageTechnology/comments/1qjfk1v/summer_schools/">
+            Summer schools
+          </a>
+
+          <div class="meta">
+            2026-01-21 19:32:39 EST ·
+            <a class="source-link" href="https://www.reddit.com/r/LanguageTechnology/comments/1qjfk1v/summer_schools/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/r/LanguageTechnology/comments/1qjfk1v/summer_schools/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--midjourney);">
+            74. midjourney
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/midjourney/comments/1qjfiuh/welcome_home/">
+            Welcome home
+          </a>
+
+          <div class="meta">
+            2026-01-21 19:31:12 EST ·
+            <a class="source-link" href="https://v.redd.it/uhhwx7kqpseg1" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://v.redd.it/uhhwx7kqpseg1&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--StableDiffusion);">
+            75. StableDiffusion
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/StableDiffusion/comments/1qjfi5b/ltx2_audioimage_to_video_impressive/">
+            LTX-2 AUDIO+IMAGE TO VIDEO- IMPRESSIVE!
+          </a>
+
+          <div class="meta">
+            2026-01-21 19:30:25 EST ·
+            <a class="source-link" href="https://v.redd.it/kk50nph3pseg1" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://v.redd.it/kk50nph3pseg1&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--Artificialinteligence);">
+            76. Artificialinteligence
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/ArtificialInteligence/comments/1qjfbv0/why_identity_constraints_stabilize_some_ai_models/">
+            Why Identity Constraints Stabilize Some AI Models — and Destabilize Others
+          </a>
+
+          <div class="meta">
+            2026-01-21 19:23:12 EST ·
+            <a class="source-link" href="https://www.reddit.com/r/ArtificialInteligence/comments/1qjfbv0/why_identity_constraints_stabilize_some_ai_models/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/r/ArtificialInteligence/comments/1qjfbv0/why_identity_constraints_stabilize_some_ai_models/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--artificial);">
+            77. artificial
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/artificial/comments/1qjfapw/human_intelligence_ai_and_the_problem_i_think/">
+            Human Intelligence, AI, and the Problem I Think We're Missing
+          </a>
+
+          <div class="meta">
+            2026-01-21 19:21:48 EST ·
+            <a class="source-link" href="https://www.reddit.com/r/artificial/comments/1qjfapw/human_intelligence_ai_and_the_problem_i_think/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/r/artificial/comments/1qjfapw/human_intelligence_ai_and_the_problem_i_think/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--ChatGPT);">
+            78. ChatGPT
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/ChatGPT/comments/1qjf9xv/i_asked_to_create_image_of_ugly_fact_of_life/">
+            I asked to create image of ugly fact of life
+          </a>
+
+          <div class="meta">
+            2026-01-21 19:20:52 EST ·
+            <a class="source-link" href="https://i.redd.it/i0m0bj3wnseg1.jpeg" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://i.redd.it/i0m0bj3wnseg1.jpeg&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--learnmachinelearning);">
+            79. learnmachinelearning
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/learnmachinelearning/comments/1qjf9cc/rate_my_regression_model_features/">
+            Rate my Regression model features
+          </a>
+
+          <div class="meta">
+            2026-01-21 19:20:10 EST ·
+            <a class="source-link" href="https://www.reddit.com/r/learnmachinelearning/comments/1qjf9cc/rate_my_regression_model_features/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/r/learnmachinelearning/comments/1qjf9cc/rate_my_regression_model_features/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--OpenAI);">
+            80. OpenAI
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/OpenAI/comments/1qjf4vy/i_asked_chatgpt_tocreate_a_meme_only_an_ai_would/">
+            I asked ChatGPT to,create a meme only an AI would find funny:
+          </a>
+
+          <div class="meta">
+            2026-01-21 19:14:59 EST ·
+            <a class="source-link" href="https://i.redd.it/jgzy4txtmseg1.jpeg" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://i.redd.it/jgzy4txtmseg1.jpeg&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--learnmachinelearning);">
+            81. learnmachinelearning
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/learnmachinelearning/comments/1qjf2hp/which_version_of_handson_machine_learning_should/">
+            Which version of Hands-On Machine Learning should I buy: TensorFlow/Keras or PyTorch? (AMD GPU, Linux)
+          </a>
+
+          <div class="meta">
+            2026-01-21 19:12:08 EST ·
+            <a class="source-link" href="https://www.reddit.com/r/learnmachinelearning/comments/1qjf2hp/which_version_of_handson_machine_learning_should/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/r/learnmachinelearning/comments/1qjf2hp/which_version_of_handson_machine_learning_should/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--Technology);">
+            82. Technology
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/technology/comments/1qjf28w/microsoft_announces_new_security_baseline_for/">
+            Microsoft announces new security baseline for Office apps
+          </a>
+
+          <div class="meta">
+            2026-01-21 19:11:50 EST ·
+            <a class="source-link" href="https://www.neowin.net/news/microsoft-announces-new-security-baseline-for-office-apps/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.neowin.net/news/microsoft-announces-new-security-baseline-for-office-apps/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--midjourney);">
+            83. midjourney
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/midjourney/comments/1qjf20p/time_fate_karma_god/">
+            Time :: Fate :: Karma :: God
+          </a>
+
+          <div class="meta">
+            2026-01-21 19:11:34 EST ·
+            <a class="source-link" href="https://www.reddit.com/gallery/1qjf20p" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/gallery/1qjf20p&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--midjourney);">
+            84. midjourney
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/midjourney/comments/1qjesn7/handpan_music_deep_relaxation_with_midjourney/">
+            Handpan Music - Deep relaxation with midjourney visuals
+          </a>
+
+          <div class="meta">
+            2026-01-21 19:00:44 EST ·
+            <a class="source-link" href="https://youtu.be/pBdgoVO5nkw" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://youtu.be/pBdgoVO5nkw&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--OpenAI);">
+            85. OpenAI
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/OpenAI/comments/1qjerec/idiot_gpt_52/">
+            idiot gpt 5.2
+          </a>
+
+          <div class="meta">
+            2026-01-21 18:59:26 EST ·
+            <a class="source-link" href="https://www.reddit.com/r/OpenAI/comments/1qjerec/idiot_gpt_52/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/r/OpenAI/comments/1qjerec/idiot_gpt_52/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--StableDiffusion);">
+            86. StableDiffusion
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/StableDiffusion/comments/1qjemoj/i_converted_some_half_life_12_screenshots_into/">
+            I converted some Half Life 1/2 screenshots into real life with the help of Klein 4b!
+          </a>
+
+          <div class="meta">
+            2026-01-21 18:53:58 EST ·
+            <a class="source-link" href="https://www.reddit.com/gallery/1qjemoj" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/gallery/1qjemoj&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--learnmachinelearning);">
+            87. learnmachinelearning
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/learnmachinelearning/comments/1qjelcn/we_trained_a_language_model_wrong_as_a_joke/">
+            We trained a language model wrong, as a joke
+          </a>
+
+          <div class="meta">
+            2026-01-21 18:52:30 EST ·
+            <a class="source-link" href="https://www.reddit.com/r/learnmachinelearning/comments/1qjelcn/we_trained_a_language_model_wrong_as_a_joke/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/r/learnmachinelearning/comments/1qjelcn/we_trained_a_language_model_wrong_as_a_joke/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--ChatGPT);">
+            88. ChatGPT
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/ChatGPT/comments/1qjej2q/when_will_i_be_able_to_buy_an_offline_50_gpt/">
+            When will I be able to buy an offline 5.0 GPT computer
+          </a>
+
+          <div class="meta">
+            2026-01-21 18:49:57 EST ·
+            <a class="source-link" href="https://www.reddit.com/r/ChatGPT/comments/1qjej2q/when_will_i_be_able_to_buy_an_offline_50_gpt/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/r/ChatGPT/comments/1qjej2q/when_will_i_be_able_to_buy_an_offline_50_gpt/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--ChatGPT);">
+            89. ChatGPT
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/ChatGPT/comments/1qjehi9/seeing_as_the_tech_is_now_available_to_remove/">
+            Seeing as the tech is now available to "remove" clothes per generated images, is it also possible to have this pointed towards, say, mask-wearers?
+          </a>
+
+          <div class="meta">
+            2026-01-21 18:48:09 EST ·
+            <a class="source-link" href="https://www.reddit.com/r/ChatGPT/comments/1qjehi9/seeing_as_the_tech_is_now_available_to_remove/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/r/ChatGPT/comments/1qjehi9/seeing_as_the_tech_is_now_available_to_remove/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--Artificialinteligence);">
+            90. Artificialinteligence
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/ArtificialInteligence/comments/1qjehaa/i_produce_an_ai_show_can_i_get_your_opinion_on_my/">
+            I produce an AI show - can I get your opinion on my V0
+          </a>
+
+          <div class="meta">
+            2026-01-21 18:47:54 EST ·
+            <a class="source-link" href="https://www.reddit.com/r/ArtificialInteligence/comments/1qjehaa/i_produce_an_ai_show_can_i_get_your_opinion_on_my/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/r/ArtificialInteligence/comments/1qjehaa/i_produce_an_ai_show_can_i_get_your_opinion_on_my/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--ChatGPT);">
+            91. ChatGPT
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/ChatGPT/comments/1qjegs8/deep_research_gone/">
+            Deep Research gone?
+          </a>
+
+          <div class="meta">
+            2026-01-21 18:47:20 EST ·
+            <a class="source-link" href="https://www.reddit.com/r/ChatGPT/comments/1qjegs8/deep_research_gone/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/r/ChatGPT/comments/1qjegs8/deep_research_gone/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--ChatGPT);">
+            92. ChatGPT
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/ChatGPT/comments/1qjefy1/human_intelligence_ai_and_the_problem_i_think/">
+            Human Intelligence, AI, and the Problem I Think We're Missing
+          </a>
+
+          <div class="meta">
+            2026-01-21 18:46:23 EST ·
+            <a class="source-link" href="https://www.reddit.com/r/ChatGPT/comments/1qjefy1/human_intelligence_ai_and_the_problem_i_think/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/r/ChatGPT/comments/1qjefy1/human_intelligence_ai_and_the_problem_i_think/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--midjourney);">
+            93. midjourney
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/midjourney/comments/1qje91f/song_of_the_the_bowmen_of_shu/">
+            Song of the the Bowmen of Shu
+          </a>
+
+          <div class="meta">
+            2026-01-21 18:38:42 EST ·
+            <a class="source-link" href="https://i.redd.it/xn53e1j7gseg1.png" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://i.redd.it/xn53e1j7gseg1.png&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--ChatGPT);">
+            94. ChatGPT
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/ChatGPT/comments/1qje8n6/ha_sweet_probably_like_50_done_at_this_point/">
+            Ha! Sweet 😁 probably like 50% done at this point
+          </a>
+
+          <div class="meta">
+            2026-01-21 18:38:16 EST ·
+            <a class="source-link" href="https://www.reddit.com/gallery/1qje8n6" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/gallery/1qje8n6&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--StableDiffusion);">
+            95. StableDiffusion
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/StableDiffusion/comments/1qje8ji/is_it_worth_training_new_slorasmigrating_to_qwen/">
+            Is it worth training new sloras/migrating to qwen edit 2511 ?
+          </a>
+
+          <div class="meta">
+            2026-01-21 18:38:08 EST ·
+            <a class="source-link" href="https://www.reddit.com/r/StableDiffusion/comments/1qje8ji/is_it_worth_training_new_slorasmigrating_to_qwen/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/r/StableDiffusion/comments/1qje8ji/is_it_worth_training_new_slorasmigrating_to_qwen/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+        <div class="mb-3">
+          <div class="fw-bold" style="color:var(--ChatGPT);">
+            96. ChatGPT
+          </div>
+
+          <a class="post-title fs-5 text-white" href="https://www.reddit.com/r/ChatGPT/comments/1qje8al/my_chatgbt_is_losing_it/">
+            My ChatGBT is losing it.
+          </a>
+
+          <div class="meta">
+            2026-01-21 18:37:52 EST ·
+            <a class="source-link" href="https://www.reddit.com/r/ChatGPT/comments/1qje8al/my_chatgbt_is_losing_it/" target="_blank">
+              <img class="source-favicon" src="https://www.google.com/s2/favicons?domain=https://www.reddit.com/r/ChatGPT/comments/1qje8al/my_chatgbt_is_losing_it/&amp;sz=32">
+              Source
+            </a>
+          </div>
+
+        </div>
+        
+      </main>
+
+    </div>
+  </div>
+
+  <button style="position:fixed;right:20px;bottom:64px" onclick="window.scrollTo(0,0)">
+    ↑ Top
+  </button>
+
+  <button style="position:fixed;right:20px;bottom:20px" onclick="window.scrollTo(0, document.body.scrollHeight)">
+    ↓ End
+  </button>
+
+
+  <div class="mt-4">
+    <nav aria-label="..."><ul class="pagination  "><li class="page-item disabled"><a class="page-link">«</a></li><li class="page-item active" aria-current="page"><span class="page-link">1</span></li><li class="page-item"><a class="page-link" href="/?page=2">2</a></li><li class="page-item"><a class="page-link" href="/?page=3">3</a></li><li class="page-item"><a class="page-link" href="/?page=4">4</a></li><li class="page-item"><a class="page-link" href="/?page=5">5</a></li><li class="page-item disabled"><span class="page-link">...</span></li><li class="page-item"><a class="page-link" href="/?page=10932">10932</a></li><li class="page-item"><a class="page-link" href="/?page=10933">10933</a></li><li class="page-item"><a class="page-link" href="/?page=2" aria-label="Next"><span aria-hidden="true">»</span></a></li></ul></nav>
+  </div>
+
+  <div class="hero-divider"></div>
+
+  <div class="text-center mt-3">
+    <a href="https://precptress.ai" class="text-decoration-none">
+      <b>Precptress AI</b>
+    </a>
+    <div class="site-footer">
+      UI and sounds by <a href="https://songtospot.com" target="_blank" rel="noopener">djDslam.</a><br>
+      Server Magic + ForgeOS by <a href="https://neurocompute.online" target="_blank" rel="noopener">Team Epic</a><br>
+      Built using the <a href="https://github.com/preceptress/yarp" target="_blank" rel="noopener">YARP</a> Data Engine
+      + Agent • © 2026
+    </div>
+  </div>
+
+  <div class="hero-divider mb-5"></div>
+
+  <script src="/static/main.js"></script>
+
+  <script>
+    (function startCronCountdown() {
+      const display = document.getElementById("cron-countdown");
+      if (!display) return;
+
+      function update() {
+        const now = new Date();
+
+        const seconds = now.getSeconds();
+        const minutes = now.getMinutes();
+
+        // next 5-minute boundary
+        const nextMinute = Math.ceil(minutes / 5) * 5;
+        const target = new Date(now);
+
+        target.setMinutes(nextMinute);
+        target.setSeconds(0);
+        target.setMilliseconds(0);
+
+        // handle hour rollover
+        if (nextMinute === 60) {
+          target.setHours(now.getHours() + 1);
+          target.setMinutes(0);
+        }
+
+        const diffMs = target - now;
+        const diffSec = Math.max(0, Math.floor(diffMs / 1000));
+
+        const mm = String(Math.floor(diffSec / 60)).padStart(2, "0");
+        const ss = String(diffSec % 60).padStart(2, "0");
+
+        display.textContent = `${mm}:${ss}`;
+      }
+
+      update();
+      setInterval(update, 1000);
+    })();
+  </script>
+
+
+
+</body></html>

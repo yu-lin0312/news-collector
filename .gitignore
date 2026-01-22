@@ -1,0 +1,51 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environment
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Environment Variables & Secrets (CRITICAL)
+.env
+.streamlit/secrets.toml
+serviceAccountKey.json
+google_credentials.json
+
+# Local Data (Ephemeral)
+*.db
+*.sqlite3
+top10_*.json
+top10_cache.json
+debug_log.txt
+news.db
+
+# IDE
+.vscode/
+.idea/
+
+# Streamlit
+.streamlit/

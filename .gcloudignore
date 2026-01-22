@@ -1,0 +1,31 @@
+# Version control
+.git
+.gitignore
+
+# Python artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+venv/
+.env
+
+# Local database
+*.db
+*.sqlite3
+
+# Debug and temporary files
+*.html
+debug_*.txt
+debug_*.py
+test_*.py
+inspect_*.py
+check_*.py
+clean_db.py
+fix_dates.py
+fetch_*.py
+inspection_result.txt
+
+# OS generated files
+.DS_Store
+Thumbs.db

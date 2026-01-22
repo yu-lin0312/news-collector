@@ -1,0 +1,10 @@
+streamlit
+firebase-admin
+google-cloud-firestore
+playwright
+requests
+beautifulsoup4
+python-dotenv
+pandas
+google-generativeai
+urllib3
