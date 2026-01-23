@@ -527,7 +527,7 @@ def generate_deep_top10(target_date=None):
     # Filter for target date window (last 2 days to account for timezone differences)
     # Use naive datetime for comparison since published_at in DB is naive
     target_date_naive = target_date.replace(tzinfo=None)
-    limit_date = target_date_naive - timedelta(days=2)  # Expanded to 2 days
+    limit_date = target_date_naive - timedelta(days=1)  # 縮短為 1 天
     limit_date = limit_date.replace(hour=0, minute=0, second=0)
     
     print(f"DEBUG: Target Date: {target_date_naive}, Limit Date: {limit_date}")
