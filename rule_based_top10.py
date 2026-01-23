@@ -182,9 +182,17 @@ def calculate_score(news_item):
     # 3. Recency bonus (今日新聞優先)
     try:
         pub_date_str = news_item['published_at']
-        pub_date = datetime.strptime(pub_date_str, '%Y-%m-%d')
-        today = datetime.now()
-        days_diff = (today - pub_date).days
+        try:
+            # Try YYYY-MM-DD first
+            pub_date = datetime.strptime(pub_date_str, '%Y-%m-%d')
+        except ValueError:
+            # Try ISO format (e.g. from Firestore)
+            pub_date = datetime.fromisoformat(pub_date_str)
+            
+        # Compare dates only to avoid timezone issues
+        today_date = datetime.now().date()
+        pub_date_date = pub_date.date()
+        days_diff = (today_date - pub_date_date).days
         
         if days_diff <= 0:  # Today - 大幅加分
             score += 10
@@ -194,7 +202,8 @@ def calculate_score(news_item):
             score += 2
         elif days_diff <= 7:  # Within 7 days
             score += 1
-    except:
+    except Exception as e:
+        # print(f"Date score error: {e}")
         pass
     
     return round(score, 1)
