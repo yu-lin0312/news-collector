@@ -71,6 +71,34 @@ body {
     margin-bottom: 32px;
 }
 
+/* RWD: 平板 (寬度 <= 1024px) 顯示 2 欄 */
+@media (max-width: 1024px) {
+    .news-grid-responsive {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+}
+
+/* RWD: 手機 (寬度 <= 640px) 顯示 1 欄 */
+@media (max-width: 640px) {
+    .news-grid-responsive {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .news-card-text-only {
+        padding: 16px;
+    }
+
+    .card-title {
+        font-size: 15px;
+    }
+
+    .card-summary {
+        font-size: 13px;
+    }
+}
+
 .news-card-text-only {
     background: #ffffff;
     border: 1px solid var(--border-color);
