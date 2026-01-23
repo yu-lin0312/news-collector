@@ -566,11 +566,27 @@ def generate_deep_top10(target_date=None):
     MAX_PER_SOURCE = 3
     
     # 1. Guaranteed Entry: Top 3 from each category
+    from difflib import SequenceMatcher
+    
+    def is_duplicate(item, pool):
+        """Check if item is duplicate based on URL or Title similarity"""
+        for existing in pool:
+            # URL check
+            if item['url'] == existing['url']:
+                return True
+            
+            # Title similarity check
+            ratio = SequenceMatcher(None, item['title'].lower(), existing['title'].lower()).ratio()
+            if ratio > 0.85: # 85% similarity threshold
+                print(f"DEBUG: Duplicate detected by title: '{item['title']}' vs '{existing['title']}' ({ratio:.2f})")
+                return True
+        return False
+
     for cat, items in category_buckets.items():
         # items are already sorted by score
         top_picks = items[:3]
         for item in top_picks:
-            if item['url'] not in seen_urls:
+            if not is_duplicate(item, diversity_pool):
                 # Check source cap
                 source = item.get('source', 'Unknown')
                 if source_counts.get(source, 0) >= MAX_PER_SOURCE:
@@ -585,7 +601,7 @@ def generate_deep_top10(target_date=None):
     # HackingAI is special, we might want to allow more from it if it's the aggregator itself,
     # but since we resolved sources, these might now be 'GitHub', 'Arxiv', etc.
     # So we filter by discussion_url presence which indicates HackingAI origin.
-    hacking_ai_items = [item for item in candidates if item.get('discussion_url') and item['url'] not in seen_urls]
+    hacking_ai_items = [item for item in candidates if item.get('discussion_url') and not is_duplicate(item, diversity_pool)]
     for item in hacking_ai_items[:5]:
         # Check source cap (even for HackingAI derived items, we want diversity)
         # But maybe relax it slightly or treat them as distinct? 
