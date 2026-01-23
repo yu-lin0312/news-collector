@@ -26,18 +26,35 @@ SOURCE_WEIGHTS = {
     
     # Tech News sources
     'TechCrunch': 9,
+    'TechCrunch AI': 9,
     'VentureBeat': 8,
     'TechNews': 7,
-    # 台灣中文來源 (提高權重)
+    # 台灣中文來源 (提高權重，使用實際來源名稱)
     'iThome': 10,
     'INSIDE': 10,
     '數位時代': 10,
     'TechOrange': 9,
+    'TechOrange 科技報橘': 10,  # 實際名稱
     'BusinessNext': 8,
     'Meet': 7,
     'Techbang': 7,
     '經濟日報 AI': 9,
     '聯合報科技': 9,
+    # Google News 帶回來的中文來源
+    'CMoney投資網誌': 9,
+    'CMoney': 9,
+    '科技島': 10,
+    'news.cnyes.com': 8,
+    '聯合新聞網': 10,
+    'TechNews 科技新報': 10,
+    '工商時報': 9,
+    '中央社 CNA': 10,
+    '經濟日報': 9,
+    '奇摩新聞': 8,
+    '蕃新聞': 7,
+    '網管人': 8,
+    '台視全球資訊網': 8,
+    'Techritual Hong Kong': 7,
     # 其他英文來源
     'AI News': 7,
     'Computer Weekly': 7,
