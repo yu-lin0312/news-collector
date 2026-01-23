@@ -45,6 +45,34 @@
     }
   },
   {
+    "name": "數位時代",
+    "url": "https://www.bnext.com.tw/search/tag/AI",
+    "type": "dynamic",
+    "category": "台灣科技新聞",
+    "selectors": {
+      "container": "div.item_content",
+      "title": "h2.item_title a",
+      "link": "h2.item_title a",
+      "date": "span.item_date",
+      "summary": "p.item_description",
+      "image": "img"
+    }
+  },
+  {
+    "name": "INSIDE",
+    "url": "https://www.inside.com.tw/tag/ai",
+    "type": "dynamic",
+    "category": "台灣科技新聞",
+    "selectors": {
+      "container": "div.post_list_item",
+      "title": "h3.post_title a",
+      "link": "h3.post_title a",
+      "date": "span.post_date",
+      "summary": "p.post_description",
+      "image": ".post_list_item_img"
+    }
+  },
+  {
     "name": "Nature",
     "url": "https://www.nature.com/search?q=artificial+intelligence&order=date_desc",
     "type": "static",
