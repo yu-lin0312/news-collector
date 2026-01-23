@@ -524,36 +524,15 @@ def generate_deep_top10(target_date=None):
     database.init_db()
     all_news = rule_based_top10.get_recent_news() # This gets last 7 days
     
-    # Filter for target date window (last 2 days to account for timezone differences)
-    # Use naive datetime for comparison since published_at in DB is naive
-    target_date_naive = target_date.replace(tzinfo=None)
-    limit_date = target_date_naive - timedelta(days=1)  # 縮短為 1 天
-    limit_date = limit_date.replace(hour=0, minute=0, second=0)
-    
-    print(f"DEBUG: Target Date: {target_date_naive}, Limit Date: {limit_date}")
-    print(f"DEBUG: Total news items: {len(all_news)}")
+    # Trust rule_based_top10's filtering and scoring (which already handles recency bonus)
+    # We just take the top candidates directly to avoid double-filtering issues with timezones
+    print(f"DEBUG: Trusting rule_based_top10 results. Total items: {len(all_news)}")
     
     candidates = []
     for item in all_news:
-        try:
-            pub_date_str = item['published_at']
-            try:
-                # Try YYYY-MM-DD
-                pub_date = datetime.strptime(pub_date_str, '%Y-%m-%d')
-            except ValueError:
-                # Try ISO format
-                if 'T' in pub_date_str:
-                    pub_date = datetime.fromisoformat(pub_date_str)
-                    if pub_date.tzinfo is not None:
-                        pub_date = pub_date.replace(tzinfo=None)
-                else:
-                    continue
-            
-            # print(f"DEBUG: Checking {item['published_at']} vs {limit_date} - {target_date_naive}")
-            if limit_date <= pub_date <= target_date_naive:
-                candidates.append(item)
-        except:
-            continue
+        # Basic validation only
+        if item and item.get('title') and item.get('url'):
+            candidates.append(item)
             
     # Score them
     if not candidates:

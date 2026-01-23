@@ -219,10 +219,24 @@ def categorize_news(news_item, sources_config):
     if news_item.get('discussion_url'):
         source_category = '全球 AI 趨勢' # Default category for HackingAI
     else:
+        # Check config first
         for src in sources_config:
             if src['name'] == source_name:
                 source_category = src.get('category', '')
                 break
+        
+        # Fallback for Google News sources (hardcoded categories)
+        if not source_category:
+            tw_tech_sources = [
+                'CMoney投資網誌', 'CMoney', '科技島', 'news.cnyes.com', 
+                '聯合新聞網', 'TechNews 科技新報', 'TechOrange 科技報橘',
+                '工商時報', '中央社 CNA', '經濟日報', '奇摩新聞', 
+                '蕃新聞', '網管人', '台視全球資訊網', 'Techritual Hong Kong'
+            ]
+            if source_name in tw_tech_sources:
+                source_category = '台灣科技新聞'
+            elif 'TechCrunch' in source_name:
+                source_category = '全球 AI 趨勢'
     
     # Map to Top 10 categories
     text = (news_item.get('title', '') + ' ' + news_item.get('summary', '')).lower()
