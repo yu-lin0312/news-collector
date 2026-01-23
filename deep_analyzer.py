@@ -671,12 +671,15 @@ def generate_deep_top10(target_date=None):
     # --- AI EDITOR SELECTION ---
     final_candidates = select_top_stories_with_ai(candidates)
     
-    final_top10 = []
+    # 定義 7 種新聞分類
+    ALL_CATEGORIES = ['Breaking', 'Tools', 'Business', 'Creative', 'Research', 'Rules', 'Risk']
+    
+    processed_articles = []  # 改用新變數名稱，收集所有成功處理的文章
     processed_count = 0
     
-    # 2. Process Candidates until we have 10 good ones
+    # 2. Process Candidates until we have 15 good ones (多處理一些以確保分類多樣性)
     for item in final_candidates:
-        if len(final_top10) >= 10:
+        if len(processed_articles) >= 15:
             break
             
         print(f"Processing candidate {processed_count+1}/{len(final_candidates)}: {item['title']}")
@@ -732,13 +735,13 @@ def generate_deep_top10(target_date=None):
                 None  # impact
             )
             
-            final_top10.append(item)
-            print(f"  -> Added to Top 10 ✅ (Total: {len(final_top10)})")
+            processed_articles.append(item)
+            print(f"  -> Added to pool ✅ (Total: {len(processed_articles)})")
             
             # INCREMENTAL SAVE
             # Add rank
             current_top10 = []
-            for i, t_item in enumerate(final_top10):
+            for i, t_item in enumerate(processed_articles):
                 t_item_copy = t_item.copy()
                 t_item_copy['rank'] = i + 1
                 current_top10.append(t_item_copy)
@@ -748,7 +751,7 @@ def generate_deep_top10(target_date=None):
                 "generated_at": datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
                 "top10": current_top10,
                 "news_count": len(candidates),
-                "analysis_stats": {"processed": processed_count + 1, "accepted": len(final_top10)},
+                "analysis_stats": {"processed": processed_count + 1, "accepted": len(processed_articles)},
                 "method": "deep-ai-analysis"
             }
             
@@ -764,11 +767,54 @@ def generate_deep_top10(target_date=None):
         processed_count += 1
         time.sleep(1) # Paid tier: faster processing
         
-    # 3. Generate Daily Summary (The Cherry on Top)
+    # 3. 分類平衡選擇：確保每個分類至少有 1 則
+    print("\n🎯 Applying category balance...")
+    
+    # 按分類分組
+    category_buckets = {cat: [] for cat in ALL_CATEGORIES}
+    for item in processed_articles:
+        cat = item.get('ai_category', 'Breaking')
+        if cat in category_buckets:
+            category_buckets[cat].append(item)
+        else:
+            category_buckets['Breaking'].append(item)  # 未知分類歸入 Breaking
+    
+    # 列印每個分類的數量
+    for cat, items in category_buckets.items():
+        print(f"  {cat}: {len(items)} items")
+    
+    # 選擇邏輯：每個分類至少 1 則
+    final_top10 = []
+    used_urls = set()
+    
+    # 第一輪：每個分類各選 1 則（按處理順序，即 AI 編輯認為的重要性順序）
+    for cat in ALL_CATEGORIES:
+        items = category_buckets[cat]
+        if items and len(final_top10) < 10:
+            # 選該分類中排序最前的一則
+            for item in items:
+                if item['url'] not in used_urls:
+                    final_top10.append(item)
+                    used_urls.add(item['url'])
+                    print(f"  ✓ Selected [{cat}]: {item['title'][:40]}...")
+                    break
+    
+    # 第二輪：用剩餘名額補齊（按原始處理順序，即 AI 編輯認為的重要性）
+    for item in processed_articles:
+        if len(final_top10) >= 10:
+            break
+        if item['url'] not in used_urls:
+            final_top10.append(item)
+            used_urls.add(item['url'])
+            print(f"  + Filled with [{item.get('ai_category', 'Unknown')}]: {item['title'][:40]}...")
+    
+    print(f"\n📋 Final Top 10 selected ({len(final_top10)} items)")
+    
+    # 4. Generate Daily Summary (The Cherry on Top)
     print("Generating Daily Briefing Summary...")
     daily_summary = generate_daily_summary(final_top10)
     
-    # 4. Final Save
+    # 5. Final Save
     # Add rank
     for i, item in enumerate(final_top10):
         item['rank'] = i + 1
@@ -812,7 +858,7 @@ def generate_deep_top10(target_date=None):
         "top10": final_top10,
         "daily_briefing": daily_summary, # New field
         "news_count": len(candidates),
-        "analysis_stats": {"processed": processed_count, "accepted": len(final_top10)},
+        "analysis_stats": {"processed": processed_count, "accepted": len(processed_articles), "final_selected": len(final_top10)},
         "method": "deep-ai-analysis"
     }
     
