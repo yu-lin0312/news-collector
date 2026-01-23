@@ -295,7 +295,7 @@ else:
             st.warning(f"⚠️ 尚未生成今日 ({today_str}) 的新聞，目前顯示 {file_date} 的內容。")
         
         # Display Date Header
-        st.markdown(f"### {file_date} 重點新聞")
+        st.markdown(f"### {file_date} 新聞AI摘要")
         st.markdown("---")
         
         # 5x2 Grid Layout
