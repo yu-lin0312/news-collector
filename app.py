@@ -309,12 +309,30 @@ else:
             url = item.get('url', '#')
             rundown = item.get('ai_rundown', '尚無摘要')
             
+            # 分類標籤對應的顯示名稱和 CSS class
+            CATEGORY_DISPLAY = {
+                'Breaking': ('速報', 'tag-breaking'),
+                'Tools': ('工具', 'tag-tools'),
+                'Business': ('商業', 'tag-business'),
+                'Creative': ('創作', 'tag-creative'),
+                'Research': ('研究', 'tag-research'),
+                'Rules': ('法規', 'tag-rules'),
+                'Risk': ('風險', 'tag-risk'),
+            }
+            
+            ai_category = item.get('ai_category', '')
+            category_name, category_class = CATEGORY_DISPLAY.get(ai_category, ('', ''))
+            
+            # 只在有分類時顯示標籤
+            category_tag = f'<span class="news-category-tag {category_class}">{category_name}</span>' if category_name else ''
+            
             card_html = f'''
 <div class="news-card-text-only">
 <div class="card-rank">#{rank:02d}</div>
 <a href="{url}" target="_blank" class="card-title">{title}</a>
 <div class="card-meta">
 <span class="news-source">{source}</span>
+{category_tag}
 </div>
 <div class="card-summary">
 {rundown}

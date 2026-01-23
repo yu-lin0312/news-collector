@@ -114,6 +114,7 @@ body {
     text-decoration: none;
     display: -webkit-box;
     -webkit-line-clamp: 3;
+    line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
     flex-grow: 0;
@@ -366,4 +367,50 @@ div.stButton>button:hover {
 
 .summary-bullets li {
     margin-bottom: 4px;
+}
+
+/* ========== NEWS CATEGORY TAGS ========== */
+.news-category-tag {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+}
+
+.tag-breaking {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.tag-tools {
+    background: #dbeafe;
+    color: #2563eb;
+}
+
+.tag-business {
+    background: #fef3c7;
+    color: #d97706;
+}
+
+.tag-creative {
+    background: #f3e8ff;
+    color: #9333ea;
+}
+
+.tag-research {
+    background: #dcfce7;
+    color: #16a34a;
+}
+
+.tag-rules {
+    background: #e0e7ff;
+    color: #4f46e5;
+}
+
+.tag-risk {
+    background: #fecaca;
+    color: #b91c1c;
 }

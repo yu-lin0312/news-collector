@@ -313,6 +313,17 @@ def analyze_article_with_gemini(title, content, source):
     genai.configure(api_key=api_key)
     model = genai.GenerativeModel('gemini-3-flash-preview')
 
+    # 定義 7 種新聞分類
+    CATEGORY_DEFINITIONS = """
+    - Breaking: 突發重大事件、重要人事異動、產品重大更新（如 GPT-5 發布、CEO 辭職）
+    - Tools: 新工具、App、網站、實用功能發布（如 ChatGPT 新功能、Perplexity 更新）
+    - Business: 融資、投資、併購、財報、商業合作（如 OpenAI 融資、Google 收購）
+    - Creative: AI 繪圖、影片生成、設計工具（如 Sora、Midjourney、Runway）
+    - Research: 學術論文、技術突破、新架構（如 Arxiv 論文、MIT 研究）
+    - Rules: 政府法規、政策、補助方案（如 歐盟 AI Act、台灣補助）
+    - Risk: 資安漏洞、AI 偏見、倫理爭議、安全威脅（如 AI 攻擊、隱私問題）
+    """
+    
     prompt = f"""
     你是一位專業的科技新聞編輯，擅長 UX Writing。請閱讀以下新聞內容，並為「每日 AI 簡報」撰寫分析文案。
     
@@ -323,18 +334,24 @@ def analyze_article_with_gemini(title, content, source):
     {content[:3000]}... (下略)
 
     【撰寫要求】
-    請生成以下欄位的內容（繁體中文）：
+    請生成以下欄位的內容：
     
-    1. **ai_rundown (重點摘要)**：
+    1. **ai_rundown (重點摘要，繁體中文)**：
        - 類似 The Rundown AI 的風格。
        - 用一句話破題，接著用 2-3 句話清楚說明發生了什麼事。
        - 語氣專業、簡潔、有力。
        - 字數控制在 50 字以內。
 
+    2. **category (新聞分類，英文)**：
+       - 根據新聞內容，從以下 7 種分類中選擇最適合的一種：
+       {CATEGORY_DEFINITIONS}
+       - 只需回傳分類名稱（Breaking/Tools/Business/Creative/Research/Rules/Risk）
+
     【輸出格式】
     請直接回覆 JSON 格式，不要有 markdown 標記：
     {{
-        "ai_rundown": "..."
+        "ai_rundown": "...",
+        "category": "..."
     }}
     """
     
@@ -700,6 +717,7 @@ def generate_deep_top10(target_date=None):
         
         if analysis:
             item['ai_rundown'] = analysis.get('ai_rundown')
+            item['ai_category'] = analysis.get('category', 'Breaking')  # 新增分類欄位
             # Removed details and impact as per user request
             item['ai_details'] = None
             item['ai_impact'] = None
