@@ -147,7 +147,7 @@ def resolve_original_source(item):
     """
     If source is an aggregator, try to resolve the real source from URL.
     """
-    aggregator_names = ['TLDR Tech AI', 'HackingAI', 'Google News (AI)', 'Google News']
+    aggregator_names = ['TLDR Tech AI', 'HackingAI']
     
     # Check if it's an aggregator
     is_aggregator = False

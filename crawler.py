@@ -490,6 +490,22 @@ class NewsCrawler:
             try:
                 # Extract Title & Reddit Link
                 title_elem = item.select_one('a.post-title')
+                if not title_elem: continue
+                
+                title = title_elem.get_text(strip=True)
+                discussion_url = title_elem.get('href') # This is the Reddit link
+                
+                # Extract Original Source Link
+                source_link_elem = item.select_one('a.source-link')
+                if not source_link_elem: continue
+                
+                source_url = source_link_elem.get('href')
+                source_name = source_link_elem.get_text(strip=True)
+                
+                # Extract Category
+                cat_elem = item.select_one('div.fw-bold')
+                category = cat_elem.get_text(strip=True) if cat_elem else "全球 AI 趨勢"
+
                 meta_elem = item.select_one('div.meta')
                 raw_date = ""
                 if meta_elem:
@@ -518,7 +534,7 @@ class NewsCrawler:
                 if self.db.url_exists(source_url):
                     continue
                     
-                print(f"Adding (HackingAI): {title} ({source_name})")
+                print(f"Adding (HackingAI): {title} ({source_name}) | Date: {published_at}")
                 # Add to DB with discussion_url
                 self.db.add_news(title, source_url, source_name, category, published_at, "", "", discussion_url=discussion_url)
                 count += 1
@@ -564,7 +580,10 @@ class NewsCrawler:
             print(f"Failed to fetch {name}")
             return
 
-        soup = BeautifulSoup(html, 'html.parser')
+        # Detect RSS/XML
+        is_rss = 'rss' in url.lower() or 'feed' in url.lower() or 'xml' in url.lower()
+        parser = 'xml' if is_rss else 'html.parser'
+        soup = BeautifulSoup(html, parser)
         
         # Handle JSON Embedded
         if source.get('json_embedded'):
@@ -675,7 +694,9 @@ class NewsCrawler:
             try:
                 # Extract Title
                 title = self.extract_text(item, selectors['title'])
-                if not title: continue
+                if not title: 
+                    print(f"  -> Skip: No title found")
+                    continue
                 
                 # Extract Link
                 link_attr = selectors.get('link_attr', 'href')
@@ -684,7 +705,9 @@ class NewsCrawler:
                 else:
                     link = self.extract_attr(item, selectors['link'], link_attr)
                 
-                if not link: continue
+                if not link: 
+                    print(f"  -> Skip: No link found for '{title}'")
+                    continue
                 
                 # Handle relative links
                 if not link.startswith('http'):
@@ -699,6 +722,7 @@ class NewsCrawler:
                             link = base_url + '/' + link
 
                 if self.db.url_exists(link):
+                    # print(f"  -> Skip: URL exists: {link}")
                     continue
                 
                 # Extract Date
@@ -721,15 +745,17 @@ class NewsCrawler:
                 
                 # Special handling for Google News source extraction
                 real_source_name = name
-                if name == "Google News (AI)" and summary:
+                if name == "Google News (AI)":
                     try:
-                        # Summary often contains: <a ...>Title</a>&nbsp;&nbsp;<font color="#6f6f6f">Source Name</font>
-                        # But here 'summary' is already text extracted by extract_text if selector was simple text
-                        # However, for Google News, the description tag contains HTML. 
-                        # Let's re-parse the raw description if possible, or try to parse the text if it kept the structure.
-                        # Actually, extract_text usually gets text content. 
-                        # For Google News RSS, the description is HTML. extract_text might strip tags.
-                        # Let's look at the raw item again for Google News.
+                        # For RSS, source is often in a specific tag or part of title/description
+                        # In Google News RSS, it's often at the end of the title: "Title - Source"
+                        if " - " in title:
+                            parts = title.rsplit(" - ", 1)
+                            if len(parts) > 1:
+                                real_source_name = parts[1].strip()
+                                title = parts[0].strip() # Clean title
+                        
+                        # Fallback to description font tag if title split fails or to be sure
                         description_elem = item.select_one('description')
                         if description_elem:
                             desc_html = description_elem.get_text()
@@ -746,7 +772,7 @@ class NewsCrawler:
                 # Get Category
                 category = source.get('category', 'Uncategorized')
                 
-                print(f"Adding: {title} ({real_source_name})")
+                print(f"Adding: {title} ({real_source_name}) | Date: {published_at}")
                 self.db.add_news(title, link, real_source_name, category, published_at, summary, image_url)
                 count += 1
                 
