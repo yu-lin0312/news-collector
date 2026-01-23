@@ -28,12 +28,17 @@ SOURCE_WEIGHTS = {
     'TechCrunch': 9,
     'VentureBeat': 8,
     'TechNews': 7,
-    'iThome': 7,
-    'Inside': 7,
-    'TechOrange': 7,
-    'BusinessNext': 7,
-    'Meet': 6,
-    'Techbang': 6,
+    # 台灣中文來源 (提高權重)
+    'iThome': 10,
+    'INSIDE': 10,
+    '數位時代': 10,
+    'TechOrange': 9,
+    'BusinessNext': 8,
+    'Meet': 7,
+    'Techbang': 7,
+    '經濟日報 AI': 9,
+    '聯合報科技': 9,
+    # 其他英文來源
     'AI News': 7,
     'Computer Weekly': 7,
     'Washington Examiner': 6,
@@ -157,17 +162,17 @@ def calculate_score(news_item):
         if keyword in text:
             score += weight
     
-    # 3. Recency bonus
+    # 3. Recency bonus (今日新聞優先)
     try:
         pub_date_str = news_item['published_at']
         pub_date = datetime.strptime(pub_date_str, '%Y-%m-%d')
         today = datetime.now()
         days_diff = (today - pub_date).days
         
-        if days_diff <= 0:  # Today
-            score += 5
+        if days_diff <= 0:  # Today - 大幅加分
+            score += 10
         elif days_diff <= 1:  # Yesterday
-            score += 3
+            score += 4
         elif days_diff <= 3:  # Within 3 days
             score += 2
         elif days_diff <= 7:  # Within 7 days
