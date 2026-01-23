@@ -269,6 +269,11 @@ def fetch_article_content(url, source, discussion_url=None):
         try:
             page.goto(url, wait_until='domcontentloaded', timeout=20000)
             
+            # Special handling for Google News redirects
+            if "news.google.com" in url:
+                print("Waiting for Google News redirect...")
+                page.wait_for_timeout(5000)
+            
             # Wait a bit for JS to load
             try:
                 page.wait_for_selector('article, .content, p', timeout=5000)
