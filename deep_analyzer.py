@@ -677,9 +677,9 @@ def generate_deep_top10(target_date=None):
     processed_articles = []  # 改用新變數名稱，收集所有成功處理的文章
     processed_count = 0
     
-    # 2. Process Candidates until we have 15 good ones (多處理一些以確保分類多樣性)
+    # 2. Process Candidates until we have 12 good ones (減少處理數量以提升效能)
     for item in final_candidates:
-        if len(processed_articles) >= 15:
+        if len(processed_articles) >= 12:
             break
             
         print(f"Processing candidate {processed_count+1}/{len(final_candidates)}: {item['title']}")
@@ -765,7 +765,7 @@ def generate_deep_top10(target_date=None):
             log_debug("  -> AI Analysis failed, skipping.")
             
         processed_count += 1
-        time.sleep(1) # Paid tier: faster processing
+        time.sleep(0.5) # 加快處理速度
         
     # 3. 分類平衡選擇：確保每個分類至少有 1 則
     print("\n🎯 Applying category balance...")
