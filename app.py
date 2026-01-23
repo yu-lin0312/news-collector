@@ -311,13 +311,13 @@ else:
             
             # 分類標籤對應的顯示名稱和 CSS class
             CATEGORY_DISPLAY = {
-                'Breaking': ('速報', 'tag-breaking'),
-                'Tools': ('工具', 'tag-tools'),
-                'Business': ('商業', 'tag-business'),
-                'Creative': ('創作', 'tag-creative'),
-                'Research': ('研究', 'tag-research'),
-                'Rules': ('法規', 'tag-rules'),
-                'Risk': ('風險', 'tag-risk'),
+                'Breaking': ('Breaking', 'tag-breaking'),
+                'Tools': ('Tools', 'tag-tools'),
+                'Business': ('Business', 'tag-business'),
+                'Creative': ('Creative', 'tag-creative'),
+                'Research': ('Research', 'tag-research'),
+                'Rules': ('Rules', 'tag-rules'),
+                'Risk': ('Risk', 'tag-risk'),
             }
             
             ai_category = item.get('ai_category', '')
