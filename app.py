@@ -83,6 +83,12 @@ if hasattr(database, 'FIRESTORE_IMPORT_ERROR') and database.FIRESTORE_IMPORT_ERR
     st.warning(f"⚠️ Firestore 連線失敗，已切換至本地模式 (SQLite)。錯誤訊息: {database.FIRESTORE_IMPORT_ERROR}")
     st.info("請檢查 Secrets 設定中的 FIREBASE_CREDENTIALS 是否正確。")
 
+# DEBUG: Show database mode (remove after debugging)
+with st.expander("🔧 偵錯資訊 (Debug)", expanded=False):
+    st.write(f"**USE_FIRESTORE env:** `{os.environ.get('USE_FIRESTORE', 'NOT SET')}`")
+    st.write(f"**database.USE_FIRESTORE:** `{getattr(database, 'USE_FIRESTORE', 'N/A')}`")
+    st.write(f"**Briefing dates found:** `{database.list_briefings()}`")
+
 
 # ========== HEADER ==========
 # st.title("📡 AI News Radar")
