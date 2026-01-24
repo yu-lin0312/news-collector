@@ -559,8 +559,6 @@ class NewsCrawler:
 
         if method == 'tldr_api':
             self.crawl_tldr_api(source)
-        if method == 'tldr_api':
-            self.crawl_tldr_api(source)
             return
 
         if method == 'hackingai':

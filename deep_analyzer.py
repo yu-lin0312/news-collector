@@ -768,7 +768,7 @@ def generate_deep_top10(target_date=None):
             log_debug("  -> AI Analysis failed, skipping.")
             
         processed_count += 1
-        time.sleep(0.5) # 加快處理速度
+        # Removed time.sleep(0.5) for faster processing
         
     # 3. 分類平衡選擇：確保每個分類至少有 1 則
     print("\n🎯 Applying category balance...")
