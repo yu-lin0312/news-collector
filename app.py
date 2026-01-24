@@ -7,8 +7,6 @@ import json
 import time
 from dotenv import load_dotenv
 
-load_dotenv()
-
 # Inject Streamlit secrets into environment variables for subprocesses
 def load_secrets_to_env():
     """
@@ -44,6 +42,10 @@ def load_secrets_to_env():
         os.environ["USE_FIRESTORE"] = use_firestore
 
 load_secrets_to_env()
+
+# Load .env file (Local overrides)
+# This must run AFTER load_secrets_to_env to allow local .env to override cloud secrets
+load_dotenv(override=True)
 
 
 # Page config

@@ -533,6 +533,9 @@ def generate_deep_top10(target_date=None):
     # We just take the top candidates directly to avoid double-filtering issues with timezones
     print(f"DEBUG: Trusting rule_based_top10 results. Total items: {len(all_news)}")
     
+    # Define limit_date for logging purposes (matching rule_based_top10 logic)
+    limit_date = target_date - timedelta(days=7)
+    
     candidates = []
     for item in all_news:
         # Basic validation only
