@@ -1,5 +1,10 @@
 import os
 import json
+from dotenv import load_dotenv
+
+# Load environment variables before importing modules that depend on them
+load_dotenv()
+
 import database
 import requests
 from bs4 import BeautifulSoup
@@ -9,7 +14,6 @@ import time
 import random
 from playwright.sync_api import sync_playwright
 import urllib3
-from dotenv import load_dotenv
 try:
     from zoneinfo import ZoneInfo
 except ImportError:

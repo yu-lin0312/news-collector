@@ -1,11 +1,16 @@
 import requests
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
+import os
+from dotenv import load_dotenv
+
+# Load environment variables before importing modules that depend on them
+load_dotenv()
+
 import database
 import time
 import urllib3
 import json
-import os
 import re
 from playwright.sync_api import sync_playwright
 import sys

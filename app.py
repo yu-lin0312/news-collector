@@ -1,21 +1,14 @@
 import streamlit as st
-import database
-import pandas as pd
-from datetime import datetime, timedelta
 import os
 import json
-import time
 from dotenv import load_dotenv
 
-# Inject Streamlit secrets into environment variables for subprocesses
+# Inject Streamlit secrets into environment variables for subprocesses and main app
 def load_secrets_to_env():
     """
     Load secrets from streamlit.secrets into os.environ so that subprocesses
-    (like crawler.py and deep_analyzer.py) can access them.
-    
-    Secrets can be at root level or under [general] section.
+    (like crawler.py and deep_analyzer.py) and the main app can access them.
     """
-    # Helper to get secret from root or general section
     def get_secret(key):
         if key in st.secrets:
             return st.secrets[key]
@@ -46,6 +39,11 @@ load_secrets_to_env()
 # Load .env file (Local overrides)
 # This must run AFTER load_secrets_to_env to allow local .env to override cloud secrets
 load_dotenv(override=True)
+
+import database
+import pandas as pd
+from datetime import datetime, timedelta
+import time
 
 
 # Page config
