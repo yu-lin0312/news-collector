@@ -73,6 +73,20 @@
     }
   },
   {
+    "name": "Techbang",
+    "url": "https://www.techbang.com/posts?c=ai",
+    "type": "static",
+    "category": "台灣科技新聞",
+    "selectors": {
+      "container": "article.post-list-item, .post-list-item",
+      "title": "h2 a, h3 a",
+      "link": "h2 a, h3 a",
+      "date": "time",
+      "summary": "p",
+      "image": "img"
+    }
+  },
+  {
     "name": "Nature",
     "url": "https://www.nature.com/search?q=artificial+intelligence&order=date_desc",
     "type": "static",
