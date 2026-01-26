@@ -198,6 +198,13 @@ with st.popover("📅 每日新聞", help="點擊管理簡報"):
                 import sys
                 result = subprocess.run([sys.executable, "crawler.py"], capture_output=True, text=True, encoding='utf-8')
                 
+                # Show crawler output in logs
+                if result.stdout:
+                    for line in result.stdout.split('\n'):
+                        if line.strip():
+                            logs.append(f"CRAWLER: {line[:100]}")  # Truncate long lines
+                    update_terminal(logs)
+                
                 if result.returncode != 0:
                     logs.append(f"ERROR: Crawler failed with code {result.returncode}")
                     logs.append("Aborting sequence.")
