@@ -435,17 +435,18 @@ class NewsCrawler:
                         # Clean up title (remove read time)
                         if "(" in title and "read)" in title:
                             title = title.rsplit("(", 1)[0].strip()
-                            
+                        
+                        # Try to extract date from original URL
+                        published_at = self._try_extract_date_from_url(link)
+                        
                         news_items.append({
                             'source': source['name'],
                             'title': title,
                             'url': link,
                             'summary': summary,
-                            'url': link,
-                            'summary': summary,
-                            'published_at': datetime.now(TAIPEI_TZ).isoformat()
+                            'published_at': published_at
                         })
-                        print(f"Parsed item: {title}")
+                        print(f"Parsed item: {title} (Date: {published_at})")
                 except Exception as e:
                     print(f"Error parsing item: {e}")
                     continue
@@ -458,6 +459,60 @@ class NewsCrawler:
             print(f"Error crawling TLDR: {e}")
             
         return news_items
+    
+    def _try_extract_date_from_url(self, url):
+        """
+        Try to extract publication date from the original article URL.
+        Falls back to current date if extraction fails.
+        """
+        try:
+            # Fetch the original article
+            response = requests.get(url, headers=self.headers, timeout=10, verify=False)
+            if response.status_code == 200:
+                soup = BeautifulSoup(response.text, 'html.parser')
+                
+                # Try multiple date extraction strategies
+                
+                # 1. Look for <time> tag
+                time_tag = soup.find('time')
+                if time_tag:
+                    datetime_attr = time_tag.get('datetime')
+                    if datetime_attr:
+                        return self.normalize_date(datetime_attr)
+                    text = time_tag.get_text(strip=True)
+                    if text:
+                        return self.normalize_date(text)
+                
+                # 2. Look for meta tags
+                meta_published = soup.find('meta', property='article:published_time')
+                if meta_published:
+                    return self.normalize_date(meta_published.get('content'))
+                
+                meta_date = soup.find('meta', attrs={'name': 'date'})
+                if meta_date:
+                    return self.normalize_date(meta_date.get('content'))
+                
+                # 3. Look for common date classes
+                date_selectors = [
+                    '.published-date', '.post-date', '.entry-date', 
+                    '.article-date', '[class*="date"]', '[class*="time"]'
+                ]
+                for selector in date_selectors:
+                    date_elem = soup.select_one(selector)
+                    if date_elem:
+                        date_text = date_elem.get_text(strip=True)
+                        if date_text:
+                            normalized = self.normalize_date(date_text)
+                            # Verify it's not a future date or too old
+                            if normalized and normalized <= self._today():
+                                return normalized
+        
+        except Exception as e:
+            print(f"  Warning: Could not extract date from {url[:50]}...: {e}")
+        
+        # Fallback to current date
+        return self._today()
+
 
     def crawl_hackingai(self, source):
         """
