@@ -34,7 +34,7 @@
   {
     "name": "TechOrange",
     "url": "https://techorange.com/category/ai/",
-    "type": "static",
+    "type": "dynamic",
     "category": "台灣科技新聞",
     "selectors": {
       "container": "div[data-elementor-type=\"loop-item\"]",
@@ -42,20 +42,6 @@
       "link": "h2.elementor-heading-title a",
       "date": "time",
       "summary": null
-    }
-  },
-  {
-    "name": "數位時代",
-    "url": "https://www.bnext.com.tw/search/tag/AI",
-    "type": "dynamic",
-    "category": "台灣科技新聞",
-    "selectors": {
-      "container": "div.item_content",
-      "title": "h2.item_title a",
-      "link": "h2.item_title a",
-      "date": "span.item_date",
-      "summary": "p.item_description",
-      "image": "img"
     }
   },
   {
@@ -70,20 +56,6 @@
       "date": "span.post_date",
       "summary": "p.post_description",
       "image": ".post_list_item_img"
-    }
-  },
-  {
-    "name": "Techbang",
-    "url": "https://www.techbang.com/posts?c=ai",
-    "type": "static",
-    "category": "台灣科技新聞",
-    "selectors": {
-      "container": "article.post-list-item, .post-list-item",
-      "title": "h2 a, h3 a",
-      "link": "h2 a, h3 a",
-      "date": "time",
-      "summary": "p",
-      "image": "img"
     }
   },
   {
@@ -173,20 +145,6 @@
     }
   },
   {
-    "name": "AI News",
-    "url": "https://www.artificialintelligence-news.com/",
-    "type": "dynamic",
-    "category": "全球 AI 趨勢",
-    "selectors": {
-      "container": ".post-block",
-      "title": ".post-title a",
-      "link": ".post-title a",
-      "date": "time",
-      "summary": ".post-content",
-      "image": "img"
-    }
-  },
-  {
     "name": "Computer Weekly",
     "url": "https://www.computerweekly.com/resources/Artificial-intelligence-automation-and-robotics",
     "type": "static",
@@ -243,20 +201,6 @@
     }
   },
   {
-    "name": "Whitehouse",
-    "url": "https://www.whitehouse.gov/briefing-room/?search=artificial+intelligence",
-    "type": "dynamic",
-    "category": "政策法規與治理",
-    "selectors": {
-      "container": ".wp-block-post-template li",
-      "title": ".wp-block-post-title",
-      "link": ".wp-block-post-title a",
-      "date": ".wp-block-post-date",
-      "summary": ".nist-teaser__description",
-      "image": "img"
-    }
-  },
-  {
     "name": "NIST",
     "url": "https://www.nist.gov/news-events/news?keywords=artificial+intelligence",
     "type": "static",
@@ -268,29 +212,6 @@
       "date": "time",
       "summary": ".nist-teaser__description",
       "image": "img"
-    }
-  },
-  {
-    "name": "AI Policy Tracker",
-    "url": "https://aipolicytracker.org/news",
-    "type": "dynamic",
-    "category": "政策法規與治理",
-    "selectors": {
-      "container": "article",
-      "title": "h2 a",
-      "link": "h2 a",
-      "date": ".date",
-      "summary": "p",
-      "image": "img"
-    },
-    "json_embedded": true,
-    "json_path": "props.news.data",
-    "json_mapping": {
-      "title": "title",
-      "link": "id",
-      "date": "upload_date",
-      "summary": "description",
-      "image": "thumbnail.path"
     }
   },
   {
@@ -307,20 +228,6 @@
       "image": "img"
     },
     "link_only": true
-  },
-  {
-    "name": "CISA",
-    "url": "https://www.cisa.gov/ai",
-    "type": "dynamic",
-    "category": "政策法規與治理",
-    "selectors": {
-      "container": ".c-collection__cards .c-card",
-      "title": "h3 a",
-      "link": "h3 a",
-      "date": "time",
-      "summary": ".news-card-excerpt p",
-      "image": ".news-card-image-inner img"
-    }
   },
   {
     "name": "Wevolver",
@@ -360,21 +267,6 @@
     }
   },
   {
-    "name": "Euractiv",
-    "url": "https://www.euractiv.com/topics/artificial-intelligence/feed/",
-    "type": "static",
-    "category": "政策法規與治理",
-    "selectors": {
-      "container": "item",
-      "title": "title",
-      "link": "link",
-      "link_attr": "TEXT",
-      "date": "pubDate",
-      "summary": "description",
-      "image": null
-    }
-  },
-  {
     "name": "Campaign Archive",
     "url": "https://us7.campaign-archive.com/home/?u=6507bf4e4c2df3fdbae6ef738&id=547725049b",
     "type": "static",
@@ -389,34 +281,6 @@
     }
   },
   {
-    "name": "Google DeepMind",
-    "url": "https://deepmind.google/discover/blog/",
-    "type": "dynamic",
-    "category": "巨頭動態與研發",
-    "selectors": {
-      "container": "a[class*='Card_container'], div[class*='blog-card']",
-      "title": "span[class*='title'], h3",
-      "link": "SELF",
-      "date": "time, span[class*='date']",
-      "summary": "span[class*='description']"
-    }
-  },
-  {
-    "name": "OpenAI",
-    "url": "https://openai.com/news/",
-    "type": "dynamic",
-    "category": "巨頭動態與研發",
-    "selectors": {
-      "container": "#main a[href*='/index/']",
-      "title": "div[class*='text-h']",
-      "link": "SELF",
-      "link_attr": "href",
-      "date": "time",
-      "summary": "",
-      "image": "img"
-    }
-  },
-  {
     "name": "Microsoft AI",
     "url": "https://blogs.microsoft.com/ai/",
     "type": "static",
@@ -427,101 +291,6 @@
       "link": "h3 a, h2 a",
       "date": "time",
       "summary": "div.c-paragraph",
-      "image": "img"
-    }
-  },
-  {
-    "name": "Anthropic",
-    "url": "https://www.anthropic.com/news",
-    "type": "dynamic",
-    "category": "巨頭動態與研發",
-    "selectors": {
-      "container": "a[class*='PostCard']",
-      "title": "h3, div[class*='title']",
-      "link": "SELF",
-      "date": "div[class*='date']",
-      "summary": "p"
-    }
-  },
-  {
-    "name": "Meta AI",
-    "url": "https://ai.meta.com/blog/",
-    "type": "dynamic",
-    "category": "巨頭動態與研發",
-    "selectors": {
-      "container": "a[href*='/blog/']",
-      "title": "h3",
-      "link": "SELF",
-      "date": "span",
-      "summary": "p"
-    }
-  },
-  {
-    "name": "Hugging Face",
-    "url": "https://huggingface.co/blog",
-    "type": "dynamic",
-    "category": "巨頭動態與研發",
-    "selectors": {
-      "container": "div.flex.flex-col.overflow-hidden.rounded-xl",
-      "title": "h3",
-      "link": "a",
-      "date": "time",
-      "summary": "p"
-    }
-  },
-  {
-    "name": "NVIDIA AI",
-    "url": "https://blogs.nvidia.com/blog/category/deep-learning/",
-    "type": "static",
-    "category": "巨頭動態與研發",
-    "selectors": {
-      "container": "ul.posts-list li",
-      "title": "h3 a",
-      "link": "h3 a",
-      "date": "span.entry-date",
-      "summary": "div.entry-content"
-    }
-  },
-  {
-    "name": "The Verge AI",
-    "url": "https://www.theverge.com/ai-artificial-intelligence",
-    "type": "dynamic",
-    "category": "全球 AI 趨勢",
-    "selectors": {
-      "container": "div.duet--content-cards--content-card",
-      "title": "h2 a",
-      "link": "h2 a",
-      "date": "time",
-      "summary": "p"
-    }
-  },
-  {
-    "name": "MIT Tech Review",
-    "url": "https://www.technologyreview.com/topic/artificial-intelligence/",
-    "type": "dynamic",
-    "category": "全球 AI 趨勢",
-    "selectors": {
-      "container": "div[class*='homepageStoryCard'], div[class*='StoryItem'], article",
-      "title": "h3, h2, a[class*='title']",
-      "link": "a",
-      "link_attr": "href",
-      "date": "div[class*='date'], time, span[class*='date']",
-      "summary": "div[class*='dek'], p[class*='excerpt'], div[class*='summary']",
-      "image": "img"
-    }
-  },
-  {
-    "name": "TechCrunch AI",
-    "url": "https://techcrunch.com/category/artificial-intelligence/",
-    "type": "dynamic",
-    "category": "全球 AI 趨勢",
-    "selectors": {
-      "container": "div.loop-card, article.loop-card",
-      "title": "h3.loop-card__title",
-      "link": "h3.loop-card__title a",
-      "link_attr": "href",
-      "date": "time.loop-card__time",
-      "summary": "div.loop-card__content",
       "image": "img"
     }
   },
