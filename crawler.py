@@ -381,7 +381,8 @@ class NewsCrawler:
                     raw_summary = self.get_nested_value(item, mapping['summary'])
                     summary = BeautifulSoup(raw_summary, 'html.parser').get_text(strip=True) if raw_summary else ""
                     
-                    image_url = self.get_nested_value(item, mapping['image'])
+                    # Skip image extraction (not used in UI)
+                    image_url = ""
                     
                     print(f"Adding: {title} ({category})")
                     self.db.add_news(title, link, name, category, published_at, summary, image_url)
@@ -742,12 +743,11 @@ class NewsCrawler:
                             raw_date = str(self.get_nested_value(item, mapping.get('date', '')) or "")
                             published_at = self.normalize_date(raw_date)
                             
-                            summary = str(self.get_nested_value(item, mapping.get('summary', '')) or "")
-                            image_url = str(self.get_nested_value(item, mapping.get('image', '')) or "")
                             
-                            # Handle specific image prefix for AI Policy Tracker
-                            if name == 'AI Policy Tracker' and image_url and not image_url.startswith('http'):
-                                image_url = f"https://aipolicytracker.org/storage/{image_url}"
+                            summary = str(self.get_nested_value(item, mapping.get('summary', '')) or "")
+                            
+                            # Skip image extraction (not used in UI)
+                            image_url = ""
                             
                             category = source.get('category', 'Uncategorized')
                             print(f"Adding (JSON): {title} ({category})")
@@ -855,8 +855,9 @@ class NewsCrawler:
                     except Exception as e:
                         print(f"Error extracting Google News source: {e}")
 
-                # Extract Image
-                image_url = self.extract_image(item, selectors.get('image'))
+
+                # Skip image extraction (not used in UI)
+                image_url = ""
                 
                 # Get Category
                 category = source.get('category', 'Uncategorized')
