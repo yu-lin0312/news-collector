@@ -856,7 +856,7 @@ class NewsCrawler:
                         print(f"Error extracting Google News source: {e}")
 
                 # Extract Image
-                image_url = self.extract_image(item, selectors['image'])
+                image_url = self.extract_image(item, selectors.get('image'))
                 
                 # Get Category
                 category = source.get('category', 'Uncategorized')

@@ -201,19 +201,6 @@
     }
   },
   {
-    "name": "Techbang",
-    "type": "static",
-    "category": "學術與前瞻研究",
-    "selectors": {
-      "container": "article, .c-card",
-      "title": "h3 a",
-      "link": "h3 a",
-      "date": "time",
-      "summary": "p",
-      "image": "img"
-    }
-  },
-  {
     "name": "Turing Institute",
     "url": "https://www.turing.ac.uk/news",
     "type": "dynamic",
@@ -439,7 +426,8 @@
       "title": "h3 a, h2 a",
       "link": "h3 a, h2 a",
       "date": "time",
-      "summary": "div.c-paragraph"
+      "summary": "div.c-paragraph",
+      "image": "img"
     }
   },
   {
