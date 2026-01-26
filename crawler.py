@@ -136,7 +136,7 @@ class NewsCrawler:
             # Wait for content to load
             try:
                 selector = wait_selector if wait_selector else 'article, .item, .view-mode-teaser, .post_list_item'
-                page.wait_for_selector(selector, timeout=15000)
+                page.wait_for_selector(selector, timeout=30000)  # Increased from 15s to 30s
             except TimeoutError:
                 print(f"Timeout waiting for content ({selector}), trying to parse anyway...")
             
