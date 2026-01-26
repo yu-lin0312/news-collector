@@ -774,8 +774,8 @@ def generate_deep_top10(target_date=None):
         processed_count += 1
         # Removed time.sleep(0.5) for faster processing
         
-    # 3. 分類平衡選擇：確保每個分類至少有 1 則
-    print("\n🎯 Applying category balance...")
+    # 3. 分類平衡選擇：確保每個分類至少有 1 則，然後按 score 排序
+    print("\n🎯 Applying category balance with score-based ranking...")
     
     # 按分類分組
     category_buckets = {cat: [] for cat in ALL_CATEGORIES}
@@ -786,36 +786,45 @@ def generate_deep_top10(target_date=None):
         else:
             category_buckets['Breaking'].append(item)  # 未知分類歸入 Breaking
     
+    # 在每個分類內按 score 排序
+    for cat in category_buckets:
+        category_buckets[cat].sort(key=lambda x: x.get('score', 0), reverse=True)
+    
     # 列印每個分類的數量
     for cat, items in category_buckets.items():
         print(f"  {cat}: {len(items)} items")
     
-    # 選擇邏輯：每個分類至少 1 則
+    # 選擇邏輯：每個分類至少 1 則（選該分類中 score 最高的）
     final_top10 = []
     used_urls = set()
     
-    # 第一輪：每個分類各選 1 則（按處理順序，即 AI 編輯認為的重要性順序）
+    # 第一輪：每個分類各選 1 則（按 score 最高）
     for cat in ALL_CATEGORIES:
         items = category_buckets[cat]
         if items and len(final_top10) < 10:
-            # 選該分類中排序最前的一則
+            # 選該分類中 score 最高的一則
             for item in items:
                 if item['url'] not in used_urls:
                     final_top10.append(item)
                     used_urls.add(item['url'])
-                    print(f"  ✓ Selected [{cat}]: {item['title'][:40]}...")
+                    print(f"  ✓ Selected [{cat}] (score: {item.get('score', 0):.1f}): {item['title'][:40]}...")
                     break
     
-    # 第二輪：用剩餘名額補齊（按原始處理順序，即 AI 編輯認為的重要性）
-    for item in processed_articles:
+    # 第二輪：用剩餘名額補齊（按 score 排序）
+    remaining_items = [item for item in processed_articles if item['url'] not in used_urls]
+    remaining_items.sort(key=lambda x: x.get('score', 0), reverse=True)
+    
+    for item in remaining_items:
         if len(final_top10) >= 10:
             break
-        if item['url'] not in used_urls:
-            final_top10.append(item)
-            used_urls.add(item['url'])
-            print(f"  + Filled with [{item.get('ai_category', 'Unknown')}]: {item['title'][:40]}...")
+        final_top10.append(item)
+        used_urls.add(item['url'])
+        print(f"  + Filled with [{item.get('ai_category', 'Unknown')}] (score: {item.get('score', 0):.1f}): {item['title'][:40]}...")
     
-    print(f"\n📋 Final Top 10 selected ({len(final_top10)} items)")
+    # 最終按 score 排序
+    final_top10.sort(key=lambda x: x.get('score', 0), reverse=True)
+    
+    print(f"\n📋 Final Top 10 selected and sorted by score ({len(final_top10)} items)")
     
     # 4. Generate Daily Summary (The Cherry on Top)
     print("Generating Daily Briefing Summary...")
