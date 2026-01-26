@@ -214,6 +214,11 @@ with st.popover("📅 每日新聞", help="點擊管理簡報"):
                     st.error(f"爬蟲錯誤: {error_msg}")
                     st.stop()
                 else:
+                    # Wait for Firestore writes to complete (async write latency)
+                    logs.append("Waiting for database sync...")
+                    update_terminal(logs)
+                    time.sleep(2)
+                    
                     # Get final count
                     final_count = database.get_today_news_count()
                     new_items = final_count - initial_count
