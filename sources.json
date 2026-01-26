@@ -308,5 +308,18 @@
       "summary": "description",
       "image": ""
     }
+  },
+  {
+    "name": "數位時代",
+    "url": "https://www.bnext.com.tw/categories/ai",
+    "type": "static",
+    "category": "台灣科技新聞",
+    "selectors": {
+      "container": "div[data-dl_item=\"article\"]",
+      "title": "h2",
+      "link": "a[href*=\"/article/\"]",
+      "date": "div.flex.relative span:last-child",
+      "summary": null
+    }
   }
 ]
