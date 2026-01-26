@@ -67,7 +67,11 @@ class NewsCrawler:
             subprocess.run([sys.executable, "-m", "playwright", "install", "chromium"], check=True)
             print("Playwright browsers checked.")
         except Exception as e:
-            print(f"Warning: Failed to install Playwright browsers: {e}")
+            print(f"ERROR: Failed to install Playwright browsers: {e}")
+            print(f"ERROR TYPE: {type(e).__name__}")
+            import traceback
+            traceback.print_exc()
+            print("WARNING: Continuing without Playwright browser check...")
 
     def _ensure_browser(self):
         """Lazily initialize shared Playwright browser and context."""
