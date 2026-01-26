@@ -1,0 +1,13 @@
+﻿Checking BRIEFINGS for date: 2026-01-26
+Found 10 items in briefing.
+------------------------------
+1. [2026-01-26T10:31:50.795787+08:00] Personalized Search with AI Mode
+2. [2026-01-26] OpenAI 全面進軍企業金脈 2026年B2B AI大戰正式開打
+3. [2026-01-26T10:31:50.796331+08:00] Overcoming Compute and Memory Bottlenecks with FlashAttention-4 on NVIDIA Blackwell
+4. [2026-01-26] Paris Hilton teams up with AOC to push House to pass stalled AI deepfake porn bill
+5. [2026-01-26T10:31:50.797492+08:00] Supply-chain risk of agentic AI - infecting infrastructures via skill worms
+6. [2026-01-26T10:31:50.797121+08:00] Salesforce Adopts Cursor at Scale
+7. [2026-01-26] AI引爆美股科技超級週！雲端、大型半導體、記憶體儲存齊攜盤創新高-CMoney 研究員
+8. [2026-01-26T10:31:50.797402+08:00] Inference startup Inferact lands $150M to commercialize vLLM
+9. [2026-01-26T10:31:50.796741+08:00] Qwen3-TTS Family is Now Open Sourced: Voice Design, Clone, and Generation!
+10. [2026-01-26] Cambridge supercomputer set to get 6 times more powerful as government backs British AI innovation

@@ -126,7 +126,47 @@ with st.popover("📅 每日新聞", help="點擊管理簡報"):
         default_skip_crawl = True
         st.caption("✅ 今日簡報已存在，點擊可重新生成")
     
-    if st.button("🚀 開始生成", use_container_width=True):
+    # Check if generation is complete
+    if st.session_state.get('generation_complete', False):
+        # Display terminal with stored logs
+        term_container = st.empty()
+        
+        def display_terminal(lines, show_cursor=False):
+            content_lines = ""
+            for line in lines:
+                content_lines += f'<div class="terminal-line"><span class="terminal-prompt">➜</span><span>{line}</span></div>'
+            
+            cursor_html = '<span class="terminal-cursor"></span>' if show_cursor else ''
+            
+            html = f'''
+            <div class="terminal-window">
+                <div class="terminal-header">
+                    <div class="terminal-dots">
+                        <div class="terminal-dot dot-red"></div>
+                        <div class="terminal-dot dot-yellow"></div>
+                        <div class="terminal-dot dot-green"></div>
+                    </div>
+                    <span>BRIEFING_GENERATOR_v2.1</span>
+                </div>
+                <div class="terminal-content">
+                    {content_lines}
+                    {cursor_html}
+                </div>
+            </div>
+            '''
+            term_container.markdown(html, unsafe_allow_html=True)
+        
+        # Display stored logs
+        stored_logs = st.session_state.get('generation_logs', [])
+        display_terminal(stored_logs, show_cursor=False)
+        
+        # Add completion button
+        if st.button("✅ 完成並重新整理", use_container_width=True):
+            st.session_state.generation_complete = False
+            st.session_state.generation_logs = []
+            st.rerun()
+    
+    elif st.button("🚀 開始生成", use_container_width=True):
         # Terminal Container
         term_container = st.empty()
         
@@ -210,6 +250,10 @@ with st.popover("📅 每日新聞", help="點擊管理簡報"):
                     logs.append("Aborting sequence.")
                     update_terminal(logs, show_cursor=False)
                     
+                    # Store logs in session state
+                    st.session_state.generation_logs = logs
+                    st.session_state.generation_complete = True
+                    
                     error_msg = result.stderr if result.stderr else result.stdout
                     st.error(f"爬蟲錯誤: {error_msg}")
                     st.stop()
@@ -287,6 +331,11 @@ with st.popover("📅 每日新聞", help="點擊管理簡報"):
             if not result or not result.get('top10'):
                 logs.append("CRITICAL: Generation produced 0 items.")
                 update_terminal(logs, show_cursor=False)
+                
+                # Store logs in session state
+                st.session_state.generation_logs = logs
+                st.session_state.generation_complete = True
+                
                 st.error("⚠️ 生成結果為空！上方終端機已顯示詳細日誌 (DA: 開頭)。請檢查是否有 'Found 0 candidates' 或其他錯誤訊息。")
                 st.stop()
             
@@ -297,11 +346,20 @@ with st.popover("📅 每日新聞", help="點擊管理簡報"):
             logs.append("Sequence complete. System ready.")
             update_terminal(logs, show_cursor=False)
             
+            # Store logs in session state
+            st.session_state.generation_logs = logs
+            st.session_state.generation_complete = True
+            
             time.sleep(1)
             st.rerun()
         except Exception as e:
             logs.append(f"CRITICAL ERROR: {str(e)}")
             update_terminal(logs, show_cursor=False)
+            
+            # Store logs in session state
+            st.session_state.generation_logs = logs
+            st.session_state.generation_complete = True
+            
             st.error(f"發生錯誤: {e}")
 
 if not briefing_dates:
