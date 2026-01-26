@@ -542,8 +542,29 @@ def generate_deep_top10(target_date=None):
     
     candidates = []
     for item in all_news:
-        # Basic validation only
-        if item and item.get('title') and item.get('url'):
+        # Basic validation
+        if not (item and item.get('title') and item.get('url')):
+            continue
+            
+        # Strict Date Check (Redundancy)
+        try:
+            pub_date_str = item['published_at']
+            if 'T' in pub_date_str:
+                pub_date = datetime.fromisoformat(pub_date_str)
+            else:
+                pub_date = datetime.strptime(pub_date_str, '%Y-%m-%d')
+                
+            if pub_date.tzinfo is not None:
+                pub_date = pub_date.replace(tzinfo=None)
+                
+            # If older than limit_date (5 days), skip
+            if pub_date < limit_date:
+                # print(f"Skipping old news: {item['title']} ({pub_date_str})")
+                continue
+                
+            candidates.append(item)
+        except:
+            # If date parse fails, keep it but it might get low score
             candidates.append(item)
             
     # Score them

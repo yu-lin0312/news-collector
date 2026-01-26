@@ -122,9 +122,9 @@ def get_recent_news():
     
     print(f"RB: Total items from DB: {len(news_list)}")
     
-    # Filter for recent news (last 7 days)
+    # Filter for recent news (last 5 days)
     today = datetime.now()
-    limit_date = today - timedelta(days=7)
+    limit_date = today - timedelta(days=5)
     
     recent_news = []
     for item in news_list:
@@ -198,12 +198,12 @@ def calculate_score(news_item):
             score += 50
         elif days_diff <= 1:  # Yesterday
             score += 8
-        elif days_diff <= 3:  # Within 3 days - 降低分數
-            score += 3
-        elif days_diff <= 7:  # Within 7 days - 降低分數
-            score += 1
-        else:  # Older than 7 days - 扣分
+        elif days_diff <= 2:  # 2 days old - 輕微扣分
             score -= 5
+        elif days_diff <= 3:  # 3 days old - 顯著扣分
+            score -= 20
+        else:  # Older than 3 days - 直接排除 (扣重分)
+            score -= 100
     except Exception as e:
         # print(f"Date score error: {e}")
         pass
