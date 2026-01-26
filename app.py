@@ -186,6 +186,11 @@ with st.popover("📅 每日新聞", help="點擊管理簡報"):
                 logs.append("Starting crawler subsystem...")
                 update_terminal(logs)
                 
+                # Get initial count
+                initial_count = database.get_today_news_count()
+                logs.append(f"Initial news count: {initial_count}")
+                update_terminal(logs)
+
                 logs.append("Targeting global AI news sources...")
                 update_terminal(logs)
                 
@@ -202,9 +207,32 @@ with st.popover("📅 每日新聞", help="點擊管理簡報"):
                     st.error(f"爬蟲錯誤: {error_msg}")
                     st.stop()
                 else:
+                    # Get final count
+                    final_count = database.get_today_news_count()
+                    new_items = final_count - initial_count
+                    
                     logs.append("Crawler finished successfully. [OK]")
-                    logs.append(f"Data ingestion complete.")
+                    logs.append(f"Data ingestion complete. New items: {new_items}")
                     update_terminal(logs)
+                    
+                    if new_items == 0:
+                        logs.append("WARNING: No new items found.")
+                        update_terminal(logs)
+                        st.warning("⚠️ 本次爬蟲未抓取到任何新新聞 (新增數: 0)")
+                        with st.expander("❓ 為什麼抓不到新聞？(點擊查看排除方法)"):
+                            st.markdown("""
+                            **可能原因與解決方法：**
+                            1. **資料庫已有最新資料**：今天的新聞可能已經抓過了。
+                            2. **網路連線問題**：伺服器可能無法連線到新聞網站。
+                            3. **網站阻擋 (WAF)**：新聞來源可能阻擋了爬蟲 (如 Cloudflare)。
+                            4. **來源網站未更新**：目標網站今天可能還沒發布新文章。
+                            
+                            **建議操作：**
+                            - 檢查 `debug_log.txt` 查看詳細錯誤。
+                            - 稍後再試。
+                            """)
+                    else:
+                        st.success(f"✅ 成功抓取 {new_items} 則新新聞！")
             else:
                 logs.append("Database check: Found existing records.")
                 logs.append("Skipping crawler sequence. [SKIP]")
