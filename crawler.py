@@ -460,57 +460,79 @@ class NewsCrawler:
             
         return news_items
     
+    def _extract_date_from_html(self, html, url=""):
+        """Extract date from HTML content using BeautifulSoup."""
+        try:
+            soup = BeautifulSoup(html, 'html.parser')
+            
+            # 1. Look for <time> tag
+            time_tag = soup.find('time')
+            if time_tag:
+                datetime_attr = time_tag.get('datetime')
+                if datetime_attr:
+                    return self.normalize_date(datetime_attr)
+                text = time_tag.get_text(strip=True)
+                if text:
+                    return self.normalize_date(text)
+            
+            # 2. Look for meta tags
+            meta_published = soup.find('meta', property='article:published_time')
+            if meta_published:
+                return self.normalize_date(meta_published.get('content'))
+            
+            meta_date = soup.find('meta', attrs={'name': 'date'})
+            if meta_date:
+                return self.normalize_date(meta_date.get('content'))
+            
+            # 3. Look for common date classes
+            date_selectors = [
+                '.published-date', '.post-date', '.entry-date', 
+                '.article-date', '[class*="date"]', '[class*="time"]'
+            ]
+            for selector in date_selectors:
+                date_elem = soup.select_one(selector)
+                if date_elem:
+                    date_text = date_elem.get_text(strip=True)
+                    if date_text:
+                        normalized = self.normalize_date(date_text)
+                        if normalized and normalized <= self._today():
+                            return normalized
+        except Exception as e:
+            print(f"Error parsing HTML for date ({url}): {e}")
+        return None
+
     def _try_extract_date_from_url(self, url):
         """
         Try to extract publication date from the original article URL.
-        Falls back to current date if extraction fails.
+        Falls back to Playwright if requests fails.
         """
+        print(f"  Extracting date from: {url}")
+        
+        # 1. Try fast requests first
         try:
-            # Fetch the original article
             response = requests.get(url, headers=self.headers, timeout=10, verify=False)
             if response.status_code == 200:
-                soup = BeautifulSoup(response.text, 'html.parser')
-                
-                # Try multiple date extraction strategies
-                
-                # 1. Look for <time> tag
-                time_tag = soup.find('time')
-                if time_tag:
-                    datetime_attr = time_tag.get('datetime')
-                    if datetime_attr:
-                        return self.normalize_date(datetime_attr)
-                    text = time_tag.get_text(strip=True)
-                    if text:
-                        return self.normalize_date(text)
-                
-                # 2. Look for meta tags
-                meta_published = soup.find('meta', property='article:published_time')
-                if meta_published:
-                    return self.normalize_date(meta_published.get('content'))
-                
-                meta_date = soup.find('meta', attrs={'name': 'date'})
-                if meta_date:
-                    return self.normalize_date(meta_date.get('content'))
-                
-                # 3. Look for common date classes
-                date_selectors = [
-                    '.published-date', '.post-date', '.entry-date', 
-                    '.article-date', '[class*="date"]', '[class*="time"]'
-                ]
-                for selector in date_selectors:
-                    date_elem = soup.select_one(selector)
-                    if date_elem:
-                        date_text = date_elem.get_text(strip=True)
-                        if date_text:
-                            normalized = self.normalize_date(date_text)
-                            # Verify it's not a future date or too old
-                            if normalized and normalized <= self._today():
-                                return normalized
-        
+                date = self._extract_date_from_html(response.text, url)
+                if date and date != self._today():
+                    return date
+                print(f"    -> Requests returned no date or today's date. Trying Playwright...")
+            else:
+                print(f"    -> Requests failed ({response.status_code}). Trying Playwright...")
         except Exception as e:
-            print(f"  Warning: Could not extract date from {url[:50]}...: {e}")
+            print(f"    -> Requests error: {e}. Trying Playwright...")
+
+        # 2. Fallback to Playwright
+        try:
+            html = self.fetch_with_browser(url)
+            if html:
+                date = self._extract_date_from_html(html, url)
+                if date:
+                    return date
+        except Exception as e:
+            print(f"    -> Playwright date extraction error: {e}")
         
         # Fallback to current date
+        print("    -> Could not extract date, using today.")
         return self._today()
 
 
@@ -586,18 +608,23 @@ class NewsCrawler:
                     is_news = True
                 
                 # Filter: Only keep News items as per user request
+                # Filter: Only keep News items as per user request
                 if not is_news:
                     # print(f"Skipping discussion/image: {title}")
                     continue
                     
                 # Check if exists
                 if self.db.url_exists(source_url):
+                    print(f"  -> Skipping existing URL: {source_url}")
                     continue
                     
                 print(f"Adding (HackingAI): {title} ({source_name}) | Date: {published_at}")
                 # Add to DB with discussion_url
-                self.db.add_news(title, source_url, source_name, category, published_at, "", "", discussion_url=discussion_url)
-                count += 1
+                success = self.db.add_news(title, source_url, source_name, category, published_at, "", "", discussion_url=discussion_url)
+                if success:
+                    count += 1
+                else:
+                    print(f"  -> Failed to add to DB: {title}")
                 
             except Exception as e:
                 print(f"Error parsing HackingAI item: {e}")
