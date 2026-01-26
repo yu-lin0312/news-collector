@@ -179,7 +179,7 @@ def calculate_score(news_item):
         if keyword in text:
             score += weight
     
-    # 3. Recency bonus (今日新聞優先)
+    # 3. Recency bonus (今日新聞優先 - 大幅加強)
     try:
         pub_date_str = news_item['published_at']
         try:
@@ -194,14 +194,16 @@ def calculate_score(news_item):
         pub_date_date = pub_date.date()
         days_diff = (today_date - pub_date_date).days
         
-        if days_diff <= 0:  # Today - 大幅加分
-            score += 10
+        if days_diff <= 0:  # Today - 超大幅加分，確保今日新聞優先
+            score += 50
         elif days_diff <= 1:  # Yesterday
-            score += 4
-        elif days_diff <= 3:  # Within 3 days
-            score += 2
-        elif days_diff <= 7:  # Within 7 days
+            score += 8
+        elif days_diff <= 3:  # Within 3 days - 降低分數
+            score += 3
+        elif days_diff <= 7:  # Within 7 days - 降低分數
             score += 1
+        else:  # Older than 7 days - 扣分
+            score -= 5
     except Exception as e:
         # print(f"Date score error: {e}")
         pass
