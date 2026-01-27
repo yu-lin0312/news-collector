@@ -32,19 +32,6 @@
     }
   },
   {
-    "name": "TechOrange",
-    "url": "https://techorange.com/category/ai/",
-    "type": "dynamic",
-    "category": "台灣科技新聞",
-    "selectors": {
-      "container": "div[data-elementor-type=\"loop-item\"]",
-      "title": "h2.elementor-heading-title a",
-      "link": "h2.elementor-heading-title a",
-      "date": "time",
-      "summary": null
-    }
-  },
-  {
     "name": "INSIDE",
     "url": "https://www.inside.com.tw/tag/ai",
     "type": "dynamic",
@@ -112,8 +99,7 @@
       "date": "time",
       "summary": ".line-clamp-3 p",
       "image": "figure img"
-    },
-    "link_only": true
+    }
   },
   {
     "name": "IT Brief NZ",
@@ -127,8 +113,7 @@
       "date": "div.text-xs.text-gray-400",
       "summary": null,
       "image": "img"
-    },
-    "link_only": true
+    }
   },
   {
     "name": "Washington Examiner",
@@ -155,20 +140,6 @@
       "link": "h4 a, h3 a",
       "date": "span.date",
       "summary": "p",
-      "image": "img"
-    }
-  },
-  {
-    "name": "Turing Institute",
-    "url": "https://www.turing.ac.uk/news",
-    "type": "dynamic",
-    "category": "學術與前瞻研究",
-    "selectors": {
-      "container": "div.views-row",
-      "title": "h3 a",
-      "link": "h3 a",
-      "date": "div.field-published-date span",
-      "summary": "h4 a",
       "image": "img"
     }
   },
@@ -226,8 +197,7 @@
       "date": "time, .date",
       "summary": "p",
       "image": "img"
-    },
-    "link_only": true
+    }
   },
   {
     "name": "Wevolver",
@@ -320,6 +290,122 @@
       "link": "a[href*=\"/article/\"]",
       "date": "div.flex.relative span:last-child",
       "summary": null
+    }
+  },
+  {
+    "name": "TechCrunch AI",
+    "url": "https://techcrunch.com/category/artificial-intelligence/feed/",
+    "type": "static",
+    "category": "全球 AI 趨勢",
+    "selectors": {
+      "container": "item",
+      "title": "title",
+      "link": "link",
+      "link_attr": "TEXT",
+      "date": "pubDate",
+      "summary": "description",
+      "image": ""
+    }
+  },
+  {
+    "name": "The Verge AI",
+    "url": "https://www.theverge.com/ai-artificial-intelligence",
+    "type": "dynamic",
+    "category": "全球 AI 趨勢",
+    "selectors": {
+      "container": "article, .duet--content-cards--content-card",
+      "title": "h2 a, .duet--content-cards--content-card__title",
+      "link": "h2 a",
+      "date": "time",
+      "summary": ".duet--content-cards--content-card__description, p",
+      "image": "img"
+    }
+  },
+  {
+    "name": "MIT Technology Review",
+    "url": "https://www.technologyreview.com/topic/artificial-intelligence/",
+    "type": "static",
+    "category": "學術與前瞻研究",
+    "selectors": {
+      "container": "article, .teaserItem__a",
+      "title": "h3 a, .teaserItem__title",
+      "link": "h3 a, .teaserItem__title a",
+      "date": "time, .teaserItem__date",
+      "summary": ".teaserItem__description, p",
+      "image": "img"
+    }
+  },
+  {
+    "name": "科技新報",
+    "url": "https://technews.tw/tag/ai/",
+    "type": "static",
+    "category": "台灣科技新聞",
+    "selectors": {
+      "container": "article, .post",
+      "title": "h2 a, .entry-title a",
+      "link": "h2 a, .entry-title a",
+      "date": "time, .entry-date",
+      "summary": ".entry-summary, .excerpt",
+      "image": "img"
+    }
+  },
+  {
+    "name": "T客邦",
+    "url": "https://www.techbang.com/posts?tag=AI",
+    "type": "static",
+    "category": "台灣科技新聞",
+    "selectors": {
+      "container": "article, .post-item",
+      "title": "h3 a, .post-title a",
+      "link": "h3 a, .post-title a",
+      "date": "time, .post-date",
+      "summary": ".post-excerpt, p",
+      "image": "img"
+    }
+  },
+  {
+    "name": "Google News (人工智慧)",
+    "url": "https://news.google.com/rss/search?q=人工智慧&hl=zh-TW&gl=TW&ceid=TW:zh-hant",
+    "type": "static",
+    "category": "全球 AI 趨勢",
+    "selectors": {
+      "container": "item",
+      "title": "title",
+      "link": "link",
+      "link_attr": "TEXT",
+      "date": "pubDate",
+      "summary": "description",
+      "image": ""
+    }
+  },
+  {
+    "name": "Google News (ChatGPT)",
+    "url": "https://news.google.com/rss/search?q=ChatGPT&hl=zh-TW&gl=TW&ceid=TW:zh-hant",
+    "type": "static",
+    "category": "全球 AI 趨勢",
+    "selectors": {
+      "container": "item",
+      "title": "title",
+      "link": "link",
+      "link_attr": "TEXT",
+      "date": "pubDate",
+      "summary": "description",
+      "image": ""
+    }
+  },
+  {
+    "name": "Google News (Gemini AI)",
+    "url": "https://news.google.com/rss/search?q=Gemini+AI&hl=zh-TW&gl=TW&ceid=TW:zh-hant",
+    "type": "static",
+    "category": "全球 AI 趨勢",
+    "selectors": {
+      "container": "item",
+      "title": "title",
+      "link": "link",
+      "link_attr": "TEXT",
+      "date": "pubDate",
+      "summary": "description",
+      "image": ""
     }
   }
 ]

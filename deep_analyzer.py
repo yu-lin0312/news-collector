@@ -276,7 +276,24 @@ def fetch_article_content(url, source, discussion_url=None):
             # Special handling for Google News redirects
             if "news.google.com" in url:
                 print("Waiting for Google News redirect...")
-                page.wait_for_timeout(5000)
+                # Wait for redirect to complete
+                page.wait_for_timeout(3000)
+                
+                # Check if we've been redirected to the actual article
+                current_url = page.url
+                if "news.google.com" not in current_url:
+                    print(f"Redirected to: {current_url}")
+                else:
+                    # If still on Google News, wait longer and try to trigger redirect
+                    print("Still on Google News, waiting for redirect...")
+                    page.wait_for_timeout(5000)
+                    current_url = page.url
+                    
+                    # If still on Google News after 8 seconds total, give up on this URL
+                    if "news.google.com" in current_url:
+                        print(f"-> Redirect failed, still on Google News")
+                        page.close()
+                        return None, "Google News redirect failed", None
             
             # Wait a bit for JS to load
             try:
