@@ -151,7 +151,8 @@ def resolve_original_source(item):
     """
     If source is an aggregator, try to resolve the real source from URL.
     """
-    aggregator_names = ['TLDR Tech AI', 'HackingAI']
+    # 聚合器列表:包含 Google News 相關來源
+    aggregator_names = ['TLDR Tech AI', 'HackingAI', 'Google News']
     
     # Check if it's an aggregator
     is_aggregator = False
@@ -172,7 +173,7 @@ def resolve_original_source(item):
             parts = domain.split('.')
             if len(parts) >= 2:
                 name = parts[0]
-                # Special cases
+                # Special cases - 國際網站
                 if 'github' in name: return 'GitHub'
                 if 'arxiv' in name: return 'Arxiv'
                 if 'youtube' in name: return 'YouTube'
@@ -181,6 +182,14 @@ def resolve_original_source(item):
                 if 'wsj' in name: return 'WSJ'
                 if 'nytimes' in name: return 'NYTimes'
                 if 'reuters' in name: return 'Reuters'
+                
+                # Special cases - 台灣網站
+                if 'pchome' in name: return 'PChome'
+                if 'ithome' in name: return 'iThome'
+                if 'inside' in name: return 'INSIDE'
+                if 'bnext' in name: return '數位時代'
+                if 'technews' in name: return '科技新報'
+                if 'techbang' in name: return 'T客邦'
                 
                 # Default: Capitalize first letter
                 return name.title()
@@ -544,7 +553,7 @@ def generate_deep_top10(target_date=None):
 
     print(f"Starting Deep Analysis for {target_date.strftime('%Y-%m-%d')}...")
     
-    # 1. Get Candidates (Top 30 from Rule-Based)
+    # 1. Get Candidates (Top 100 from Rule-Based)
     import rule_based_top10
     
     database.init_db()
