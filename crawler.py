@@ -131,14 +131,17 @@ class NewsCrawler:
         print(f"Fetching with Playwright: {url}")
         try:
             page = self._get_page()
-            page.goto(url, wait_until='domcontentloaded')
+            page.goto(url, wait_until='domcontentloaded', timeout=45000)
             
             # Wait for content to load
+            # If wait_selector is provided, use it. Otherwise use a default set.
+            selector = wait_selector if wait_selector else 'article, .item, .view-mode-teaser, .post_list_item'
+            
             try:
-                selector = wait_selector if wait_selector else 'article, .item, .view-mode-teaser, .post_list_item'
-                page.wait_for_selector(selector, timeout=30000)  # Increased from 15s to 30s
-            except TimeoutError:
-                print(f"Timeout waiting for content ({selector}), trying to parse anyway...")
+                print(f"  Waiting for selector: {selector}")
+                page.wait_for_selector(selector, timeout=30000)
+            except Exception as e:
+                print(f"  Timeout or error waiting for content ({selector}), trying to parse anyway...")
             
             content = page.content()
             page.close()
@@ -158,6 +161,7 @@ class NewsCrawler:
             (r'(\d{4}-\d{1,2}-\d{1,2})', '%Y-%m-%d'),    # YYYY-MM-DD
             (r'(\d{4}/\d{1,2}/\d{1,2})', '%Y/%m/%d'),    # YYYY/MM/DD
             (r'(\d{1,2}/\d{1,2}/\d{4})', '%m/%d/%Y'),    # MM/DD/YYYY
+            (r'(\d{4})年(\d{1,2})月(\d{1,2})日', '%Y-%m-%d'),  # YYYY年MM月DD日
         ]
         for pattern, fmt in patterns:
             match = re.search(pattern, date_str)
@@ -662,7 +666,11 @@ class NewsCrawler:
         print(f"Crawling {name}...")
         
         if method == 'dynamic':
-            html = self.fetch_with_browser(url)
+            # Use the container selector as the wait_selector for better reliability
+            wait_sel = None
+            if 'selectors' in source and 'container' in source['selectors']:
+                wait_sel = source['selectors']['container'].split(',')[0].strip()
+            html = self.fetch_with_browser(url, wait_selector=wait_sel)
         else:
             html = self.fetch_page(url)
             
@@ -834,7 +842,8 @@ class NewsCrawler:
                 
                 # Special handling for Google News source extraction
                 real_source_name = name
-                if name == "Google News (AI)":
+                # 處理所有 Google News 變體 (AI, Gemini AI, ChatGPT, 人工智慧等)
+                if "Google News" in name or "google news" in name.lower():
                     try:
                         # For RSS, source is often in a specific tag or part of title/description
                         # In Google News RSS, it's often at the end of the title: "Title - Source"
