@@ -442,3 +442,58 @@ div.stButton>button:hover {
     background: #fecaca;
     color: #b91c1c;
 }
+
+/* ========== DAILY SUMMARY CARD ========== */
+.daily-summary-card {
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    border: 1px solid var(--border-color);
+    border-left: 4px solid #4285f4;
+    border-radius: var(--radius-md);
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: var(--transition-base);
+}
+
+.daily-summary-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+.daily-summary-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #4285f4;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.daily-summary-title::before {
+    content: '';
+    font-size: 16px;
+}
+
+.daily-summary-content {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--text-primary);
+    font-weight: 400;
+}
+
+@media (max-width: 640px) {
+    .daily-summary-card {
+        padding: 18px;
+        margin-bottom: 18px;
+    }
+    .daily-summary-title {
+        font-size: 13px;
+    }
+    .daily-summary-content {
+        font-size: 15px;
+        line-height: 1.6;
+    }
+}

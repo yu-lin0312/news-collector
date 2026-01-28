@@ -9,30 +9,35 @@ def load_secrets_to_env():
     Load secrets from streamlit.secrets into os.environ so that subprocesses
     (like crawler.py and deep_analyzer.py) and the main app can access them.
     """
-    def get_secret(key):
-        if key in st.secrets:
-            return st.secrets[key]
-        elif "general" in st.secrets and key in st.secrets["general"]:
-            return st.secrets["general"][key]
-        return None
-    
-    # 1. GOOGLE_API_KEY
-    api_key = get_secret("GOOGLE_API_KEY")
-    if api_key:
-        os.environ["GOOGLE_API_KEY"] = api_key
+    try:
+        def get_secret(key):
+            if key in st.secrets:
+                return st.secrets[key]
+            elif "general" in st.secrets and key in st.secrets["general"]:
+                return st.secrets["general"][key]
+            return None
+        
+        # 1. GOOGLE_API_KEY
+        api_key = get_secret("GOOGLE_API_KEY")
+        if api_key:
+            os.environ["GOOGLE_API_KEY"] = api_key
 
-    # 2. FIREBASE_CREDENTIALS
-    creds = get_secret("FIREBASE_CREDENTIALS")
-    if creds:
-        if isinstance(creds, dict):
-            os.environ["FIREBASE_CREDENTIALS"] = json.dumps(dict(creds))
-        else:
-            os.environ["FIREBASE_CREDENTIALS"] = str(creds)
+        # 2. FIREBASE_CREDENTIALS
+        creds = get_secret("FIREBASE_CREDENTIALS")
+        if creds:
+            if isinstance(creds, dict):
+                os.environ["FIREBASE_CREDENTIALS"] = json.dumps(dict(creds))
+            else:
+                os.environ["FIREBASE_CREDENTIALS"] = str(creds)
 
-    # 3. USE_FIRESTORE
-    use_firestore = get_secret("USE_FIRESTORE")
-    if use_firestore:
-        os.environ["USE_FIRESTORE"] = use_firestore
+        # 3. USE_FIRESTORE
+        use_firestore = get_secret("USE_FIRESTORE")
+        if use_firestore:
+            os.environ["USE_FIRESTORE"] = use_firestore
+    except Exception as e:
+        # Silently fail if secrets are not found (e.g. local development without secrets.toml)
+        # The app will fall back to .env file loaded below
+        pass
 
 load_secrets_to_env()
 
@@ -390,11 +395,22 @@ else:
         # Check if the displayed news is from today
         today_str = datetime.now().strftime('%Y-%m-%d')
         if file_date != today_str:
-            st.warning(f"⚠️ 尚未生成今日 ({today_str}) 的新聞，目前顯示 {file_date} 的內容。")
+            st.warning(f"⚠️ 尚未生成今日 ({today_str}) 的新聞,目前顯示 {file_date} 的內容。")
         
         # Display Date Header
         st.markdown(f"### {file_date} 新聞AI摘要")
         st.markdown("---")
+        
+        # Display Daily Summary Card (if available)
+        daily_summary = data.get('daily_briefing')
+        if daily_summary:
+            summary_html = f'''
+<div class="daily-summary-card">
+    <div class="daily-summary-title">今日新聞總結</div>
+    <div class="daily-summary-content">{daily_summary}</div>
+</div>
+'''
+            st.markdown(summary_html, unsafe_allow_html=True)
         
         # 5x2 Grid Layout
         html_cards = []

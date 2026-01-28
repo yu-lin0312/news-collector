@@ -431,7 +431,7 @@ def analyze_article_with_gemini(title, content, source):
 
 def generate_daily_summary(top10_list):
     """
-    Generates a high-level summary for the entire briefing card.
+    Generates a high-level summary for the entire briefing (100-150 words).
     """
     api_key = get_api_key()
     if not api_key or not top10_list:
@@ -443,42 +443,63 @@ def generate_daily_summary(top10_list):
     # Prepare input
     news_text = ""
     for i, item in enumerate(top10_list):
-        news_text += f"{i+1}. {item['title']} (Category: {item.get('top10_category')})\n"
+        category = item.get('ai_category', item.get('top10_category', 'Unknown'))
+        news_text += f"{i+1}. [{category}] {item['title']}\n"
         
     prompt = f"""
-    你是一位 AI 新聞主編。請根據以下今日 Top 5 新聞列表，為首頁的「每日簡報卡片」撰寫文案。
+    你是一位專業的 AI 新聞編輯。請根據以下今日 Top 10 新聞列表,撰寫一段精簡的「今日新聞總結」。
     
     【今日新聞列表】
     {news_text}
     
     【撰寫要求】
-    請生成 JSON 格式，包含以下兩個欄位 (繁體中文)：
+    1. **長度**:100-150 字(繁體中文)
+    2. **風格**:專業、簡潔、有力,類似新聞播報的開場白
+    3. **內容**:
+       - 第一句:點出今日最重要的 1-2 個大事件或趨勢
+       - 接著:簡述其他值得關注的重點(提及 2-3 個關鍵字、公司或技術)
+       - 結尾:可選擇性地點出整體趨勢或影響
+    4. **語氣**:客觀中立,避免過度誇張
     
-    1. **title_summary (標題總結)**：
-       - 綜合今日最重要的 1-2 個大事件，寫成一個吸睛的標題。
-       - 例如：「歐盟祭出 AI 新禁令，台積電 2nm 傳新進展」
-       - 字數限制：25 字以內。
-       
-    2. **key_takeaways (重點速覽)**：
-       - 用一句話概括今日重點，提到 2-3 個關鍵字或公司。
-       - 例如：「涵蓋 Grok 監管爭議、MIT 2026 十大技術預測及 AI 醫療新應用。」
-       - 字數限制：40 字以內。
-       
+    【範例】
+    「今日 AI 領域聚焦於 OpenAI 推出的 GPT-5 測試版,展現多模態能力的重大突破。同時,歐盟通過新版 AI Act 修正案,對高風險應用祭出更嚴格規範。此外,NVIDIA 發布新一代 H200 GPU、Google DeepMind 公開最新論文,以及多家新創獲得融資,顯示產業持續蓬勃發展。」
+    
     【輸出格式】
-    {{
-        "title_summary": "...",
-        "key_takeaways": "..."
-    }}
+    請直接回覆總結文字,不要有 JSON 或 markdown 標記,只需要純文字內容。
     """
     
     try:
         response = model.generate_content(prompt)
-        text = response.text
-        if "```json" in text:
-            text = text.split("```json")[1].split("```")[0]
-        elif "```" in text:
-            text = text.split("```")[1].split("```")[0]
-        return json.loads(text)
+        text = response.text.strip()
+        
+        # Clean up any potential markdown or JSON artifacts
+        if text.startswith('```'):
+            # Remove code block markers
+            text = text.split('```')[1] if '```' in text else text
+            text = text.strip()
+        
+        if text.startswith('{') or text.startswith('['):
+            # If it's JSON despite instructions, try to extract
+            try:
+                data = json.loads(text)
+                if isinstance(data, dict):
+                    text = data.get('summary', data.get('text', str(data)))
+                else:
+                    text = str(data)
+            except:
+                pass
+        
+        # Validate length (should be 100-150 chars, allow some flexibility)
+        if len(text) < 50:
+            print(f"Warning: Generated summary too short ({len(text)} chars)")
+            return None
+        
+        if len(text) > 250:
+            print(f"Warning: Generated summary too long ({len(text)} chars), truncating...")
+            text = text[:247] + "..."
+            
+        return text
+        
     except Exception as e:
         print(f"Daily summary generation failed: {e}")
         return None
