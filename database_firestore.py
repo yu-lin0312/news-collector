@@ -148,9 +148,11 @@ def get_today_news_count():
         # If it's a timestamp object, this needs adjustment.
         # Based on existing code, it seems to be a string.
         
+        # Use a simple equality check if published_at is YYYY-MM-DD
+        # Or a range that covers both YYYY-MM-DD and YYYY-MM-DD HH:MM:SS
         docs = db.collection('news')\
-            .where('published_at', '>=', start_of_day)\
-            .where('published_at', '<=', end_of_day)\
+            .where('published_at', '>=', today_str)\
+            .where('published_at', '<=', today_str + '\uf8ff')\
             .stream()
             
         count = sum(1 for _ in docs)

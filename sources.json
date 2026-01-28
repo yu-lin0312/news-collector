@@ -324,7 +324,7 @@
   {
     "name": "MIT Technology Review",
     "url": "https://www.technologyreview.com/topic/artificial-intelligence/",
-    "type": "static",
+    "type": "dynamic",
     "category": "學術與前瞻研究",
     "selectors": {
       "container": "article, .teaserItem__a",
