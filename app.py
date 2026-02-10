@@ -130,6 +130,31 @@ with st.popover("📅 每日新聞", help="點擊管理簡報"):
     else:
         default_skip_crawl = True
         st.caption("✅ 今日簡報已存在，點擊可重新生成")
+        
+        # --- Email Notification Button ---
+        if st.button("📧 發送今日電子報"):
+            with st.spinner("🚀 正在發送電子報..."):
+                try:
+                    # Load data
+                    data = database.get_briefing(today_str)
+                    top10 = data.get('top10', [])
+                    summary = data.get('daily_briefing', '')
+                    
+                    if not top10:
+                        st.error("❌ 找不到今日新聞資料")
+                    else:
+                        import notification_service
+                        notifier = notification_service.EmailNotifier()
+                        success = notifier.send_daily_briefing(top10, summary)
+                        
+                        if success:
+                            st.toast("✅ 電子報發送成功！", icon='🎉')
+                        else:
+                            st.toast("❌ 發送失敗，請檢查終端機日誌或防火牆設定", icon='⚠️')
+                            
+                except Exception as e:
+                    st.error(f"發送發生錯誤: {e}")
+        # ---------------------------------
     
     # Check if generation is complete
     if st.session_state.get('generation_complete', False):
