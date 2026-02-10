@@ -34,6 +34,12 @@ def load_secrets_to_env():
         use_firestore = get_secret("USE_FIRESTORE")
         if use_firestore:
             os.environ["USE_FIRESTORE"] = use_firestore
+
+        # 4. EMAIL CONFIGURATION
+        for email_key in ['EMAIL_SENDER', 'EMAIL_PASSWORD', 'EMAIL_RECIPIENTS']:
+            val = get_secret(email_key)
+            if val:
+                os.environ[email_key] = val
     except Exception as e:
         # Silently fail if secrets are not found (e.g. local development without secrets.toml)
         # The app will fall back to .env file loaded below
